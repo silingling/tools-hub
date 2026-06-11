@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What's Your Workplace Archetype? Free Personality Quiz</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8266798709030512" crossorigin="anonymous"></script>
+  <meta name="description" content="Find out your workplace personality archetype in just 6 fun questions! Are you The Hustler, The Politician, or The Chill One? Take the free quiz now.">
+  <meta name="keywords" content="workplace personality test, career archetype quiz, office personality test, free personality quiz, workplace archetype">
+  <link rel="canonical" href="https://tools.xiaoyuland.com/quiz/">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="What's Your Workplace Archetype? Free Personality Quiz">
+  <meta property="og:description" content="Find out your workplace personality archetype in just 6 fun questions! Are you The Hustler, The Politician, or The Chill One?">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tools.xiaoyuland.com/quiz/">
+  <meta property="og:image" content="https://tools.xiaoyuland.com/quiz/og-image.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="What's Your Workplace Archetype? Free Personality Quiz">
+  <meta name="twitter:description" content="Find out your workplace personality archetype in just 6 fun questions!">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "What's Your Workplace Archetype?",
+    "description": "A free personality quiz that reveals your workplace archetype. Answer 6 questions to find out if you're The Hustler, The Chill One, The Politician, The Expert, The Rebel, or The Connector.",
+    "applicationCategory": "QuizApplication",
+    "operatingSystem": "All",
+    "browserRequirements": "Requires JavaScript",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+
+  <style>
+    /* ===== Reset & Base ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #1a0533 0%, #2d1b69 50%, #1a0533 100%);
+      min-height: 100vh;
+      color: #fff;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: #f59e0b; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ===== Utility ===== */
+    .container {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 0 20px;
+      width: 100%;
+    }
+
+    /* ===== Page: Landing ===== */
+    #page-landing {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .hero-emoji { font-size: 72px; margin-bottom: 24px; animation: float 3s ease-in-out infinite; }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+    #page-landing h1 {
+      font-size: clamp(32px, 7vw, 52px);
+      font-weight: 800;
+      background: linear-gradient(135deg, #a855f7, #f59e0b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .subtitle {
+      font-size: clamp(16px, 3vw, 20px);
+      color: #c4b5fd;
+      margin-bottom: 12px;
+      font-weight: 400;
+    }
+    .landing-desc {
+      color: #a78bfa;
+      font-size: 15px;
+      max-width: 480px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+    .archetype-preview {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 36px;
+    }
+    .archetype-preview span {
+      background: rgba(255,255,255,0.08);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 14px;
+      color: #ddd6fe;
+    }
+    .btn-start {
+      display: inline-block;
+      background: linear-gradient(135deg, #a855f7, #f59e0b);
+      color: #fff;
+      border: none;
+      padding: 16px 48px;
+      font-size: 20px;
+      font-weight: 700;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 24px rgba(168,85,247,0.4);
+      letter-spacing: 0.5px;
+    }
+    .btn-start:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 32px rgba(168,85,247,0.6);
+    }
+    .btn-start:active { transform: translateY(0); }
+
+    /* ===== Page: Quiz ===== */
+    #page-quiz {
+      display: none;
+      min-height: 100vh;
+      padding: 60px 20px 40px;
+    }
+    .quiz-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .quiz-header h2 { font-size: 20px; color: #c4b5fd; margin-bottom: 8px; }
+    .progress-bar-wrapper {
+      width: 100%;
+      height: 6px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 3px;
+      margin-top: 16px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #a855f7, #f59e0b);
+      border-radius: 3px;
+      transition: width 0.4s ease;
+      width: 0%;
+    }
+    .question-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 32px 24px;
+      margin-bottom: 20px;
+      animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .question-number {
+      font-size: 13px;
+      color: #a78bfa;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+    .question-text {
+      font-size: clamp(18px, 4vw, 22px);
+      font-weight: 700;
+      margin-bottom: 24px;
+      line-height: 1.4;
+    }
+    .options { display: flex; flex-direction: column; gap: 10px; }
+    .option-btn {
+      background: rgba(255,255,255,0.05);
+      border: 2px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 14px 18px;
+      color: #e0d7ff;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .option-btn:hover {
+      background: rgba(168,85,247,0.15);
+      border-color: #a855f7;
+    }
+    .option-btn.selected {
+      background: rgba(168,85,247,0.2);
+      border-color: #a855f7;
+      color: #fff;
+    }
+    .option-btn .opt-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      font-size: 13px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .option-btn.selected .opt-label {
+      background: #a855f7;
+    }
+    .btn-next {
+      display: none;
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #a855f7, #f59e0b);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.3s;
+      margin-top: 8px;
+    }
+    .btn-next.show { display: block; animation: fadeIn 0.3s ease; }
+    .btn-next:hover { opacity: 0.9; }
+
+    /* ===== Page: Result ===== */
+    #page-result {
+      display: none;
+      min-height: 100vh;
+      padding: 60px 20px 40px;
+    }
+    .result-badge {
+      text-align: center;
+      margin-bottom: 24px;
+      animation: fadeIn 0.5s ease;
+    }
+    .result-badge .big-emoji { font-size: 72px; margin-bottom: 8px; }
+    .result-badge h1 {
+      font-size: clamp(28px, 6vw, 42px);
+      font-weight: 800;
+      background: linear-gradient(135deg, #a855f7, #f59e0b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .result-badge .tagline {
+      font-size: 18px;
+      color: #c4b5fd;
+      margin-top: 4px;
+      font-style: italic;
+    }
+    .result-section {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 16px;
+      animation: fadeIn 0.5s ease;
+    }
+    .result-section h3 {
+      font-size: 16px;
+      color: #f59e0b;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+    }
+    .result-section p, .result-section ul { color: #ddd6fe; font-size: 15px; line-height: 1.7; }
+    .result-section ul { list-style: none; padding: 0; }
+    .result-section ul li::before { content: "✦ "; color: #a855f7; }
+
+    /* Share overlay */
+    .share-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(8px);
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      padding: 20px;
+    }
+    .share-overlay.show { display: flex; }
+    .share-card {
+      background: linear-gradient(135deg, #2d1b69, #1a0533);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 20px;
+      padding: 32px 24px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+    .share-card h2 { font-size: 22px; margin-bottom: 8px; }
+    .share-card p { color: #a78bfa; font-size: 14px; margin-bottom: 24px; }
+    .share-btn-group { display: flex; flex-direction: column; gap: 10px; }
+    .share-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px;
+      border-radius: 12px;
+      border: none;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .share-btn:hover { opacity: 0.85; }
+    .share-btn.x { background: #1da1f2; color: #fff; }
+    .share-btn.linkedin { background: #0a66c2; color: #fff; }
+    .share-btn.whatsapp { background: #25d366; color: #fff; }
+    .share-btn.copy { background: rgba(255,255,255,0.1); color: #e0d7ff; }
+    .share-skip {
+      display: block;
+      margin-top: 20px;
+      background: none;
+      border: none;
+      color: #a78bfa;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .share-skip:hover { color: #c4b5fd; }
+
+    /* ===== FAQ ===== */
+    .faq-section {
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .faq-section h2 {
+      text-align: center;
+      font-size: 22px;
+      margin-bottom: 20px;
+      color: #c4b5fd;
+    }
+    .faq-item {
+      background: rgba(255,255,255,0.04);
+      border-radius: 12px;
+      margin-bottom: 8px;
+      overflow: hidden;
+    }
+    .faq-question {
+      padding: 14px 18px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #ddd6fe;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+    }
+    .faq-question::after {
+      content: "+";
+      font-size: 20px;
+      color: #a78bfa;
+      transition: transform 0.2s;
+    }
+    .faq-item.open .faq-question::after {
+      content: "−";
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      padding: 0 18px;
+      color: #9ca3af;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    .faq-item.open .faq-answer {
+      max-height: 200px;
+      padding: 0 18px 14px;
+    }
+
+    /* ===== Footer ===== */
+    .site-footer {
+      text-align: center;
+      padding: 24px 20px;
+      color: #6d28d9;
+      font-size: 13px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      margin-top: 40px;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 480px) {
+      .question-card { padding: 24px 18px; }
+      .result-section { padding: 18px; }
+      .option-btn { padding: 12px 14px; font-size: 15px; }
+      .btn-start { padding: 14px 36px; font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ==================== Landing Page ==================== -->
+<div id="page-landing">
+  <div class="hero-emoji">🏢</div>
+  <h1>What's Your Workplace Archetype?</h1>
+  <p class="subtitle">Discover your true office persona</p>
+  <p class="landing-desc">
+    Are you the climber, the networker, the quiet genius, or the one who's secretly running the show?
+    Answer 6 quick questions to reveal your workplace personality archetype — and what it says about you.
+  </p>
+  <div class="archetype-preview">
+    <span>💪 The Hustler</span>
+    <span>🧘 The Chill One</span>
+    <span>🤝 The Politician</span>
+    <span>🧠 The Expert</span>
+    <span>🚀 The Rebel</span>
+    <span>🦋 The Connector</span>
+  </div>
+  <button class="btn-start" onclick="startQuiz()">Start Quiz →</button>
+</div>
+
+<!-- ==================== Quiz Page ==================== -->
+<div id="page-quiz">
+  <div class="container">
+    <div class="quiz-header">
+      <h2 id="question-step">Question 1 of 6</h2>
+      <div class="progress-bar-wrapper">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+    </div>
+    <div id="question-container"></div>
+  </div>
+</div>
+
+<!-- ==================== Result Page ==================== -->
+<div id="page-result">
+  <div class="container" id="result-container"></div>
+</div>
+
+<!-- ==================== Share Overlay ==================== -->
+<div class="share-overlay" id="share-overlay">
+  <div class="share-card">
+    <h2>🎉 Share to Unlock</h2>
+    <p>Share your result to unlock the full personality report with career tips!</p>
+    <div class="share-btn-group">
+      <button class="share-btn x" onclick="shareResult('x')">𝕏 Share on X / Twitter</button>
+      <button class="share-btn linkedin" onclick="shareResult('linkedin')">💼 Share on LinkedIn</button>
+      <button class="share-btn whatsapp" onclick="shareResult('whatsapp')">💬 Share on WhatsApp</button>
+      <button class="share-btn copy" onclick="copyLink()">🔗 Copy Link</button>
+    </div>
+    <button class="share-skip" onclick="unlockReport()">Skip, show me my full report →</button>
+  </div>
+</div>
+
+<!-- ==================== Footer ==================== -->
+<div class="site-footer" style="display:none" id="footer">
+  <div class="container">
+    <p>What's Your Workplace Archetype? &#x2022; <a href="//tools.xiaoyuland.com" style="color:#c4b5fd;">🛠️ Xiaoyu Land Tools</a></p><p style="margin-top:6px;font-size:12px;color:#6d28d9;">Part of <a href="//xiaoyuland.com" style="color:#a78bfa;">🏮 Xiaoyu Land</a></p>
+  </div>
+</div>
+
+<script>
+// ===== Archetype Data =====
+const ARCHETYPES = {
+  hustler: {
+    emoji: "💪",
+    name: "The Hustler",
+    tagline: "Born to grind.",
+    description: "You're the one who's always first in, last out. Deadlines don't scare you — they energize you. You thrive on momentum and results. When everyone else is slowing down, you're just getting started.",
+    strengths: ["High energy and drive", "Results-oriented", "Resilient under pressure"],
+    weaknesses: ["Burnout risk", "Can be impatient with others", "Struggles to delegate"],
+    workStyle: "Fast-paced, goal-oriented, thrives in competitive environments",
+    careerTip: "Learn to pace yourself. Success is a marathon, not a sprint. Invest in your team — you'll go further together."
+  },
+  chillone: {
+    emoji: "🧘",
+    name: "The Chill One",
+    tagline: "Cool under pressure.",
+    description: "You've mastered the art of not sweating the small stuff. While others panic, you stay calm and find the easiest path forward. Your laid-back energy is the secret stabilizer every team needs.",
+    strengths: ["Adaptable and flexible", "Stress-resistant", "Creative problem-solver"],
+    weaknesses: ["May appear unmotivated", "Can miss deadlines", "Avoids confrontation"],
+    workStyle: "Flexible, laid-back, works best with autonomy and trust",
+    careerTip: "Your calm is a superpower. Use it to balance out the chaos — but make sure people see your effort, not just your cool attitude."
+  },
+  politician: {
+    emoji: "🤝",
+    name: "The Politician",
+    tagline: "Master of the room.",
+    description: "You know the office is a game — and you're playing chess while everyone else plays checkers. You read the room, build alliances, and know exactly when to make your move.",
+    strengths: ["Strategic thinking", "Diplomatic and persuasive", "Influential networker"],
+    weaknesses: ["Can be seen as manipulative", "Overthinks decisions", "May prioritize optics over substance"],
+    workStyle: "Relationship-driven, strategic, politically savvy",
+    careerTip: "Use your influence to lift others up. The best leaders build bridges, not just careers."
+  },
+  expert: {
+    emoji: "🧠",
+    name: "The Expert",
+    tagline: "Knowledge is power.",
+    description: "You're the one everyone comes to with questions. You don't just know the answers — you understand the systems behind them. Your reputation is built on substance, not flash.",
+    strengths: ["Deep domain knowledge", "Analytical and precise", "Trusted by colleagues"],
+    weaknesses: ["Can overthink simple decisions", "Perfectionist tendencies", "Struggles with ambiguity"],
+    workStyle: "Methodical, research-first, data-driven decision making",
+    careerTip: "Share your knowledge freely. Teaching others doesn't diminish your expertise — it multiplies it."
+  },
+  rebel: {
+    emoji: "🚀",
+    name: "The Rebel",
+    tagline: "Rules? What rules?",
+    description: "You don't fit the mold — and you're proud of it. You see opportunities where others see obstacles, and you're not afraid to shake things up. Innovation is your middle name.",
+    strengths: ["Innovative and creative", "Bold decision-maker", "Independent thinker"],
+    weaknesses: ["Can be disruptive", "Resists authority", "May skip important processes"],
+    workStyle: "Unconventional, risk-taking, challenges the status quo",
+    careerTip: "Channel your rebel energy into innovation that moves the needle. Break rules that don't matter — but know which ones do."
+  },
+  connector: {
+    emoji: "🦋",
+    name: "The Connector",
+    tagline: "It's all about who you know.",
+    description: "You're the human glue of the office. You know everyone, introduce everyone, and make sure the right people talk to each other. Your greatest skill is bringing people together.",
+    strengths: ["Exceptional networker", "Empathetic listener", "Collaborative spirit"],
+    weaknesses: ["Can get distracted by socializing", "Struggles with solo work", "Takes on too many people's problems"],
+    workStyle: "Collaborative, people-first, thrives in team settings",
+    careerTip: "Your network is your net worth. Keep building bridges — but also carve out focused time for your own growth."
+  }
+};
+
+const LABELS = ['A', 'B', 'C', 'D'];
+
+// ===== Questions =====
+const QUESTIONS = [
+  {
+    text: "Monday morning — what's the vibe?",
+    options: [
+      { text: "Ready to crush the day! 💪", archetype: "hustler" },
+      { text: "Hit snooze three times... 😴", archetype: "chillone" },
+      { text: "Strategizing the week ahead 🗓️", archetype: "politician" },
+      { text: "Deep in thought about last week's bug 🧠", archetype: "expert" }
+    ]
+  },
+  {
+    text: "When faced with a difficult task...",
+    options: [
+      { text: "Attack it from a weird angle 🚀", archetype: "rebel" },
+      { text: "Find the easiest way through 🎯", archetype: "chillone" },
+      { text: "Gather the right people to help 🤝", archetype: "connector" },
+      { text: "Research, plan, then execute 📚", archetype: "expert" }
+    ]
+  },
+  {
+    text: "Your ideal work environment?",
+    options: [
+      { text: "High-energy, fast-paced ⚡", archetype: "hustler" },
+      { text: "Breaking the rules somewhere new 🌴", archetype: "rebel" },
+      { text: "Collaborative hub with great coffee ☕", archetype: "politician" },
+      { text: "Quiet corner, deep focus 🎧", archetype: "chillone" }
+    ]
+  },
+  {
+    text: "During team meetings...",
+    options: [
+      { text: "You're steering the conversation 🎯", archetype: "politician" },
+      { text: "You're multitasking on something better 📱", archetype: "rebel" },
+      { text: "You're connecting people and ideas 🔗", archetype: "connector" },
+      { text: "You're quietly analyzing everything 📊", archetype: "expert" }
+    ]
+  },
+  {
+    text: "When a deadline is approaching...",
+    options: [
+      { text: "You work harder and faster ⚡", archetype: "hustler" },
+      { text: "You negotiate a realistic extension 📅", archetype: "chillone" },
+      { text: "You delegate and coordinate 📋", archetype: "connector" },
+      { text: "You pull the all-nighter 🌙", archetype: "expert" }
+    ]
+  },
+  {
+    text: "Colleagues would describe you as...",
+    options: [
+      { text: "Driven and unstoppable 🏆", archetype: "hustler" },
+      { text: "Easygoing and fun to be around 🎉", archetype: "chillone" },
+      { text: "Well-connected and diplomatic 🤝", archetype: "connector" },
+      { text: "Someone who does things differently 🔥", archetype: "rebel" }
+    ]
+  }
+];
+
+// ===== State =====
+let currentQuestion = 0;
+let answers = [];
+let resultArchetype = null;
+let fullReportUnlocked = false;
+
+// ===== DOM Refs =====
+const pageLanding = document.getElementById('page-landing');
+const pageQuiz = document.getElementById('page-quiz');
+const pageResult = document.getElementById('page-result');
+const questionContainer = document.getElementById('question-container');
+const questionStep = document.getElementById('question-step');
+const progressBar = document.getElementById('progress-bar');
+const resultContainer = document.getElementById('result-container');
+const shareOverlay = document.getElementById('share-overlay');
+const footer = document.getElementById('footer');
+
+// ===== Functions =====
+
+function startQuiz() {
+  currentQuestion = 0;
+  answers = [];
+  pageLanding.style.display = 'none';
+  pageQuiz.style.display = 'block';
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = QUESTIONS[currentQuestion];
+  questionStep.textContent = `Question ${currentQuestion + 1} of ${QUESTIONS.length}`;
+  progressBar.style.width = `${((currentQuestion) / QUESTIONS.length) * 100}%`;
+
+  let html = `<div class="question-card">
+    <div class="question-number">Q${currentQuestion + 1}</div>
+    <div class="question-text">${q.text}</div>
+    <div class="options">`;
+
+  q.options.forEach((opt, idx) => {
+    const selected = answers[currentQuestion] === idx ? 'selected' : '';
+    html += `<button class="option-btn ${selected}" data-index="${idx}" onclick="selectOption(${idx})">
+      <span class="opt-label">${LABELS[idx]}</span>
+      ${opt.text}
+    </button>`;
+  });
+
+  html += `</div></div>`;
+  html += `<button class="btn-next ${answers[currentQuestion] !== undefined ? 'show' : ''}" id="btn-next" onclick="nextQuestion()">
+    ${currentQuestion < QUESTIONS.length - 1 ? 'Next Question →' : 'See My Result →'}
+  </button>`;
+
+  questionContainer.innerHTML = html;
+}
+
+function selectOption(idx) {
+  answers[currentQuestion] = idx;
+  // Update visual selection
+  document.querySelectorAll('.option-btn').forEach((btn, i) => {
+    btn.classList.toggle('selected', i === idx);
+  });
+  // Show next button
+  document.getElementById('btn-next').classList.add('show');
+}
+
+function nextQuestion() {
+  if (answers[currentQuestion] === undefined) return;
+
+  if (currentQuestion < QUESTIONS.length - 1) {
+    currentQuestion++;
+    renderQuestion();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else {
+    // Calculate result
+    showResult();
+  }
+}
+
+function calculateArchetype() {
+  const scores = {};
+  Object.keys(ARCHETYPES).forEach(key => scores[key] = 0);
+
+  QUESTIONS.forEach((q, qi) => {
+    const chosenIdx = answers[qi];
+    if (chosenIdx !== undefined) {
+      const archetype = q.options[chosenIdx].archetype;
+      scores[archetype]++;
+    }
+  });
+
+  // Find highest score
+  let maxScore = 0;
+  let topArchetypes = [];
+  for (const [key, score] of Object.entries(scores)) {
+    if (score > maxScore) {
+      maxScore = score;
+      topArchetypes = [key];
+    } else if (score === maxScore) {
+      topArchetypes.push(key);
+    }
+  }
+
+  // Tie-break: random pick
+  if (topArchetypes.length > 1) {
+    return topArchetypes[Math.floor(Math.random() * topArchetypes.length)];
+  }
+  return topArchetypes[0];
+}
+
+function showResult() {
+  pageQuiz.style.display = 'none';
+  pageResult.style.display = 'block';
+  footer.style.display = 'block';
+
+  resultArchetype = calculateArchetype();
+  const a = ARCHETYPES[resultArchetype];
+
+  // Show share overlay (unlock mechanic)
+  setTimeout(() => {
+    shareOverlay.classList.add('show');
+  }, 500);
+
+  // Render preview result (locked)
+  renderResultPreview(a);
+}
+
+function renderResultPreview(a) {
+  let html = `
+    <div class="result-badge">
+      <div class="big-emoji">${a.emoji}</div>
+      <h1>${a.name}</h1>
+      <p class="tagline">"${a.tagline}"</p>
+    </div>
+    <div class="result-section">
+      <h3>Summary</h3>
+      <p>${a.description.substring(0, 120)}...</p>
+    </div>
+    <div class="result-section" style="text-align:center; opacity:0.5;">
+      <p>🔒 Share to unlock your full report</p>
+    </div>
+  `;
+  resultContainer.innerHTML = html;
+}
+
+function renderFullReport(a) {
+  let html = `
+    <div class="result-badge">
+      <div class="big-emoji">${a.emoji}</div>
+      <h1>${a.name}</h1>
+      <p class="tagline">"${a.tagline}"</p>
+    </div>
+    <div class="result-section">
+      <h3>📋 About You</h3>
+      <p>${a.description}</p>
+    </div>
+    <div class="result-section">
+      <h3>✅ Strengths</h3>
+      <ul>${a.strengths.map(s => `<li>${s}</li>`).join('')}</ul>
+    </div>
+    <div class="result-section">
+      <h3>⚠️ Watch Out For</h3>
+      <ul>${a.weaknesses.map(w => `<li>${w}</li>`).join('')}</ul>
+    </div>
+    <div class="result-section">
+      <h3>🎯 Work Style</h3>
+      <p>${a.workStyle}</p>
+    </div>
+    <div class="result-section">
+      <h3>💡 Career Tip</h3>
+      <p>${a.careerTip}</p>
+    </div>
+    <div class="result-section" style="text-align:center; margin-top:10px;">
+      <button class="btn-start" style="padding:12px 36px;font-size:16px;" onclick="shareOverlay.classList.add('show')">
+        📤 Share Your Archetype
+      </button>
+      <p style="margin-top:12px;color:#a78bfa;font-size:14px;">
+        <a href="#" onclick="retakeQuiz();return false;">Take the quiz again</a>
+      </p>
+    </div>
+  `;
+  resultContainer.innerHTML = html;
+
+  // Scroll to top of result
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function unlockReport() {
+  shareOverlay.classList.remove('show');
+  fullReportUnlocked = true;
+  const a = ARCHETYPES[resultArchetype];
+  renderFullReport(a);
+}
+
+function shareResult(platform) {
+  const a = ARCHETYPES[resultArchetype];
+  const url = window.location.href.split('?')[0].split('#')[0];
+  const text = `I got "${a.name}" ${a.emoji} on the Workplace Archetype Quiz! Find out yours:`;
+
+  let shareUrl;
+  switch (platform) {
+    case 'x':
+      shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+      break;
+    case 'linkedin':
+      shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}&summary=${encodeURIComponent(text)}`;
+      break;
+    case 'whatsapp':
+      shareUrl = `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`;
+      break;
+  }
+
+  if (shareUrl) {
+    window.open(shareUrl, '_blank', 'width=600,height=500');
+  }
+
+  // Unlock report after sharing
+  setTimeout(() => unlockReport(), 500);
+}
+
+function copyLink() {
+  const a = ARCHETYPES[resultArchetype];
+  const url = window.location.href.split('?')[0].split('#')[0];
+  const text = `I got "${a.name}" ${a.emoji} on the Workplace Archetype Quiz! Find out yours: ${url}`;
+
+  navigator.clipboard.writeText(text).then(() => {
+    alert('Link copied to clipboard!');
+    unlockReport();
+  }).catch(() => {
+    unlockReport();
+  });
+}
+
+function retakeQuiz() {
+  pageResult.style.display = 'none';
+  footer.style.display = 'none';
+  currentQuestion = 0;
+  answers = [];
+  resultArchetype = null;
+  fullReportUnlocked = false;
+  shareOverlay.classList.remove('show');
+  pageLanding.style.display = 'flex';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ===== FAQ Accordion =====
+document.addEventListener('click', function(e) {
+  const faqQuestion = e.target.closest('.faq-question');
+  if (faqQuestion) {
+    const item = faqQuestion.parentElement;
+    item.classList.toggle('open');
+  }
+});
+</script>
+
+<!-- ==================== FAQ (SEO) ==================== -->
+<div class="faq-section container" id="faq-section" style="display:none;">
+  <h2>Frequently Asked Questions</h2>
+
+  <div class="faq-item">
+    <div class="faq-question">What is a workplace archetype?</div>
+    <div class="faq-answer">A workplace archetype is a personality profile that describes how you tend to behave, communicate, and work in an office or professional environment. It's a fun way to reflect on your natural tendencies at work.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-question">How accurate is this personality test?</div>
+    <div class="faq-answer">This quiz is designed for entertainment and self-reflection. While the questions are based on common workplace personality patterns, it's not a scientific assessment. Take it as a fun insight, not a career diagnosis!</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-question">Can I share my results?</div>
+    <div class="faq-answer">Absolutely! Share your archetype on X (Twitter), LinkedIn, or WhatsApp to unlock the full report with career tips. Sharing is the best way to compare your results with colleagues and friends.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-question">How many questions are in the quiz?</div>
+    <div class="faq-answer">The quiz has 6 quick multiple-choice questions. It takes about 2 minutes to complete and reveals your workplace archetype instantly.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-question">Will there be more archetypes added?</div>
+    <div class="faq-answer">We're constantly expanding! If you have ideas for new archetypes or quiz topics, we'd love to hear them. Stay tuned for future updates.</div>
+  </div>
+</div>
+
+<script>
+// Show FAQ section when results page is visible
+const observer = new MutationObserver(() => {
+  const faq = document.getElementById('faq-section');
+  if (pageResult.style.display === 'block' && faq) {
+    faq.style.display = 'block';
+  }
+});
+observer.observe(pageResult, { attributes: true, attributeFilter: ['style'] });
+</script>
+
+</body>
+</html>

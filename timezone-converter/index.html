@@ -271,6 +271,7 @@ function getMasterTz() { return TIMEZONES[parseInt(document.getElementById('mast
 function updateMasterDisplay() {
   const tz = getMasterTz();
   document.getElementById('masterIcon').textContent = tz.emoji || '\u{1F310}';
+  document.getElementById('masterCity').textContent = tz.city;
   const tzCode = getMasterTzCode();
   document.getElementById('masterTime').textContent = fmtTime(masterDate, tzCode);
   document.getElementById('masterDate').textContent = fmtDate(masterDate, tzCode);

@@ -39,13 +39,24 @@
       border: 2px solid var(--tools-red);
     }
     .master-clock .label { text-align: center; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--tools-red); margin-bottom: 8px; }
-    .master-body { display: flex; align-items: center; gap: 20px; justify-content: center; }
-    .master-icon { font-size: 64px; flex-shrink: 0; line-height: 1; }
+    .master-body { display: flex; align-items: center; gap: 24px; justify-content: center; }
+    .master-badge {
+      flex-shrink: 0; width: 110px; text-align: center;
+      background: rgba(255,255,255,.5); border-radius: 16px;
+      padding: 12px 10px; border: 1px solid rgba(196,30,58,.15);
+    }
+    .master-badge .badge-icon { font-size: 52px; line-height: 1; margin-bottom: 2px; }
+    .master-badge .badge-city { font-size: 13px; font-weight: 700; color: var(--tools-dark); }
+    .master-badge .badge-country { font-size: 10px; font-weight: 600; color: var(--text-light); text-transform: uppercase; letter-spacing: .5px; }
     .master-info { text-align: left; }
     .master-clock .big-time { font-size: 56px; font-weight: 800; color: var(--tools-dark); line-height: 1; letter-spacing: -1px; }
     .master-clock .big-date { font-size: 14px; color: var(--text); margin-top: 2px; }
     .master-clock .big-tz { font-size: 13px; font-weight: 600; color: var(--text-light); margin-top: 4px; padding: 3px 14px; background: rgba(255,255,255,.6); border-radius: 50px; display: inline-block; }
     .master-controls { display: flex; gap: 8px; justify-content: center; align-items: center; margin-top: 14px; flex-wrap: wrap; }
+    @media (max-width: 640px) {
+      .master-body { flex-direction: column; gap: 12px; }
+      .master-info { text-align: center; }
+    }
     .master-controls select { padding: 8px 14px; border-radius: 10px; border: 2px solid #e8d8cc; font-size: 14px; background: var(--bg-card); outline: none; font-family: inherit; cursor: pointer; }
     .master-controls input { padding: 8px 12px; border-radius: 10px; border: 2px solid #e8d8cc; font-size: 14px; background: var(--bg-card); outline: none; font-family: inherit; }
     .master-controls input:focus { border-color: var(--tools-red); }
@@ -125,7 +136,11 @@
       <div class="master-clock">
         <div class="label">🕐 YOUR TIME</div>
         <div class="master-body">
-          <div class="master-icon" id="masterIcon">🏮</div>
+          <div class="master-badge" id="masterBadge">
+            <div class="badge-icon" id="masterIcon">🐼</div>
+            <div class="badge-city" id="masterCity">Shanghai</div>
+            <div class="badge-country">China</div>
+          </div>
           <div class="master-info">
             <div class="big-time" id="masterTime">16:20</div>
             <div class="big-date" id="masterDate">Sat, Jun 13, 2026</div>

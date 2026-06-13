@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word Counter - Free Character & Word Count Tool</title>
+  <meta name="description" content="Free online word counter. Count words, characters, sentences, paragraphs, and reading time instantly. Perfect for writers, students, and SEO.">
+  <meta name="keywords" content="word counter, character count, word count tool, free word counter, text analyzer">
+  <link rel="canonical" href="https://tools.xiaoyuland.com/word-counter/">
+
+  <meta property="og:title" content="Word Counter - Free Text Analysis Tool">
+  <meta property="og:description" content="Count words, characters, sentences, and more. Free online text analyzer.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tools.xiaoyuland.com/word-counter/">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Word Counter",
+    "description": "Count words, characters, sentences, and paragraphs",
+    "applicationCategory": "Utility",
+    "operatingSystem": "All"
+  }
+  </script>
+
+  <style>
+    :root {
+      --tools-red: #c41e3a;
+      --tools-dark: #8b0000;
+      --tools-light: #fff0e6;
+      --bg: #faf6f0;
+      --bg-card: #fff;
+      --text: #2c2c2c;
+      --text-light: #666;
+      --text-muted: #999;
+      --radius: 16px;
+      --shadow: 0 4px 20px rgba(0,0,0,.06);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: var(--text); background: var(--bg); line-height: 1.6;
+      min-height: 100vh; display: flex; flex-direction: column;
+    }
+    a { color: var(--tools-red); text-decoration: none; }
+    .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+    nav {
+      background: var(--bg-card); border-bottom: 1px solid #eee;
+      padding: 14px 0; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(8px);
+    }
+    nav .container { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .nav-brand { font-size: 20px; font-weight: 800; color: var(--tools-dark); display: flex; align-items: center; gap: 8px; }
+    .nav-links { display: flex; gap: 4px; flex-wrap: wrap; }
+    .nav-links a { padding: 6px 14px; border-radius: 8px; font-size: 14px; font-weight: 600; color: var(--text); transition: all .2s; }
+    .nav-links a:hover { background: var(--tools-light); color: var(--tools-dark); text-decoration: none; }
+    .nav-links a.active { background: var(--tools-red); color: #fff; }
+
+    .hero { padding: 48px 0 24px; text-align: center; }
+    .hero-icon { font-size: 56px; margin-bottom: 8px; display: block; }
+    .hero h1 { font-size: 36px; font-weight: 800; color: var(--tools-dark); margin-bottom: 6px; }
+    .hero p { font-size: 16px; color: var(--text-light); }
+
+    .tool-section { padding: 32px 0; }
+    .tool-card {
+      background: var(--bg-card); border-radius: var(--radius);
+      padding: 32px; box-shadow: var(--shadow); border: 1px solid #f0e8e0;
+      max-width: 640px; margin: 0 auto;
+    }
+
+    textarea {
+      width: 100%; min-height: 200px; padding: 16px; border-radius: 12px;
+      border: 2px solid #e8e0d8; background: #faf6f0;
+      font-size: 16px; line-height: 1.7; outline: none; resize: vertical;
+      font-family: inherit; transition: border .2s;
+    }
+    textarea:focus { border-color: var(--tools-red); }
+
+    .actions { display: flex; gap: 8px; margin: 12px 0 24px; flex-wrap: wrap; }
+    .actions button {
+      padding: 8px 20px; border-radius: 50px; font-size: 13px; font-weight: 600;
+      border: 2px solid #e8e0d8; background: var(--bg-card); color: var(--text);
+      cursor: pointer; transition: all .2s;
+    }
+    .actions button:hover { border-color: var(--tools-red); color: var(--tools-dark); }
+
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 12px;
+    }
+    .stat-card {
+      background: var(--bg); border-radius: 12px; padding: 16px;
+      text-align: center; border: 1px solid #f0e8e0;
+    }
+    .stat-card .stat-num {
+      font-size: 32px; font-weight: 800; color: var(--tools-dark);
+      line-height: 1; margin-bottom: 4px;
+    }
+    .stat-card .stat-label { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+
+    .extra-stats {
+      margin-top: 24px; padding: 16px 20px; border-radius: 12px;
+      background: var(--tools-light); display: grid;
+      grid-template-columns: 1fr 1fr; gap: 8px;
+    }
+    .extra-stats .item { font-size: 14px; color: var(--text); }
+    .extra-stats .item span { font-weight: 700; color: var(--tools-dark); }
+
+    .keyword-box {
+      margin-top: 20px; padding: 16px; border-radius: 12px;
+      background: var(--bg); border: 1px solid #f0e8e0;
+    }
+    .keyword-box h4 { font-size: 14px; color: var(--tools-dark); margin-bottom: 8px; }
+    .keyword-list { display: flex; flex-wrap: wrap; gap: 6px; }
+    .keyword-tag {
+      padding: 4px 12px; border-radius: 50px; font-size: 12px;
+      background: var(--bg-card); border: 1px solid #e8e0d8; color: var(--text-light);
+    }
+    .keyword-tag .count { color: var(--tools-dark); font-weight: 700; }
+
+    footer {
+      margin-top: auto; background: var(--bg-card); border-top: 1px solid #eee;
+      padding: 32px 0; text-align: center;
+    }
+    footer p { font-size: 13px; color: var(--text-muted); }
+    footer a { color: var(--tools-red); font-weight: 600; }
+    footer .foot-links { margin-bottom: 8px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+    footer .foot-links a { padding: 4px 10px; font-size: 13px; color: var(--text-light); border-radius: 6px; }
+    footer .foot-links a:hover { background: var(--tools-light); color: var(--tools-dark); text-decoration: none; }
+
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 28px; }
+      .tool-card { padding: 20px; }
+      .stats-grid { grid-template-columns: repeat(3, 1fr); }
+      .extra-stats { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a class="nav-brand" href="//xiaoyuland.com">🏮 Xiaoyu Land</a>
+    <div class="nav-links">
+      <a href="//tools.xiaoyuland.com">🛠️ Tools</a>
+      <a href="//game.xiaoyuland.com">🎮 Games</a>
+      <a href="//ai.xiaoyuland.com">🤖 AI</a>
+      <a href="//culture.xiaoyuland.com">🏮 Culture</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <span class="hero-icon">📝</span>
+    <h1>Word Counter</h1>
+    <p>Count words, characters, sentences, paragraphs & more</p>
+  </div>
+</section>
+
+<section class="tool-section">
+  <div class="container">
+    <div class="tool-card">
+      <textarea id="textInput" placeholder="Type or paste your text here..." oninput="analyze()">Hello! Welcome to the Word Counter tool. Try typing some text here and watch the stats update in real-time.
+
+This is a second paragraph with some more content. You can see how sentences and paragraphs are counted automatically.</textarea>
+
+      <div class="actions">
+        <button onclick="clearText()">🗑️ Clear</button>
+        <button onclick="sampleText()">📄 Sample</button>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-num" id="wordCount">36</div>
+          <div class="stat-label">Words</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="charCount">215</div>
+          <div class="stat-label">Characters</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="charNoSpace">180</div>
+          <div class="stat-label">No Spaces</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="sentenceCount">4</div>
+          <div class="stat-label">Sentences</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="paraCount">2</div>
+          <div class="stat-label">Paragraphs</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="readingTime">0.2</div>
+          <div class="stat-label">Min Read</div>
+        </div>
+      </div>
+
+      <div class="extra-stats">
+        <div class="item">🔤 Letters: <span id="letterCount">170</span></div>
+        <div class="item">🔢 Digits: <span id="digitCount">0</span></div>
+        <div class="item">␣ Spaces: <span id="spaceCount">35</span></div>
+        <div class="item">🔣 Special: <span id="specialCount">10</span></div>
+        <div class="item">📏 Avg Word Length: <span id="avgWordLen">5.0</span></div>
+        <div class="item">📊 Longest Word: <span id="longestWord">automatic</span></div>
+      </div>
+
+      <div class="keyword-box" id="keywordBox" style="display:none">
+        <h4>🏆 Top Keywords</h4>
+        <div class="keyword-list" id="keywordList"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="foot-links">
+      <a href="/word-counter/">📝 Word Counter</a>
+      <a href="/random-picker/">🎲 Random Picker</a>
+      <a href="/bmi-calculator/">⚖️ BMI Calculator</a>
+      <a href="/password-generator/">🔑 Password Generator</a>
+      <a href="/quiz/">🏢 Workplace Quiz</a>
+      <a href="//xiaoyuland.com">🏠 Xiaoyu Land</a>
+    </div>
+    <p>© 2026 <a href="//xiaoyuland.com">Xiaoyu Land</a> · Tools</p>
+  </div>
+</footer>
+
+<script>
+function analyze() {
+  const text = document.getElementById('textInput').value;
+  const trimmed = text.trim();
+
+  // Words
+  const words = trimmed ? trimmed.split(/\s+/).filter(w => w.length > 0) : [];
+  document.getElementById('wordCount').textContent = words.length;
+
+  // Characters
+  document.getElementById('charCount').textContent = text.length;
+  document.getElementById('charNoSpace').textContent = text.replace(/\s/g, '').length;
+
+  // Sentences (split by . ! ?)
+  const sentences = trimmed ? trimmed.split(/[.!?]+/).filter(s => s.trim().length > 0) : [];
+  document.getElementById('sentenceCount').textContent = sentences.length;
+
+  // Paragraphs (split by double newline)
+  const paras = trimmed ? trimmed.split(/\n\s*\n/).filter(p => p.trim().length > 0) : [];
+  document.getElementById('paraCount').textContent = Math.max(1, paras.length);
+
+  // Reading time (200 words/min)
+  const mins = words.length / 200;
+  document.getElementById('readingTime').textContent = mins < 0.1 ? '<0.1' : mins.toFixed(1);
+
+  // Letter / Digit / Space / Special counts
+  let letters = 0, digits = 0, spaces = 0, special = 0;
+  for (const ch of text) {
+    if (/[a-zA-Z]/.test(ch)) letters++;
+    else if (/[0-9]/.test(ch)) digits++;
+    else if (/\s/.test(ch)) spaces++;
+    else special++;
+  }
+  document.getElementById('letterCount').textContent = letters;
+  document.getElementById('digitCount').textContent = digits;
+  document.getElementById('spaceCount').textContent = spaces;
+  document.getElementById('specialCount').textContent = special;
+
+  // Avg word length
+  if (words.length > 0) {
+    const avg = words.reduce((sum, w) => sum + w.length, 0) / words.length;
+    document.getElementById('avgWordLen').textContent = avg.toFixed(1);
+    document.getElementById('longestWord').textContent = words.reduce((a, b) => a.length >= b.length ? a : b);
+  } else {
+    document.getElementById('avgWordLen').textContent = '0';
+    document.getElementById('longestWord').textContent = '—';
+  }
+
+  // Top keywords (words with 4+ chars, exclude common stop words)
+  const stopWords = new Set(['this','that','with','from','have','the','and','for','are','not','but','you','all','can','was','had','her','his','has','its','out','see','she','too','did','get','say','got','put','use','try','ask','let','may','now','how','why','who','what','when','where','our','its','the','and','for','not','but','are','you','all']);
+  const freq = {};
+  for (const w of words) {
+    const lower = w.toLowerCase().replace(/[^a-z0-9]/g, '');
+    if (lower.length >= 4 && !stopWords.has(lower)) {
+      freq[lower] = (freq[lower] || 0) + 1;
+    }
+  }
+  const sorted = Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 8);
+  const kwBox = document.getElementById('keywordBox');
+  const kwList = document.getElementById('keywordList');
+  if (sorted.length > 0) {
+    kwBox.style.display = '';
+    kwList.innerHTML = sorted.map(([word, count]) =>
+      `<span class="keyword-tag">${word} <span class="count">(${count})</span></span>`
+    ).join('');
+  } else {
+    kwBox.style.display = 'none';
+  }
+}
+
+function clearText() {
+  document.getElementById('textInput').value = '';
+  analyze();
+}
+
+function sampleText() {
+  document.getElementById('textInput').value = `In the heart of a bustling city, there was a small bookstore tucked away between two towering skyscrapers. It was called "The Reading Nook," and it had been there for over fifty years.
+
+The owner, Mrs. Chen, knew every book on her shelves by heart. She could recommend the perfect read for anyone who walked through her door — a mystery for the tired businessman, a romance for the lovesick teenager, or a biography for the curious traveler.
+
+One rainy afternoon, a young girl named Lily wandered in, looking for a book that could take her on an adventure. Mrs. Chen smiled and handed her a worn copy of "Journey to the West." That single moment changed Lily's life forever. She read the book in one night, and from then on, she was never without a story in her hands.`;
+  analyze();
+}
+
+// Analyze on load
+analyze();
+</script>
+</body>
+</html>

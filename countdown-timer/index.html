@@ -247,7 +247,7 @@ function setPreset(d, h, m, s) {
   document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active-preset'));
   event.target.classList.add('active-preset');
   if (!running) {
-    totalSecs = h * 3600 + m * 60 + s;
+    totalSecs = d * 86400 + h * 3600 + m * 60 + s;
     pauseRemaining = totalSecs * 1000;
     renderMs(pauseRemaining, true);
   }

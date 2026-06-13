@@ -262,8 +262,9 @@ function getTzOffset(tzCode, date) {
     const opts = { timeZone: tzCode, hour12: false, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' };
     const parts = new Intl.DateTimeFormat('en-CA', opts).formatToParts(date);
     const get = (type) => { const p = parts.find(x => x.type === type); return p ? parseInt(p.value, 10) : 0; };
-    const local = new Date(get('year'), get('month')-1, get('day'), get('hour'), get('minute'), get('second'));
-    return Math.round((local - date) / 60000); // offset in minutes, rounded
+    // Use Date.UTC to avoid browser local timezone shift
+    const local = new Date(Date.UTC(get('year'), get('month')-1, get('day'), get('hour'), get('minute'), get('second')));
+    return Math.round((local - date) / 60000);
   } catch(e) {
     const tz = TIMEZONES.find(t => t.code === tzCode);
     return tz ? Math.round(tz.offset * 60) : 0;

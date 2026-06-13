@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Number Base Converter - Binary, Octal, Decimal, Hex</title>
+  <meta name="description" content="Free online number base converter. Convert numbers between binary, octal, decimal, hexadecimal and more.">
+  <meta name="keywords" content="base converter, binary converter, hex converter, octal, decimal, number conversion">
+  <link rel="canonical" href="https://tools.xiaoyuland.com/number-base/">
+  <meta property="og:title" content="Number Base Converter">
+  <meta property="og:description" content="Convert numbers between binary, octal, decimal, hexadecimal and more.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tools.xiaoyuland.com/number-base/">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Number Base Converter","description":"Convert numbers between binary, octal, decimal, hexadecimal","applicationCategory":"Utility","operatingSystem":"All"}</script>
+  <style>
+    :root { --tools-red: #c41e3a; --tools-dark: #8b0000; --tools-light: #fff0e6; --bg: #faf6f0; --bg-card: #fff; --text: #2c2c2c; --text-light: #666; --text-muted: #999; --radius: 16px; --shadow: 0 4px 20px rgba(0,0,0,.06); }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'SF Mono', 'Cascadia Code', 'Consolas', monospace; color: var(--text); background: var(--bg); line-height: 1.5; min-height: 100vh; display: flex; flex-direction: column; }
+    body, input, select, button { font-family: inherit; }
+    a { color: var(--tools-red); text-decoration: none; }
+    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+    nav { background: var(--bg-card); border-bottom: 1px solid #eee; padding: 14px 0; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(8px); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    nav .container { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .nav-brand { font-size: 20px; font-weight: 800; color: var(--tools-dark); display: flex; align-items: center; gap: 8px; }
+    .nav-links { display: flex; gap: 4px; flex-wrap: wrap; }
+    .nav-links a { padding: 6px 14px; border-radius: 8px; font-size: 14px; font-weight: 600; color: var(--text); transition: all .2s; }
+    .nav-links a:hover { background: var(--tools-light); color: var(--tools-dark); text-decoration: none; }
+    .hero { padding: 36px 0 16px; text-align: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .hero-icon { font-size: 44px; margin-bottom: 2px; display: block; }
+    .hero h1 { font-size: 30px; font-weight: 800; color: var(--tools-dark); margin-bottom: 2px; }
+    .hero p { font-size: 14px; color: var(--text-light); }
+    .tool-section { padding: 16px 0 40px; }
+    .tool-card { background: var(--bg-card); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow); border: 1px solid #f0e8e0; }
+
+    .input-area { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+    .input-area label { font-size: 13px; font-weight: 700; color: var(--tools-dark); }
+    .input-area select { padding: 10px 14px; border-radius: 10px; border: 2px solid #e8d8cc; font-size: 14px; background: var(--bg-card); outline: none; cursor: pointer; }
+    .input-area input[type="text"] { flex: 1; min-width: 200px; padding: 10px 14px; border-radius: 10px; border: 2px solid #e8d8cc; font-size: 16px; background: var(--bg); outline: none; }
+    .input-area input:focus { border-color: var(--tools-red); }
+
+    .results { display: flex; flex-direction: column; gap: 8px; }
+    .result-row { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 12px; background: var(--bg); border: 1px solid #eee8e0; transition: all .2s; }
+    .result-row:hover { border-color: var(--tools-red); }
+    .result-row .base-label { flex: 0 0 100px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--text-light); }
+    .result-row .base-badge { flex: 0 0 44px; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; background: var(--tools-light); color: var(--tools-dark); text-align: center; }
+    .result-row .result-value { flex: 1; font-size: 20px; font-weight: 700; color: var(--tools-dark); word-break: break-all; }
+    .result-row .copy-btn { flex-shrink: 0; padding: 6px 14px; border-radius: 8px; border: 1px solid #e8d8cc; background: var(--bg-card); font-size: 12px; font-weight: 600; cursor: pointer; transition: all .2s; color: var(--text-light); }
+    .result-row .copy-btn:hover { background: var(--tools-light); border-color: var(--tools-red); color: var(--tools-dark); }
+    .result-row .copy-btn.copied { background: #e8f5e9; border-color: #2e7d32; color: #2e7d32; }
+
+    .result-row.bin { border-left: 4px solid #c41e3a; }
+    .result-row.oct { border-left: 4px solid #e67e22; }
+    .result-row.dec { border-left: 4px solid #27ae60; }
+    .result-row.hex { border-left: 4px solid #2980b9; }
+    .result-row.base36 { border-left: 4px solid #8e44ad; }
+    .result-row.custom { border-left: 4px solid #16a085; }
+
+    .error-msg { color: var(--tools-red); font-size: 13px; margin-top: 8px; display: none; align-items: center; gap: 6px; }
+    .error-msg.show { display: flex; }
+
+    .info-bar { display: flex; gap: 16px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin-top: 16px; padding: 12px 16px; border-radius: 10px; background: var(--bg); border: 1px solid #eee8e0; font-size: 13px; color: var(--text-light); flex-wrap: wrap; }
+    .info-bar span strong { color: var(--text); }
+
+    footer { margin-top: auto; background: var(--bg-card); border-top: 1px solid #eee; padding: 24px 0; text-align: center; }
+    footer p { font-size: 13px; color: var(--text-muted); }
+    footer a { color: var(--tools-red); font-weight: 600; }
+    footer .foot-links { margin-bottom: 6px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    footer .foot-links a { padding: 4px 10px; font-size: 13px; color: var(--text-light); border-radius: 6px; }
+    footer .foot-links a:hover { background: var(--tools-light); color: var(--tools-dark); text-decoration: none; }
+
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 24px; }
+      .tool-card { padding: 16px; }
+      .result-row { flex-wrap: wrap; gap: 6px; padding: 10px 12px; }
+      .result-row .base-label { flex: 0 0 70px; }
+      .result-row .result-value { font-size: 16px; flex: 1 1 100%; order: 3; }
+      .input-area { flex-direction: column; align-items: stretch; }
+      .input-area input[type="text"] { min-width: unset; }
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <div class="container">
+    <a class="nav-brand" href="//xiaoyuland.com">🏮 Xiaoyu Land</a>
+    <div class="nav-links">
+      <a href="//tools.xiaoyuland.com">🛠️ Tools</a>
+      <a href="//game.xiaoyuland.com">🎮 Games</a>
+      <a href="//ai.xiaoyuland.com">🤖 AI</a>
+      <a href="//culture.xiaoyuland.com">🏮 Culture</a>
+    </div>
+  </div>
+</nav>
+<section class="hero">
+  <div class="container">
+    <span class="hero-icon">🔢</span>
+    <h1>Number Base Converter</h1>
+    <p>Convert numbers between any base — binary, octal, decimal, hex, and more</p>
+  </div>
+</section>
+<section class="tool-section">
+  <div class="container">
+    <div class="tool-card">
+      <div class="input-area">
+        <label for="inputBase">From</label>
+        <select id="inputBase">
+          <option value="2">Binary (2)</option>
+          <option value="8">Octal (8)</option>
+          <option value="10" selected>Decimal (10)</option>
+          <option value="16">Hexadecimal (16)</option>
+          <option value="36">Base 36</option>
+          <option value="custom">Custom...</option>
+        </select>
+        <input type="text" id="numberInput" placeholder="Enter a number..." value="42">
+        <button class="now-btn" onclick="document.getElementById('numberInput').value='42';document.getElementById('inputBase').value='10';convert();" style="padding:10px 18px;border-radius:10px;border:none;background:var(--tools-red);color:#fff;font-size:14px;font-weight:700;cursor:pointer">↺</button>
+      </div>
+      <div id="customBaseRow" style="display:none;margin:-12px 0 16px;">
+        <label for="customBase" style="font-size:13px;font-weight:700;color:var(--text-light);margin-right:8px;">Base (2-62):</label>
+        <input type="number" id="customBase" value="3" min="2" max="62" style="padding:8px 12px;border-radius:8px;border:2px solid #e8d8cc;width:80px;font-size:14px;outline:none;">
+      </div>
+      <div class="error-msg" id="errorMsg">⚠️ <span id="errorText">Invalid input for selected base</span></div>
+      <div class="results" id="results"></div>
+      <div class="info-bar" id="infoBar">
+        <span>Binary digits: <strong id="infoBits">-</strong></span>
+        <span>Decimal digits: <strong id="infoDigits">-</strong></span>
+        <span>Hex nibbles: <strong id="infoNibbles">-</strong></span>
+      </div>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="container">
+    <div class="foot-links">
+      <a href="/number-base/">🔢 Number Base</a>
+      <a href="/timezone-converter/">🌍 World Clock</a>
+      <a href="/word-counter/">📝 Word Counter</a>
+      <a href="/random-picker/">🎲 Random Picker</a>
+      <a href="/bmi-calculator/">⚖️ BMI Calculator</a>
+      <a href="/password-generator/">🔑 Password Generator</a>
+      <a href="/quiz/">🏢 Workplace Quiz</a>
+      <a href="//xiaoyuland.com">🏠 Xiaoyu Land</a>
+    </div>
+    <p>© 2026 <a href="//xiaoyuland.com">Xiaoyu Land</a> · Tools</p>
+  </div>
+</section>
+<script>
+const BASES = [
+  { base: 2,  label: 'Binary',      abbr: 'BIN', cls: 'bin' },
+  { base: 8,  label: 'Octal',       abbr: 'OCT', cls: 'oct' },
+  { base: 10, label: 'Decimal',     abbr: 'DEC', cls: 'dec' },
+  { base: 16, label: 'Hexadecimal', abbr: 'HEX', cls: 'hex' },
+  { base: 36, label: 'Base 36',     abbr: 'B36', cls: 'base36' },
+];
+
+function isValidForBase(str, base) {
+  if (base < 2 || base > 62) return false;
+  const digits = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.slice(0, base);
+  const upper = str.toUpperCase();
+  for (const ch of upper) {
+    if (!digits.includes(ch)) return false;
+  }
+  return true;
+}
+
+function parseValue(str, base) {
+  if (base < 2 || base > 62) return NaN;
+  const digits = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  const upper = str.replace(/^0+/, '') || '0';
+  let val = 0n;
+  for (const ch of upper) {
+    const idx = BigInt(digits.indexOf(ch));
+    if (idx < 0 || idx >= base) return NaN;
+    val = val * BigInt(base) + idx;
+  }
+  return val;
+}
+
+function formatValue(val, base) {
+  if (val < 0n) val = -val;
+  if (val === 0n) return '0';
+  const digits = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  let result = '';
+  while (val > 0n) {
+    result = digits[Number(val % BigInt(base))] + result;
+    result += '';
+    val = val / BigInt(base);
+  }
+  return result;
+}
+
+function formatWithGroups(str, base) {
+  if (base === 2) {
+    // Group binary in 4s
+    return str.replace(/\B(?=(\d{4})+(?!\d))/g, ' ');
+  }
+  if (base === 16) {
+    return str.replace(/\B(?=(\d{2})+(?!\d))/g, ' ');
+  }
+  return str.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+}
+
+function convert() {
+  const input = document.getElementById('numberInput');
+  const baseSelect = document.getElementById('inputBase');
+  const customBase = document.getElementById('customBase');
+  const results = document.getElementById('results');
+  const errorMsg = document.getElementById('errorMsg');
+  const errorText = document.getElementById('errorText');
+  const customRow = document.getElementById('customBaseRow');
+
+  let fromBase = parseInt(baseSelect.value);
+  if (baseSelect.value === 'custom') {
+    customRow.style.display = 'block';
+    fromBase = parseInt(customBase.value) || 3;
+    if (fromBase < 2) fromBase = 2;
+    if (fromBase > 62) fromBase = 62;
+  } else {
+    customRow.style.display = 'none';
+  }
+
+  const str = input.value.trim();
+  if (!str) {
+    errorMsg.classList.remove('show');
+    results.innerHTML = '';
+    updateInfo(null);
+    return;
+  }
+
+  if (!isValidForBase(str, fromBase)) {
+    errorText.textContent = 'Invalid input for base ' + fromBase + '. Allowed: 0-' + (fromBase <= 36 ? '9A-Z' : '9A-Za-z').slice(0, fromBase <= 36 ? fromBase : 10 + (fromBase-10)*2);
+    errorMsg.classList.add('show');
+    results.innerHTML = '';
+    updateInfo(null);
+    return;
+  }
+
+  errorMsg.classList.remove('show');
+  const val = parseValue(str, fromBase);
+
+  // Build result rows
+  let html = '';
+  const allBases = [...BASES];
+
+  // If custom base and not in presets, add it
+  if (baseSelect.value === 'custom') {
+    const existing = allBases.find(b => b.base === fromBase);
+    if (!existing) {
+      allBases.push({ base: fromBase, label: 'Base ' + fromBase, abbr: 'B' + fromBase, cls: 'custom' });
+    }
+  }
+
+  allBases.forEach(b => {
+    const formatted = formatValue(val, b.base);
+    const grouped = formatWithGroups(formatted, b.base);
+    html += '<div class="result-row ' + b.cls + '">' +
+      '<div class="base-badge">' + b.abbr + '</div>' +
+      '<div class="base-label">' + b.label + '</div>' +
+      '<div class="result-value">' + grouped + '</div>' +
+      '<button class="copy-btn" onclick="copyResult(this,\'' + formatted + '\')">📋 Copy</button>' +
+      '</div>';
+  });
+
+  results.innerHTML = html;
+  updateInfo(val);
+}
+
+function updateInfo(val) {
+  document.getElementById('infoBits').textContent = val !== null ? val.toString(2).length : '-';
+  document.getElementById('infoDigits').textContent = val !== null ? val.toString().length : '-';
+  document.getElementById('infoNibbles').textContent = val !== null ? val.toString(16).length : '-';
+}
+
+function copyResult(btn, text) {
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✅ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = '📋 Copy';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+// Event listeners
+document.getElementById('numberInput').addEventListener('input', convert);
+document.getElementById('inputBase').addEventListener('change', convert);
+document.getElementById('customBase').addEventListener('input', convert);
+
+// Init
+convert();
+</script>
+</body>
+</html>

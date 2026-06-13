@@ -261,11 +261,12 @@ function getTzOffset(tzCode, date) {
   try {
     const opts = { timeZone: tzCode, hour12: false, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' };
     const parts = new Intl.DateTimeFormat('en-CA', opts).formatToParts(date);
-    const get = (type) => parseInt(parts.find(p => p.type === type).value, 10);
+    const get = (type) => { const p = parts.find(x => x.type === type); return p ? parseInt(p.value, 10) : 0; };
     const local = new Date(get('year'), get('month')-1, get('day'), get('hour'), get('minute'), get('second'));
-    return (local - date) / 60000; // offset in minutes
+    return Math.round((local - date) / 60000); // offset in minutes, rounded
   } catch(e) {
-    return TIMEZONES.find(t => t.code === tzCode).offset * 60;
+    const tz = TIMEZONES.find(t => t.code === tzCode);
+    return tz ? Math.round(tz.offset * 60) : 0;
   }
 }
 
@@ -285,10 +286,11 @@ function fmtDateTime(date, tzCode) {
 
 function fmtOffset(tzCode, date) {
   const min = getTzOffset(tzCode, date);
-  const h = Math.floor(Math.abs(min) / 60);
-  const m = Math.abs(min) % 60;
+  const abs = Math.abs(min);
+  const h = Math.floor(abs / 60);
+  const m = Math.round(abs % 60);
   const sign = min >= 0 ? '+' : '-';
-  return `UTC${sign}${h}${m ? ':' + String(m).padStart(2,'0') : ''}`;
+  return m === 0 ? 'UTC' + sign + h : 'UTC' + sign + h + ':' + String(m).padStart(2,'0');
 }
 
 function populateSelects() {

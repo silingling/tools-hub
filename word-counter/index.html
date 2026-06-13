@@ -236,20 +236,30 @@ function analyze() {
   const trimmed = text.trim();
 
   // Words
-  // Count words: CJK characters individually, English words by whitespace
+  // Count words: skip punctuation, count CJK chars individually
   let words = [];
   if (trimmed) {
     for (const token of trimmed.split(/\s+/)) {
       let buf = '';
       for (const ch of token) {
         if (/[\u4e00-\u9fff\u3400-\u4dbf\uf900-\ufaff]/.test(ch)) {
-          if (buf) { words.push(buf); buf = ''; }
+          if (buf) { 
+            const cl = buf.replace(/[^a-zA-Z0-9]/g, '');
+            if (cl) words.push(cl);
+            buf = ''; 
+          }
           words.push(ch);
-        } else {
+        } else if (/[a-zA-Z0-9]/.test(ch)) {
           buf += ch;
+        } else {
+          // punctuation or other - flush buf
+          if (buf) { words.push(buf); buf = ''; }
         }
       }
-      if (buf) words.push(buf);
+      if (buf) {
+        const cl = buf.replace(/[^a-zA-Z0-9]/g, '');
+        if (cl) words.push(cl);
+      }
     }
   }
   document.getElementById('wordCount').textContent = words.length;

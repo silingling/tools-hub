@@ -139,7 +139,7 @@
           <div class="master-badge" id="masterBadge">
             <div class="badge-icon" id="masterIcon">🐼</div>
             <div class="badge-city" id="masterCity">Shanghai</div>
-            <div class="badge-country">China</div>
+            <div class="badge-country" id="masterCountry">International</div>
           </div>
           <div class="master-info">
             <div class="big-time" id="masterTime">16:20</div>
@@ -179,36 +179,36 @@
 </section>
 <script>
 const TIMEZONES = [
-  { name: 'UTC', code: 'UTC', city: 'UTC', emoji: '\u{1F30D}', offset: 0 },
-  { name: 'US Eastern', code: 'America/New_York', city: 'New York', emoji: '\u{1F5FD}', offset: -5 },
-  { name: 'US Central', code: 'America/Chicago', city: 'Chicago', emoji: '\u{1F3C0}', offset: -6 },
-  { name: 'US Mountain', code: 'America/Denver', city: 'Denver', emoji: '\u{1F304}', offset: -7 },
-  { name: 'US Pacific', code: 'America/Los_Angeles', city: 'Los Angeles', emoji: '\u{1F3AC}', offset: -8 },
-  { name: 'Alaska', code: 'America/Anchorage', city: 'Anchorage', emoji: '\u{1F427}', offset: -9 },
-  { name: 'Hawaii', code: 'Pacific/Honolulu', city: 'Honolulu', emoji: '\u{1F334}', offset: -10 },
-  { name: 'Canada Atlantic', code: 'America/Halifax', city: 'Halifax', emoji: '\u{1F99E}', offset: -4 },
-  { name: 'Brazil', code: 'America/Sao_Paulo', city: 'São Paulo', emoji: '\u{1F3AD}', offset: -3 },
-  { name: 'Argentina', code: 'America/Argentina/Buenos_Aires', city: 'Buenos Aires', emoji: '\u{1F4AA}', offset: -3 },
-  { name: 'UK/Ireland', code: 'Europe/London', city: 'London', emoji: '\u{1F451}', offset: 0 },
-  { name: 'Central Europe', code: 'Europe/Berlin', city: 'Berlin', emoji: '\u{1F3EA}', offset: 1 },
-  { name: 'Eastern Europe', code: 'Europe/Helsinki', city: 'Helsinki', emoji: '\u{1F525}', offset: 2 },
-  { name: 'Moscow', code: 'Europe/Moscow', city: 'Moscow', emoji: '\u{1F43B}', offset: 3 },
-  { name: 'Dubai', code: 'Asia/Dubai', city: 'Dubai', emoji: '\u{1F306}', offset: 4 },
-  { name: 'India', code: 'Asia/Kolkata', city: 'Kolkata', emoji: '\u{1F54C}', offset: 5.5 },
-  { name: 'Bangladesh', code: 'Asia/Dhaka', city: 'Dhaka', emoji: '\u{1F405}', offset: 6 },
-  { name: 'Thailand', code: 'Asia/Bangkok', city: 'Bangkok', emoji: '\u{1F6DF}', offset: 7 },
-  { name: 'China', code: 'Asia/Shanghai', city: 'Shanghai', emoji: '\u{1F43C}', offset: 8 },
-  { name: 'Singapore', code: 'Asia/Singapore', city: 'Singapore', emoji: '\u{1F9FB}', offset: 8 },
-  { name: 'Japan', code: 'Asia/Tokyo', city: 'Tokyo', emoji: '\u{1F338}', offset: 9 },
-  { name: 'Korea', code: 'Asia/Seoul', city: 'Seoul', emoji: '\u{1F30F}', offset: 9 },
-  { name: 'Australia AEST', code: 'Australia/Sydney', city: 'Sydney', emoji: '\u{1F31F}', offset: 10 },
-  { name: 'Australia ACDT', code: 'Australia/Adelaide', city: 'Adelaide', emoji: '\u{1F30A}', offset: 10.5 },
-  { name: 'Australia AWST', code: 'Australia/Perth', city: 'Perth', emoji: '\u{1F998}', offset: 8 },
-  { name: 'New Zealand', code: 'Pacific/Auckland', city: 'Auckland', emoji: '\u{1F98B}', offset: 12 },
-  { name: 'Fiji', code: 'Pacific/Fiji', city: 'Suva', emoji: '\u{1F33A}', offset: 12 },
-  { name: 'South Africa', code: 'Africa/Johannesburg', city: 'Johannesburg', emoji: '\u{1F9A7}', offset: 2 },
-  { name: 'Nigeria', code: 'Africa/Lagos', city: 'Lagos', emoji: '\u{1F3B2}', offset: 1 },
-  { name: 'Kenya', code: 'Africa/Nairobi', city: 'Nairobi', emoji: '\u{1F98C}', offset: 3 },
+  { name: 'UTC', code: 'UTC', city: 'UTC', emoji: '\u{1F30D}', offset: 0 , country: 'International' },
+  { name: 'US Eastern', code: 'America/New_York', city: 'New York', emoji: '\u{1F5FD}', offset: -5 , country: 'United States' },
+  { name: 'US Central', code: 'America/Chicago', city: 'Chicago', emoji: '\u{1F3C0}', offset: -6 , country: 'United States' },
+  { name: 'US Mountain', code: 'America/Denver', city: 'Denver', emoji: '\u{1F304}', offset: -7 , country: 'United States' },
+  { name: 'US Pacific', code: 'America/Los_Angeles', city: 'Los Angeles', emoji: '\u{1F3AC}', offset: -8 , country: 'United States' },
+  { name: 'Alaska', code: 'America/Anchorage', city: 'Anchorage', emoji: '\u{1F427}', offset: -9 , country: 'United States' },
+  { name: 'Hawaii', code: 'Pacific/Honolulu', city: 'Honolulu', emoji: '\u{1F334}', offset: -10 , country: 'United States' },
+  { name: 'Canada Atlantic', code: 'America/Halifax', city: 'Halifax', emoji: '\u{1F99E}', offset: -4 , country: 'Canada' },
+  { name: 'Brazil', code: 'America/Sao_Paulo', city: 'São Paulo', emoji: '\u{1F3AD}', offset: -3 , country: 'Brazil' },
+  { name: 'Argentina', code: 'America/Argentina/Buenos_Aires', city: 'Buenos Aires', emoji: '\u{1F4AA}', offset: -3 , country: 'Argentina' },
+  { name: 'UK/Ireland', code: 'Europe/London', city: 'London', emoji: '\u{1F451}', offset: 0 , country: 'United Kingdom' },
+  { name: 'Central Europe', code: 'Europe/Berlin', city: 'Berlin', emoji: '\u{1F3EA}', offset: 1 , country: 'Germany' },
+  { name: 'Eastern Europe', code: 'Europe/Helsinki', city: 'Helsinki', emoji: '\u{1F525}', offset: 2 , country: 'Finland' },
+  { name: 'Moscow', code: 'Europe/Moscow', city: 'Moscow', emoji: '\u{1F43B}', offset: 3 , country: 'Russia' },
+  { name: 'Dubai', code: 'Asia/Dubai', city: 'Dubai', emoji: '\u{1F306}', offset: 4 , country: 'UAE' },
+  { name: 'India', code: 'Asia/Kolkata', city: 'Kolkata', emoji: '\u{1F54C}', offset: 5.5 , country: 'India' },
+  { name: 'Bangladesh', code: 'Asia/Dhaka', city: 'Dhaka', emoji: '\u{1F405}', offset: 6 , country: 'Bangladesh' },
+  { name: 'Thailand', code: 'Asia/Bangkok', city: 'Bangkok', emoji: '\u{1F6DF}', offset: 7 , country: 'Thailand' },
+  { name: 'China', code: 'Asia/Shanghai', city: 'Shanghai', emoji: '\u{1F43C}', offset: 8 , country: 'China' },
+  { name: 'Singapore', code: 'Asia/Singapore', city: 'Singapore', emoji: '\u{1F9FB}', offset: 8 , country: 'Singapore' },
+  { name: 'Japan', code: 'Asia/Tokyo', city: 'Tokyo', emoji: '\u{1F338}', offset: 9 , country: 'Japan' },
+  { name: 'Korea', code: 'Asia/Seoul', city: 'Seoul', emoji: '\u{1F30F}', offset: 9 , country: 'South Korea' },
+  { name: 'Australia AEST', code: 'Australia/Sydney', city: 'Sydney', emoji: '\u{1F31F}', offset: 10 , country: 'Australia' },
+  { name: 'Australia ACDT', code: 'Australia/Adelaide', city: 'Adelaide', emoji: '\u{1F30A}', offset: 10.5 , country: 'Australia' },
+  { name: 'Australia AWST', code: 'Australia/Perth', city: 'Perth', emoji: '\u{1F998}', offset: 8 , country: 'Australia' },
+  { name: 'New Zealand', code: 'Pacific/Auckland', city: 'Auckland', emoji: '\u{1F98B}', offset: 12 , country: 'New Zealand' },
+  { name: 'Fiji', code: 'Pacific/Fiji', city: 'Suva', emoji: '\u{1F33A}', offset: 12 , country: 'Fiji' },
+  { name: 'South Africa', code: 'Africa/Johannesburg', city: 'Johannesburg', emoji: '\u{1F9A7}', offset: 2 , country: 'South Africa' },
+  { name: 'Nigeria', code: 'Africa/Lagos', city: 'Lagos', emoji: '\u{1F3B2}', offset: 1 , country: 'Nigeria' },
+  { name: 'Kenya', code: 'Africa/Nairobi', city: 'Nairobi', emoji: '\u{1F98C}', offset: 3 , country: 'Kenya' },
 ];
 
 function getTzOffset(tzCode, date) {
@@ -272,6 +272,7 @@ function updateMasterDisplay() {
   const tz = getMasterTz();
   document.getElementById('masterIcon').textContent = tz.emoji || '\u{1F310}';
   document.getElementById('masterCity').textContent = tz.city;
+  document.getElementById('masterCountry').textContent = tz.country || '';
   const tzCode = getMasterTzCode();
   document.getElementById('masterTime').textContent = fmtTime(masterDate, tzCode);
   document.getElementById('masterDate').textContent = fmtDate(masterDate, tzCode);

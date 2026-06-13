@@ -4,20 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Time Zone Converter - Free World Clock & Time Conversion</title>
-  <meta name="description" content="Free online time zone converter. Convert time between time zones worldwide. See current time in multiple cities, plan meetings across time zones.">
+  <meta name="description" content="Free online time zone converter. Convert time between time zones worldwide.">
   <meta name="keywords" content="time zone converter, world clock, time converter, meeting planner, timezone">
   <link rel="canonical" href="https://tools.xiaoyuland.com/timezone-converter/">
-  <meta property="og:title" content="Time Zone Converter - Free World Clock">
+  <meta property="og:title" content="World Clock - Time Zone Converter">
   <meta property="og:description" content="See what time it is anywhere in the world.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://tools.xiaoyuland.com/timezone-converter/">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Time Zone Converter","description":"See what time it is anywhere in the world","applicationCategory":"Utility","operatingSystem":"All"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"World Clock","description":"See time in cities worldwide","applicationCategory":"Utility","operatingSystem":"All"}</script>
   <style>
     :root { --tools-red: #c41e3a; --tools-dark: #8b0000; --tools-light: #fff0e6; --bg: #faf6f0; --bg-card: #fff; --text: #2c2c2c; --text-light: #666; --text-muted: #999; --radius: 16px; --shadow: 0 4px 20px rgba(0,0,0,.06); }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: var(--text); background: var(--bg); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
     a { color: var(--tools-red); text-decoration: none; }
-    .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
     nav { background: var(--bg-card); border-bottom: 1px solid #eee; padding: 14px 0; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(8px); }
     nav .container { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
     .nav-brand { font-size: 20px; font-weight: 800; color: var(--tools-dark); display: flex; align-items: center; gap: 8px; }
@@ -25,57 +25,81 @@
     .nav-links a { padding: 6px 14px; border-radius: 8px; font-size: 14px; font-weight: 600; color: var(--text); transition: all .2s; }
     .nav-links a:hover { background: var(--tools-light); color: var(--tools-dark); text-decoration: none; }
     .nav-links a.active { background: var(--tools-red); color: #fff; }
-    .hero { padding: 40px 0 20px; text-align: center; }
-    .hero-icon { font-size: 48px; margin-bottom: 4px; display: block; }
-    .hero h1 { font-size: 32px; font-weight: 800; color: var(--tools-dark); margin-bottom: 4px; }
-    .hero p { font-size: 15px; color: var(--text-light); }
-    .tool-section { padding: 20px 0 48px; }
-    .tool-card { background: var(--bg-card); border-radius: var(--radius); padding: 32px; box-shadow: var(--shadow); border: 1px solid #f0e8e0; max-width: 800px; margin: 0 auto; }
 
-    /* Master time section */
+    .hero { padding: 36px 0 16px; text-align: center; }
+    .hero-icon { font-size: 44px; margin-bottom: 2px; display: block; }
+    .hero h1 { font-size: 30px; font-weight: 800; color: var(--tools-dark); margin-bottom: 2px; }
+    .hero p { font-size: 14px; color: var(--text-light); }
+
+    .tool-section { padding: 16px 0 40px; }
+    .tool-card { background: var(--bg-card); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow); border: 1px solid #f0e8e0; }
+
+    /* Left-right layout */
+    .split { display: flex; gap: 28px; align-items: flex-start; }
+    
+    /* LEFT PANEL - Master clock */
+    .left-panel { flex: 0 0 260px; position: sticky; top: 80px; }
     .master-clock {
-      text-align: center; padding: 24px; border-radius: 14px;
-      background: linear-gradient(135deg, #fff0e6 0%, #ffe8dc 100%);
-      border: 2px solid var(--tools-red); margin-bottom: 20px;
+      background: linear-gradient(145deg, #fff0e6, #ffe4d4);
+      border-radius: 20px; padding: 24px 20px;
+      border: 2px solid var(--tools-red); text-align: center;
     }
-    .master-clock .label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--tools-red); margin-bottom: 4px; }
-    .master-clock .big-time { font-size: 48px; font-weight: 800; color: var(--tools-dark); line-height: 1; }
-    .master-clock .big-date { font-size: 15px; color: var(--text); margin-top: 2px; }
-    .master-controls { display: flex; gap: 8px; justify-content: center; align-items: center; margin-top: 12px; flex-wrap: wrap; }
-    .master-controls select { padding: 8px 14px; border-radius: 10px; border: 2px solid #e8d8cc; font-size: 14px; background: var(--bg-card); outline: none; font-family: inherit; cursor: pointer; }
-    .master-controls input[type="date"], .master-controls input[type="time"] { padding: 8px 12px; border-radius: 10px; border: 2px solid #e8d8cc; font-size: 14px; background: var(--bg-card); outline: none; font-family: inherit; }
-    .master-controls input:focus { border-color: var(--tools-red); }
-    .master-controls .now-btn { padding: 8px 18px; border-radius: 50px; border: none; background: var(--tools-red); color: #fff; font-size: 13px; font-weight: 600; cursor: pointer; transition: background .2s; }
+    .master-clock .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--tools-red); margin-bottom: 6px; }
+    .master-clock .big-time { font-size: 52px; font-weight: 800; color: var(--tools-dark); line-height: 1; letter-spacing: -1px; }
+    .master-clock .big-date { font-size: 14px; color: var(--text); margin-top: 2px; }
+    .master-clock .big-tz { font-size: 13px; font-weight: 600; color: var(--text-light); margin-top: 6px; padding: 4px 14px; background: rgba(255,255,255,.6); border-radius: 50px; display: inline-block; }
+    .master-controls { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
+    .master-controls select { padding: 10px 14px; border-radius: 12px; border: 2px solid #e8d8cc; font-size: 14px; background: var(--bg-card); outline: none; font-family: inherit; cursor: pointer; width: 100%; }
+    .master-controls .row { display: flex; gap: 6px; }
+    .master-controls .row input { flex: 1; padding: 10px; border-radius: 10px; border: 2px solid #e8d8cc; font-size: 14px; background: var(--bg-card); outline: none; font-family: inherit; }
+    .master-controls .row input:focus { border-color: var(--tools-red); }
+    .master-controls .now-btn { width: 100%; padding: 10px; border-radius: 12px; border: none; background: var(--tools-red); color: #fff; font-size: 14px; font-weight: 700; cursor: pointer; transition: background .2s; }
     .master-controls .now-btn:hover { background: var(--tools-dark); }
 
-    /* World clocks */
-    .world-clocks { margin-top: 4px; }
-    .clock-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); gap: 14px; }
-    .clock-card { padding: 18px 14px 16px; border-radius: 16px; background: var(--bg-card); border: 1px solid #eee8e0; text-align: center; transition: all .25s; box-shadow: 0 2px 8px rgba(0,0,0,.04); position: relative; overflow: hidden; }
-    .clock-card:hover { border-color: var(--tools-red); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(196,30,58,.1); }
-    .clock-card .card-emoji { font-size: 38px; display: block; margin-bottom: 4px; line-height: 1.2; }
-    .clock-card .city { font-size: 12px; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: .5px; }
-    .clock-card .time { font-size: 28px; font-weight: 800; color: var(--tools-dark); margin: 6px 0 2px; line-height: 1.1; letter-spacing: .5px; }
-    .clock-card .date { font-size: 12px; color: var(--text-muted); }
-    .clock-card .offset { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
-    .clock-card .diff { font-size: 11px; font-weight: 700; padding: 3px 12px; border-radius: 50px; display: inline-block; margin-top: 8px; min-width: 48px; }
+    /* RIGHT PANEL - World clocks */
+    .right-panel { flex: 1; min-width: 0; }
+    .right-panel .header { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+    .right-panel .header h3 { font-size: 16px; font-weight: 700; color: var(--tools-dark); }
+    .right-panel .header .count { font-size: 13px; color: var(--text-muted); font-weight: 400; }
+
+    .clock-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; }
+    .clock-card {
+      padding: 16px 12px 14px; border-radius: 16px;
+      background: var(--bg); border: 1px solid #eee8e0;
+      text-align: center; transition: all .25s;
+      box-shadow: 0 1px 4px rgba(0,0,0,.03);
+    }
+    .clock-card:hover { border-color: var(--tools-red); transform: translateY(-3px); box-shadow: 0 6px 20px rgba(196,30,58,.1); }
+    .clock-card .card-emoji { font-size: 34px; display: block; margin-bottom: 2px; line-height: 1.2; }
+    .clock-card .city { font-size: 11px; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: .8px; }
+    .clock-card .time { font-size: 26px; font-weight: 800; color: var(--tools-dark); margin: 5px 0 1px; line-height: 1.1; letter-spacing: .3px; }
+    .clock-card .date { font-size: 11px; color: var(--text-muted); }
+    .clock-card .offset { font-size: 10px; color: var(--text-muted); margin-top: 1px; }
+    .clock-card .diff { font-size: 10px; font-weight: 700; padding: 2px 10px; border-radius: 50px; display: inline-block; margin-top: 6px; min-width: 44px; }
     .diff.same { background: #e8f5e9; color: #2e7d32; }
     .diff.ahead { background: #fff8e1; color: #e65100; border: 1px solid #ffe082; }
     .diff.behind { background: #e3f2fd; color: #1565c0; border: 1px solid #90caf9; }
 
-    footer { margin-top: auto; background: var(--bg-card); border-top: 1px solid #eee; padding: 32px 0; text-align: center; }
+    /* Day/Night indicator */
+    .clock-card.night { background: #1a1a2e; border-color: #2a2a4e; }
+    .clock-card.night .city { color: #9999cc; }
+    .clock-card.night .time { color: #e8e8ff; }
+    .clock-card.night .date { color: #7777aa; }
+    .clock-card.night .offset { color: #7777aa; }
+
+    footer { margin-top: auto; background: var(--bg-card); border-top: 1px solid #eee; padding: 28px 0; text-align: center; }
     footer p { font-size: 13px; color: var(--text-muted); }
     footer a { color: var(--tools-red); font-weight: 600; }
-    footer .foot-links { margin-bottom: 8px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+    footer .foot-links { margin-bottom: 6px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
     footer .foot-links a { padding: 4px 10px; font-size: 13px; color: var(--text-light); border-radius: 6px; }
     footer .foot-links a:hover { background: var(--tools-light); color: var(--tools-dark); text-decoration: none; }
 
-    @media (max-width: 640px) {
-      .hero h1 { font-size: 26px; }
-      .tool-card { padding: 16px; }
-      .master-clock .big-time { font-size: 36px; }
+    @media (max-width: 768px) {
+      .split { flex-direction: column; }
+      .left-panel { flex: none; position: static; width: 100%; }
+      .master-clock .big-time { font-size: 42px; }
       .clock-grid { grid-template-columns: repeat(3, 1fr); }
-      .master-controls { flex-direction: column; }
+      .tool-card { padding: 16px; }
     }
   </style>
 </head>
@@ -101,19 +125,32 @@
 <section class="tool-section">
   <div class="container">
     <div class="tool-card">
-      <div class="master-clock">
-        <div class="label">🕐 YOUR TIME</div>
-        <div class="big-time" id="masterTime">3:54 PM</div>
-        <div class="big-date" id="masterDate">Sat, Jun 13, 2026</div>
-        <div class="master-controls">
-          <select id="masterTz"></select>
-          <input type="date" id="masterDateInput">
-          <input type="time" id="masterTimeInput">
-          <button class="now-btn" onclick="resetNow()">🔁 Now</button>
+      <div class="split">
+        <!-- LEFT: Your Time -->
+        <div class="left-panel">
+          <div class="master-clock">
+            <div class="label">🕐 YOUR TIME</div>
+            <div class="big-time" id="masterTime">16:04</div>
+            <div class="big-date" id="masterDate">Sat, Jun 13, 2026</div>
+            <div class="big-tz" id="masterTzLabel">UTC+8</div>
+            <div class="master-controls">
+              <select id="masterTz"></select>
+              <div class="row">
+                <input type="date" id="masterDateInput">
+                <input type="time" id="masterTimeInput">
+              </div>
+              <button class="now-btn" onclick="resetNow()">🔁 Now</button>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="world-clocks">
-        <div class="clock-grid" id="clockGrid"></div>
+        <!-- RIGHT: World Clocks -->
+        <div class="right-panel">
+          <div class="header">
+            <h3>🌐 World Cities</h3>
+            <span class="count">30 cities</span>
+          </div>
+          <div class="clock-grid" id="clockGrid"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -203,7 +240,12 @@ function fmtOffset(tzCode, date) {
   return 'UTC' + sign + h + (m ? ':' + String(m).padStart(2,'0') : '');
 }
 
-let masterDate = new Date(); // UTC master reference
+function getHour(tzCode, date) {
+  try { return parseInt(new Intl.DateTimeFormat('en-US', { timeZone: tzCode, hour: '2-digit', hour12: false }).format(date), 10); }
+  catch { return 12; }
+}
+
+let masterDate = new Date();
 
 function populateSelect() {
   const sel = document.getElementById('masterTz');
@@ -215,42 +257,36 @@ function populateSelect() {
   sel.value = idx >= 0 ? idx : TIMEZONES.findIndex(t => t.code === 'Asia/Shanghai');
 }
 
-function getMasterTzCode() {
-  const idx = parseInt(document.getElementById('masterTz').value);
-  return TIMEZONES[idx].code;
-}
-
-function getMasterTz() {
-  return TIMEZONES[parseInt(document.getElementById('masterTz').value)];
-}
+function getMasterTzCode() { return TIMEZONES[parseInt(document.getElementById('masterTz').value)].code; }
 
 function updateMasterDisplay() {
   const tzCode = getMasterTzCode();
   document.getElementById('masterTime').textContent = fmtTime(masterDate, tzCode);
-  document.getElementById('masterDate').textContent = fmtDate(masterDate, tzCode) + ' ' + fmtOffset(tzCode, masterDate);
+  document.getElementById('masterDate').textContent = fmtDate(masterDate, tzCode);
+  document.getElementById('masterTzLabel').textContent = fmtOffset(tzCode, masterDate);
 }
 
 function updateAllClocks() {
   const srcTz = getMasterTzCode();
-  const grid = document.getElementById('clockGrid');
   const srcOffset = getTzOffset(srcTz, masterDate);
-  const nowLocal = new Date(); // for "same/ahead/behind" comparison
+  const grid = document.getElementById('clockGrid');
 
   grid.innerHTML = TIMEZONES.map((tz, i) => {
     const t = fmtTime(masterDate, tz.code);
     const d = fmtShortDate(masterDate, tz.code);
     const off = fmtOffset(tz.code, masterDate);
     const e = tz.emoji || '\u{1F310}';
+    const h = getHour(tz.code, masterDate);
+    const isNight = h < 6 || h >= 20;
 
-    // Time difference badge
     const tzOff = getTzOffset(tz.code, masterDate);
     const diffMin = tzOff - srcOffset;
     let diffLabel = '', diffClass = 'same';
     if (diffMin === 0) { diffLabel = 'same'; diffClass = 'same'; }
-    else if (diffMin > 0) { const h = Math.floor(diffMin/60); diffLabel = '+' + h + 'h'; diffClass = 'ahead'; const rm = Math.abs(diffMin) % 60; if(rm) diffLabel += String(rm); }
-    else { const h = Math.floor(-diffMin/60); diffLabel = '-' + h + 'h'; diffClass = 'behind'; const rm = Math.abs(diffMin) % 60; if(rm) diffLabel += String(rm); }
+    else if (diffMin > 0) { const hh = Math.floor(diffMin / 60); diffLabel = '+' + hh + 'h'; diffClass = 'ahead'; const rm = Math.abs(diffMin) % 60; if(rm) diffLabel += String(rm); }
+    else { const hh = Math.floor(-diffMin / 60); diffLabel = '-' + hh + 'h'; diffClass = 'behind'; const rm = Math.abs(diffMin) % 60; if(rm) diffLabel += String(rm); }
 
-    return '<div class="clock-card">' +
+    return '<div class="clock-card' + (isNight ? ' night' : '') + '">' +
       '<span class="card-emoji">' + e + '</span>' +
       '<div class="city">' + tz.city + '</div>' +
       '<div class="time">' + t + '</div>' +
@@ -260,10 +296,7 @@ function updateAllClocks() {
   }).join('');
 }
 
-function refresh() {
-  updateMasterDisplay();
-  updateAllClocks();
-}
+function refresh() { updateMasterDisplay(); updateAllClocks(); }
 
 function convertFromInput() {
   const dateStr = document.getElementById('masterDateInput').value;
@@ -280,9 +313,6 @@ function convertFromInput() {
 function resetNow() {
   masterDate = new Date();
   const tzCode = getMasterTzCode();
-  document.getElementById('masterDateInput').value = masterDate.toISOString().slice(0,10);
-  document.getElementById('masterTimeInput').value = masterDate.toTimeString().slice(0,5);
-  // Sync masterDate's date/time to the input in the master TZ
   const parts = new Intl.DateTimeFormat('en-CA', { timeZone: tzCode, hour12: false, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).format(masterDate);
   const pd = parts.split(', ');
   document.getElementById('masterDateInput').value = pd[0];
@@ -302,19 +332,13 @@ function initInputs() {
 populateSelect();
 initInputs();
 
-document.getElementById('masterTz').addEventListener('change', () => {
-  convertFromInput();
-});
+document.getElementById('masterTz').addEventListener('change', convertFromInput);
 document.getElementById('masterDateInput').addEventListener('input', convertFromInput);
 document.getElementById('masterTimeInput').addEventListener('input', convertFromInput);
 
-// Auto-refresh clocks every 60s when not modified by user
 setInterval(() => {
-  // Only auto-refresh if masterDate is within 5 seconds of "now"
-  // so user's manual time isn't overwritten
   const now = new Date();
-  const diff = Math.abs(masterDate.getTime() - now.getTime());
-  if (diff < 5000) {
+  if (Math.abs(masterDate.getTime() - now.getTime()) < 5000) {
     masterDate = new Date();
     initInputs();
   }

@@ -322,7 +322,7 @@ function spinWheel(items) {
   const totalSpin = Math.PI * 2 * (5 + Math.random() * 5); // 5-10 full rotations
   const target = Math.floor(Math.random() * items.length);
   const targetAngle = target * arc + arc / 2;
-  const finalAngle = totalSpin + targetAngle;
+  const finalAngle = totalSpin - targetAngle;
   const duration = 3000;
   const start = performance.now();
 

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Time Zone Converter - Free World Clock & Time Conversion</title>
+  <meta name="description" content="Free online time zone converter. Convert time between time zones worldwide. See current time in multiple cities, plan meetings across time zones.">
+  <meta name="keywords" content="time zone converter, world clock, time converter, meeting planner, timezone">
+  <link rel="canonical" href="https://tools.xiaoyuland.com/timezone-converter/">
+
+  <meta property="og:title" content="Time Zone Converter - Free World Clock">
+  <meta property="og:description" content="Convert time across time zones instantly. Plan meetings worldwide.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tools.xiaoyuland.com/timezone-converter/">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Time Zone Converter",
+    "description": "Convert time between time zones worldwide",
+    "applicationCategory": "Utility",
+    "operatingSystem": "All"
+  }
+  </script>
+
+  <style>
+    :root {
+      --tools-red: #c41e3a;
+      --tools-dark: #8b0000;
+      --tools-light: #fff0e6;
+      --bg: #faf6f0;
+      --bg-card: #fff;
+      --text: #2c2c2c;
+      --text-light: #666;
+      --text-muted: #999;
+      --radius: 16px;
+      --shadow: 0 4px 20px rgba(0,0,0,.06);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: var(--text); background: var(--bg); line-height: 1.6;
+      min-height: 100vh; display: flex; flex-direction: column;
+    }
+    a { color: var(--tools-red); text-decoration: none; }
+    .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+    nav {
+      background: var(--bg-card); border-bottom: 1px solid #eee;
+      padding: 14px 0; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(8px);
+    }
+    nav .container { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .nav-brand { font-size: 20px; font-weight: 800; color: var(--tools-dark); display: flex; align-items: center; gap: 8px; }
+    .nav-links { display: flex; gap: 4px; flex-wrap: wrap; }
+    .nav-links a { padding: 6px 14px; border-radius: 8px; font-size: 14px; font-weight: 600; color: var(--text); transition: all .2s; }
+    .nav-links a:hover { background: var(--tools-light); color: var(--tools-dark); text-decoration: none; }
+    .nav-links a.active { background: var(--tools-red); color: #fff; }
+
+    .hero { padding: 48px 0 24px; text-align: center; }
+    .hero-icon { font-size: 56px; margin-bottom: 8px; display: block; }
+    .hero h1 { font-size: 36px; font-weight: 800; color: var(--tools-dark); margin-bottom: 6px; }
+    .hero p { font-size: 16px; color: var(--text-light); }
+
+    .tool-section { padding: 24px 0 48px; }
+    .tool-card {
+      background: var(--bg-card); border-radius: var(--radius);
+      padding: 32px; box-shadow: var(--shadow); border: 1px solid #f0e8e0;
+      max-width: 720px; margin: 0 auto;
+    }
+
+    .conv-row { display: flex; gap: 12px; align-items: center; margin-bottom: 24px; flex-wrap: wrap; }
+    .conv-row label { font-size: 13px; font-weight: 600; color: var(--text-light); min-width: 60px; }
+    .conv-row select, .conv-row input {
+      padding: 10px 14px; border-radius: 10px; border: 2px solid #e8e0d8;
+      font-size: 15px; font-family: inherit; background: var(--bg);
+      outline: none; transition: border .2s; flex: 1; min-width: 140px;
+    }
+    .conv-row select:focus, .conv-row input:focus { border-color: var(--tools-red); }
+
+    .swap-btn {
+      width: 42px; height: 42px; border-radius: 50%; border: 2px solid #e8e0d8;
+      background: var(--bg-card); font-size: 20px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all .2s; flex-shrink: 0;
+    }
+    .swap-btn:hover { border-color: var(--tools-red); background: var(--tools-light); }
+
+    .result-box {
+      text-align: center; padding: 24px; border-radius: 12px;
+      background: var(--tools-light); margin-bottom: 24px;
+    }
+    .result-box .src-time { font-size: 20px; color: var(--text); margin-bottom: 4px; }
+    .result-box .src-label { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; }
+    .result-box .arrow { font-size: 24px; color: var(--tools-dark); margin: 4px 0; }
+    .result-box .dst-time { font-size: 28px; font-weight: 800; color: var(--tools-dark); }
+    .result-box .dst-label { font-size: 14px; color: var(--text-light); margin-top: 4px; }
+
+    .world-clocks { margin-top: 24px; }
+    .world-clocks h3 { font-size: 15px; color: var(--tools-dark); margin-bottom: 12px; }
+    .clock-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 10px;
+    }
+    .clock-card {
+      padding: 14px; border-radius: 10px;
+      background: var(--bg); border: 1px solid #f0e8e0; text-align: center;
+      cursor: pointer; transition: all .2s;
+    }
+    .clock-card:hover { border-color: var(--tools-red); }
+    .clock-card .city { font-size: 13px; font-weight: 600; color: var(--text); }
+    .clock-card .time { font-size: 16px; font-weight: 700; color: var(--tools-dark); }
+    .clock-card .offset { font-size: 11px; color: var(--text-muted); }
+    .clock-card.active { border-color: var(--tools-red); background: var(--tools-light); }
+
+    .time-input-group {
+      display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+    }
+    .time-input-group input[type="time"] {
+      padding: 10px 14px; border-radius: 10px; border: 2px solid #e8e0d8;
+      font-size: 15px; font-family: inherit; background: var(--bg);
+      outline: none; transition: border .2s;
+    }
+    .time-input-group input[type="time"]:focus { border-color: var(--tools-red); }
+    .time-input-group input[type="date"] {
+      padding: 10px 14px; border-radius: 10px; border: 2px solid #e8e0d8;
+      font-size: 15px; font-family: inherit; background: var(--bg);
+      outline: none; transition: border .2s;
+    }
+    .time-input-group input[type="date"]:focus { border-color: var(--tools-red); }
+    .time-input-group .label-sm { font-size: 13px; color: var(--text-muted); }
+
+    footer {
+      margin-top: auto; background: var(--bg-card); border-top: 1px solid #eee;
+      padding: 32px 0; text-align: center;
+    }
+    footer p { font-size: 13px; color: var(--text-muted); }
+    footer a { color: var(--tools-red); font-weight: 600; }
+    footer .foot-links { margin-bottom: 8px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+    footer .foot-links a { padding: 4px 10px; font-size: 13px; color: var(--text-light); border-radius: 6px; }
+    footer .foot-links a:hover { background: var(--tools-light); color: var(--tools-dark); text-decoration: none; }
+
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 28px; }
+      .tool-card { padding: 20px; }
+      .clock-grid { grid-template-columns: repeat(3, 1fr); }
+      .conv-row { flex-direction: column; align-items: stretch; }
+      .conv-row label { min-width: auto; }
+      .swap-btn { align-self: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a class="nav-brand" href="//xiaoyuland.com">🏮 Xiaoyu Land</a>
+    <div class="nav-links">
+      <a href="//tools.xiaoyuland.com">🛠️ Tools</a>
+      <a href="//game.xiaoyuland.com">🎮 Games</a>
+      <a href="//ai.xiaoyuland.com">🤖 AI</a>
+      <a href="//culture.xiaoyuland.com">🏮 Culture</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <span class="hero-icon">🌍</span>
+    <h1>Time Zone Converter</h1>
+    <p>Convert time across time zones — perfect for remote meetings</p>
+  </div>
+</section>
+
+<section class="tool-section">
+  <div class="container">
+    <div class="tool-card">
+      <div class="conv-row">
+        <label>From:</label>
+        <select id="srcTz"></select>
+        <div class="time-input-group">
+          <input type="date" id="srcDate">
+          <input type="time" id="srcTime">
+          <button class="swap-btn" onclick="swapTz()" title="Swap time zones">⇄</button>
+        </div>
+      </div>
+
+      <div class="conv-row">
+        <label>To:</label>
+        <select id="dstTz"></select>
+        <div class="time-input-group">
+          <input type="date" id="dstDate" readonly style="background:#f5f0ea">
+          <input type="time" id="dstTime" readonly style="background:#f5f0ea">
+        </div>
+      </div>
+
+      <div class="result-box" id="resultBox">
+        <div class="src-time" id="srcLabel">---</div>
+        <div class="arrow">⬇</div>
+        <div class="dst-time" id="dstLabel">---</div>
+      </div>
+
+      <div class="world-clocks">
+        <h3>🌐 World Clocks <span style="font-weight:400;color:var(--text-muted);font-size:13px">(click to set as target)</span></h3>
+        <div class="clock-grid" id="clockGrid"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="foot-links">
+      <a href="/timezone-converter/">🌍 Time Zone Converter</a>
+      <a href="/word-counter/">📝 Word Counter</a>
+      <a href="/random-picker/">🎲 Random Picker</a>
+      <a href="/bmi-calculator/">⚖️ BMI Calculator</a>
+      <a href="/password-generator/">🔑 Password Generator</a>
+      <a href="/quiz/">🏢 Workplace Quiz</a>
+      <a href="//xiaoyuland.com">🏠 Xiaoyu Land</a>
+    </div>
+    <p>© 2026 <a href="//xiaoyuland.com">Xiaoyu Land</a> · Tools</p>
+  </div>
+</footer>
+
+<script>
+const TIMEZONES = [
+  { name: 'UTC', code: 'UTC', city: 'UTC', offset: 0 },
+  { name: 'US Eastern (EST/EDT)', code: 'America/New_York', city: 'New York', offset: -5 },
+  { name: 'US Central (CST/CDT)', code: 'America/Chicago', city: 'Chicago', offset: -6 },
+  { name: 'US Mountain (MST/MDT)', code: 'America/Denver', city: 'Denver', offset: -7 },
+  { name: 'US Pacific (PST/PDT)', code: 'America/Los_Angeles', city: 'Los Angeles', offset: -8 },
+  { name: 'Alaska (AKST/AKDT)', code: 'America/Anchorage', city: 'Anchorage', offset: -9 },
+  { name: 'Hawaii (HST)', code: 'Pacific/Honolulu', city: 'Honolulu', offset: -10 },
+  { name: 'Canada Atlantic (AST)', code: 'America/Halifax', city: 'Halifax', offset: -4 },
+  { name: 'Brazil (BRT)', code: 'America/Sao_Paulo', city: 'São Paulo', offset: -3 },
+  { name: 'Argentina (ART)', code: 'America/Argentina/Buenos_Aires', city: 'Buenos Aires', offset: -3 },
+  { name: 'UK/Ireland (GMT/BST)', code: 'Europe/London', city: 'London', offset: 0 },
+  { name: 'Central Europe (CET/CEST)', code: 'Europe/Berlin', city: 'Berlin', offset: 1 },
+  { name: 'Eastern Europe (EET/EEST)', code: 'Europe/Helsinki', city: 'Helsinki', offset: 2 },
+  { name: 'Moscow (MSK)', code: 'Europe/Moscow', city: 'Moscow', offset: 3 },
+  { name: 'Dubai (GST)', code: 'Asia/Dubai', city: 'Dubai', offset: 4 },
+  { name: 'India (IST)', code: 'Asia/Kolkata', city: 'Kolkata', offset: 5.5 },
+  { name: 'Bangladesh (BST)', code: 'Asia/Dhaka', city: 'Dhaka', offset: 6 },
+  { name: 'Thailand (ICT)', code: 'Asia/Bangkok', city: 'Bangkok', offset: 7 },
+  { name: 'China (CST)', code: 'Asia/Shanghai', city: 'Shanghai', offset: 8 },
+  { name: 'Singapore (SGT)', code: 'Asia/Singapore', city: 'Singapore', offset: 8 },
+  { name: 'Japan (JST)', code: 'Asia/Tokyo', city: 'Tokyo', offset: 9 },
+  { name: 'Korea (KST)', code: 'Asia/Seoul', city: 'Seoul', offset: 9 },
+  { name: 'Australia AEST', code: 'Australia/Sydney', city: 'Sydney', offset: 10 },
+  { name: 'Australia ACDT', code: 'Australia/Adelaide', city: 'Adelaide', offset: 10.5 },
+  { name: 'Australia AWST', code: 'Australia/Perth', city: 'Perth', offset: 8 },
+  { name: 'New Zealand (NZST/NZDT)', code: 'Pacific/Auckland', city: 'Auckland', offset: 12 },
+  { name: 'Fiji (FJT)', code: 'Pacific/Fiji', city: 'Suva', offset: 12 },
+  { name: 'South Africa (SAST)', code: 'Africa/Johannesburg', city: 'Johannesburg', offset: 2 },
+  { name: 'Nigeria (WAT)', code: 'Africa/Lagos', city: 'Lagos', offset: 1 },
+  { name: 'Kenya (EAT)', code: 'Africa/Nairobi', city: 'Nairobi', offset: 3 },
+];
+
+function getTzOffset(tzCode, date) {
+  try {
+    const opts = { timeZone: tzCode, hour12: false, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+    const parts = new Intl.DateTimeFormat('en-CA', opts).formatToParts(date);
+    const get = (type) => parseInt(parts.find(p => p.type === type).value, 10);
+    const local = new Date(get('year'), get('month')-1, get('day'), get('hour'), get('minute'), get('second'));
+    return (local - date) / 60000; // offset in minutes
+  } catch(e) {
+    return TIMEZONES.find(t => t.code === tzCode).offset * 60;
+  }
+}
+
+function fmtTime(date, tzCode) {
+  try {
+    const opts = { timeZone: tzCode, hour: '2-digit', minute: '2-digit', hour12: true, weekday: 'short' };
+    return new Intl.DateTimeFormat('en-US', opts).format(date);
+  } catch { return '--:-- --'; }
+}
+
+function fmtDateTime(date, tzCode) {
+  try {
+    const opts = { timeZone: tzCode, hour: '2-digit', minute: '2-digit', hour12: true, weekday: 'short', month: 'short', day: 'numeric' };
+    return new Intl.DateTimeFormat('en-US', opts).format(date);
+  } catch { return '--:--'; }
+}
+
+function fmtOffset(tzCode, date) {
+  const min = getTzOffset(tzCode, date);
+  const h = Math.floor(Math.abs(min) / 60);
+  const m = Math.abs(min) % 60;
+  const sign = min >= 0 ? '+' : '-';
+  return `UTC${sign}${h}${m ? ':' + String(m).padStart(2,'0') : ''}`;
+}
+
+function populateSelects() {
+  const src = document.getElementById('srcTz');
+  const dst = document.getElementById('dstTz');
+  TIMEZONES.forEach((tz, i) => {
+    src.innerHTML += `<option value="${i}">${tz.name}</option>`;
+    dst.innerHTML += `<option value="${i}">${tz.name}</option>`;
+  });
+  // Default: source = local browser, target = Shanghai
+  const browserTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const browserIdx = TIMEZONES.findIndex(t => t.code === browserTz);
+  src.value = browserIdx >= 0 ? browserIdx : 0;
+  const shIdx = TIMEZONES.findIndex(t => t.code === 'Asia/Shanghai');
+  dst.value = shIdx >= 0 ? shIdx : 0;
+
+  // Set default time to "now"
+  const now = new Date();
+  document.getElementById('srcDate').value = now.toISOString().slice(0,10);
+  document.getElementById('srcTime').value = now.toTimeString().slice(0,5);
+}
+
+function buildClocks() {
+  const grid = document.getElementById('clockGrid');
+  const now = new Date();
+  grid.innerHTML = TIMEZONES.map((tz, i) => {
+    const time = fmtTime(now, tz.code);
+    const off = fmtOffset(tz.code, now);
+    return `<div class="clock-card" data-idx="${i}" onclick="setDst(${i})">
+      <div class="city">${tz.city}</div>
+      <div class="time">${time}</div>
+      <div class="offset">${off}</div>
+    </div>`;
+  }).join('');
+}
+
+function setDst(idx) {
+  document.getElementById('dstTz').value = idx;
+  convert();
+}
+
+function swapTz() {
+  const src = document.getElementById('srcTz');
+  const dst = document.getElementById('dstTz');
+  const tmp = src.value;
+  src.value = dst.value;
+  dst.value = tmp;
+  convert();
+}
+
+function convert() {
+  const srcIdx = parseInt(document.getElementById('srcTz').value);
+  const dstIdx = parseInt(document.getElementById('dstTz').value);
+  const srcTz = TIMEZONES[srcIdx].code;
+  const dstTz = TIMEZONES[dstIdx].code;
+  const srcDateStr = document.getElementById('srcDate').value;
+  const srcTimeStr = document.getElementById('srcTime').value;
+
+  if (!srcDateStr || !srcTimeStr) return;
+
+  // Parse the source date/time as if it's in the source timezone
+  const [year, month, day] = srcDateStr.split('-').map(Number);
+  const [hour, minute] = srcTimeStr.split(':').map(Number);
+
+  // Create a date in UTC that represents the source time
+  // We need to account for the offset difference
+  const srcOffset = getTzOffset(srcTz, new Date(year, month-1, day, hour, minute));
+  // Create UTC timestamp for the source time
+  const utcMs = Date.UTC(year, month-1, day, hour, minute) - srcOffset * 60000;
+  const utcDate = new Date(utcMs);
+
+  // Update source display
+  document.getElementById('srcLabel').textContent =
+    fmtDateTime(utcDate, srcTz) + ' ' + fmtOffset(srcTz, utcDate);
+
+  // Update destination display
+  document.getElementById('dstLabel').textContent =
+    fmtDateTime(utcDate, dstTz) + ' ' + fmtOffset(dstTz, utcDate);
+
+  // Update the readonly destination date/time inputs
+  try {
+    const dstOpts = { timeZone: dstTz, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false };
+    const parts = new Intl.DateTimeFormat('en-CA', dstOpts).formatToParts(utcDate);
+    const get = (type) => parts.find(p => p.type === type)?.value || '00';
+    document.getElementById('dstDate').value = `${get('year')}-${get('month')}-${get('day')}`;
+    document.getElementById('dstTime').value = `${get('hour')}:${get('minute')}`;
+  } catch(e) {
+    // fallback: manual offset calculation
+    const dstOffset = getTzOffset(dstTz, utcDate);
+    const dstMs = utcMs + dstOffset * 60000;
+    const d = new Date(dstMs);
+    document.getElementById('dstDate').value = d.toISOString().slice(0,10);
+    document.getElementById('dstTime').value = d.toTimeString().slice(0,5);
+  }
+
+  // Highlight active clock
+  document.querySelectorAll('.clock-card').forEach(el => el.classList.remove('active'));
+  const activeEl = document.querySelector(`.clock-card[data-idx="${dstIdx}"]`);
+  if (activeEl) activeEl.classList.add('active');
+}
+
+// Auto-update clocks every second
+function tickClocks() {
+  const now = new Date();
+  document.querySelectorAll('.clock-card').forEach(el => {
+    const idx = parseInt(el.dataset.idx);
+    const tz = TIMEZONES[idx].code;
+    el.querySelector('.time').textContent = fmtTime(now, tz);
+    el.querySelector('.offset').textContent = fmtOffset(tz, now);
+  });
+}
+
+// Init
+populateSelects();
+buildClocks();
+convert();
+setInterval(tickClocks, 1000);
+
+// Event listeners
+document.getElementById('srcTime').addEventListener('input', convert);
+document.getElementById('srcDate').addEventListener('input', convert);
+document.getElementById('srcTz').addEventListener('change', convert);
+document.getElementById('dstTz').addEventListener('change', convert);
+
+// Update world clock offset display each minute
+setInterval(() => {
+  document.querySelectorAll('.clock-card').forEach(el => {
+    const idx = parseInt(el.dataset.idx);
+    const tz = TIMEZONES[idx].code;
+    el.querySelector('.offset').textContent = fmtOffset(tz, new Date());
+  });
+}, 60000);
+</script>
+</body>
+</html>

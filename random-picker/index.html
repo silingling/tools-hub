@@ -199,7 +199,7 @@ Eve</textarea>
 
       <div class="wheel-container" id="wheelMode">
         <div class="wheel-pointer"></div>
-        <canvas id="wheelCanvas" width="400" height="400"></canvas>
+        <canvas id="wheelCanvas" width="400" height="400" style="transform-origin:50% 50%"></canvas>
         <div class="wheel-center">?</div>
       </div>
 
@@ -314,50 +314,19 @@ function spin() {
 }
 
 function spinWheel(items) {
-  const canvas = document.getElementById('wheelCanvas');
-  const ctx = canvas.getContext('2d');
-  const w = canvas.width, h = canvas.height;
-  const cx = w / 2, cy = h / 2, r = Math.min(cx, cy) - 8;
-  const arc = (Math.PI * 2) / items.length;
-  const totalSpin = Math.PI * 2 * (5 + Math.floor(Math.random() * 6)); // 5-10 full rotations
   const target = Math.floor(Math.random() * items.length);
-  const targetAngle = target * arc + arc / 2;
-  const finalAngle = totalSpin + targetAngle;
+  const segDeg = 360 / items.length;
+  const fullSpins = (5 + Math.floor(Math.random() * 6)) * 360;
+  // Rotate so target segment center aligns with top pointer
+  const finalDeg = fullSpins + target * segDeg + segDeg / 2;
+  const canvas = document.getElementById('wheelCanvas');
   const duration = 3000;
   const start = performance.now();
-
   function animate(now) {
     const elapsed = now - start;
     const progress = Math.min(1, elapsed / duration);
-    // Ease out cubic
     const ease = 1 - Math.pow(1 - progress, 3);
-    const currentAngle = ease * finalAngle;
-
-    ctx.clearRect(0, 0, w, h);
-    for (let i = 0; i < items.length; i++) {
-      const startAngle = i * arc - Math.PI / 2 + currentAngle;
-      ctx.beginPath();
-      ctx.moveTo(cx, cy);
-      ctx.arc(cx, cy, r, startAngle, startAngle + arc);
-      ctx.closePath();
-      ctx.fillStyle = COLORS[i % COLORS.length];
-      ctx.fill();
-      ctx.strokeStyle = '#fff';
-      ctx.lineWidth = 2;
-      ctx.stroke();
-
-      ctx.save();
-      ctx.translate(cx, cy);
-      ctx.rotate(startAngle + arc / 2);
-      ctx.fillStyle = '#fff';
-      ctx.font = 'bold 13px sans-serif';
-      ctx.textAlign = 'right';
-      ctx.textBaseline = 'middle';
-      const label = items[i].length > 10 ? items[i].slice(0, 9) + '…' : items[i];
-      ctx.fillText(label, r - 16, 0);
-      ctx.restore();
-    }
-
+    canvas.style.transform = 'rotate(' + (ease * finalDeg) + 'deg)';
     if (progress < 1) {
       requestAnimationFrame(animate);
     } else {

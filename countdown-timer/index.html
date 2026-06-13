@@ -55,6 +55,7 @@
     .ctrl-btn:disabled { opacity: .4; cursor: not-allowed; transform: none !important; }
 
     .input-area { display: flex; gap: 8px; align-items: center; justify-content: center; flex-wrap: wrap; margin-bottom: 10px; }
+    .input-area .input-label { font-size: 13px; font-weight: 700; color: var(--tools-dark); margin-right: 6px; white-space: nowrap; }
     .input-area .input-group { display: flex; flex-direction: column; align-items: center; gap: 2px; }
     .input-area .input-group label { font-size: 10px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; }
     .input-area .sep { font-size: 18px; font-weight: 700; color: var(--text-muted); margin-top: -14px; }
@@ -124,6 +125,7 @@
 
       <div id="countdownSection">
         <div class="input-area">
+          <span class="input-label">⏳ Preset Time</span>
           <div class="input-group">
             <input type="number" id="cdHour" min="0" max="99" value="0">
             <label>Hours</label>

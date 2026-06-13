@@ -50,17 +50,18 @@
 
     /* World clocks */
     .world-clocks { margin-top: 4px; }
-    .clock-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
-    .clock-card { padding: 14px; border-radius: 12px; background: var(--bg); border: 1px solid #f0e8e0; text-align: center; transition: all .2s; }
-    .clock-card:hover { border-color: var(--tools-red); }
-    .clock-card .city { font-size: 13px; font-weight: 600; color: var(--text); }
-    .clock-card .time { font-size: 20px; font-weight: 700; color: var(--tools-dark); margin: 2px 0; }
-    .clock-card .date { font-size: 11px; color: var(--text-muted); }
-    .clock-card .offset { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
-    .clock-card .diff { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 50px; display: inline-block; margin-top: 4px; }
+    .clock-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); gap: 14px; }
+    .clock-card { padding: 18px 14px 16px; border-radius: 16px; background: var(--bg-card); border: 1px solid #eee8e0; text-align: center; transition: all .25s; box-shadow: 0 2px 8px rgba(0,0,0,.04); position: relative; overflow: hidden; }
+    .clock-card:hover { border-color: var(--tools-red); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(196,30,58,.1); }
+    .clock-card .card-emoji { font-size: 38px; display: block; margin-bottom: 4px; line-height: 1.2; }
+    .clock-card .city { font-size: 12px; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: .5px; }
+    .clock-card .time { font-size: 28px; font-weight: 800; color: var(--tools-dark); margin: 6px 0 2px; line-height: 1.1; letter-spacing: .5px; }
+    .clock-card .date { font-size: 12px; color: var(--text-muted); }
+    .clock-card .offset { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+    .clock-card .diff { font-size: 11px; font-weight: 700; padding: 3px 12px; border-radius: 50px; display: inline-block; margin-top: 8px; min-width: 48px; }
     .diff.same { background: #e8f5e9; color: #2e7d32; }
-    .diff.ahead { background: #fff3e0; color: #e65100; }
-    .diff.behind { background: #e3f2fd; color: #1565c0; }
+    .diff.ahead { background: #fff8e1; color: #e65100; border: 1px solid #ffe082; }
+    .diff.behind { background: #e3f2fd; color: #1565c0; border: 1px solid #90caf9; }
 
     footer { margin-top: auto; background: var(--bg-card); border-top: 1px solid #eee; padding: 32px 0; text-align: center; }
     footer p { font-size: 13px; color: var(--text-muted); }
@@ -239,18 +240,19 @@ function updateAllClocks() {
     const t = fmtTime(masterDate, tz.code);
     const d = fmtShortDate(masterDate, tz.code);
     const off = fmtOffset(tz.code, masterDate);
-    
+    const e = tz.emoji || '\u{1F310}';
+
     // Time difference badge
     const tzOff = getTzOffset(tz.code, masterDate);
     const diffMin = tzOff - srcOffset;
     let diffLabel = '', diffClass = 'same';
     if (diffMin === 0) { diffLabel = 'same'; diffClass = 'same'; }
-    else if (diffMin > 0) { const h = Math.floor(diffMin/60); diffLabel = '+' + h + 'h'; diffClass = 'ahead'; }
-    else { const h = Math.floor(-diffMin/60); diffLabel = '-' + h + 'h'; diffClass = 'behind'; }
-    if (diffMin % 60 !== 0) diffLabel += String(Math.abs(diffMin)%60);
+    else if (diffMin > 0) { const h = Math.floor(diffMin/60); diffLabel = '+' + h + 'h'; diffClass = 'ahead'; const rm = Math.abs(diffMin) % 60; if(rm) diffLabel += String(rm); }
+    else { const h = Math.floor(-diffMin/60); diffLabel = '-' + h + 'h'; diffClass = 'behind'; const rm = Math.abs(diffMin) % 60; if(rm) diffLabel += String(rm); }
 
     return '<div class="clock-card">' +
-      '<div class="city">' + (tz.emoji || '') + ' ' + tz.city + '</div>' +
+      '<span class="card-emoji">' + e + '</span>' +
+      '<div class="city">' + tz.city + '</div>' +
       '<div class="time">' + t + '</div>' +
       '<div class="date">' + d + '</div>' +
       '<div class="offset">' + off + '</div>' +

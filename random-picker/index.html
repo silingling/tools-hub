@@ -318,7 +318,7 @@ function spinWheel(items) {
   const segDeg = 360 / items.length;
   const fullSpins = (5 + Math.floor(Math.random() * 6)) * 360;
   // Rotate so target segment center aligns with top pointer
-  const finalDeg = fullSpins + target * segDeg + segDeg / 2;
+  const finalDeg = fullSpins - target * segDeg - segDeg / 2;
   const canvas = document.getElementById('wheelCanvas');
   const duration = 3000;
   const start = performance.now();

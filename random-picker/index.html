@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Picker - Spin the Wheel, Pick Random Items</title>
+  <meta name="description" content="Free random picker wheel. Enter your choices and let fate decide! Perfect for giveaways, decisions, raffles, and fun.">
+  <meta name="keywords" content="random picker, spin wheel, random selector, decision maker, raffle wheel">
+  <link rel="canonical" href="https://tools.xiaoyuland.com/random-picker/">
+
+  <meta property="og:title" content="Random Picker - Spin the Wheel">
+  <meta property="og:description" content="Enter your choices and spin to pick a random winner!">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tools.xiaoyuland.com/random-picker/">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Random Picker",
+    "description": "Pick random items or names from a list. Spin the wheel or draw randomly.",
+    "applicationCategory": "Utility",
+    "operatingSystem": "All"
+  }
+  </script>
+
+  <style>
+    :root {
+      --tools-red: #c41e3a;
+      --tools-dark: #8b0000;
+      --bg: #faf6f0;
+      --bg-card: #fff;
+      --text: #2c2c2c;
+      --text-light: #666;
+      --text-muted: #999;
+      --radius: 16px;
+      --shadow: 0 4px 20px rgba(0,0,0,.06);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: var(--text); background: var(--bg); line-height: 1.6;
+      min-height: 100vh; display: flex; flex-direction: column;
+    }
+    a { color: var(--tools-red); text-decoration: none; }
+
+    .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+    nav {
+      background: var(--bg-card); border-bottom: 1px solid #eee;
+      padding: 14px 0; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(8px);
+    }
+    nav .container { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .nav-brand { font-size: 20px; font-weight: 800; color: var(--tools-dark); display: flex; align-items: center; gap: 8px; }
+    .nav-links { display: flex; gap: 4px; flex-wrap: wrap; }
+    .nav-links a { padding: 6px 14px; border-radius: 8px; font-size: 14px; font-weight: 600; color: var(--text); transition: all .2s; }
+    .nav-links a:hover { background: #fff0e6; color: var(--tools-dark); text-decoration: none; }
+    .nav-links a.active { background: var(--tools-red); color: #fff; }
+
+    .hero { padding: 48px 0 24px; text-align: center; }
+    .hero-icon { font-size: 56px; margin-bottom: 8px; display: block; }
+    .hero h1 { font-size: 36px; font-weight: 800; color: var(--tools-dark); margin-bottom: 6px; }
+    .hero p { font-size: 16px; color: var(--text-light); }
+
+    .tool-section { padding: 32px 0; }
+    .tool-card {
+      background: var(--bg-card); border-radius: var(--radius);
+      padding: 32px; box-shadow: var(--shadow); border: 1px solid #f0e8e0;
+      max-width: 560px; margin: 0 auto;
+    }
+
+    .input-area { margin-bottom: 16px; }
+    .input-area label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+    .input-area textarea {
+      width: 100%; min-height: 140px; padding: 12px; border-radius: 12px;
+      border: 2px solid #e8e0d8; background: #faf6f0;
+      font-size: 15px; outline: none; resize: vertical; font-family: inherit;
+    }
+    .input-area textarea:focus { border-color: var(--tools-red); }
+    .input-hint { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+
+    .mode-row { display: flex; gap: 8px; margin-bottom: 16px; }
+    .mode-btn {
+      flex: 1; padding: 10px; border: 2px solid #e8e0d8; border-radius: 12px;
+      background: var(--bg-card); font-size: 14px; font-weight: 600; cursor: pointer;
+      transition: all .2s; text-align: center;
+    }
+    .mode-btn.active { border-color: var(--tools-red); background: #fff0e6; color: var(--tools-dark); }
+    .mode-btn:hover { border-color: var(--tools-red); }
+
+    .btn-spin {
+      width: 100%; padding: 14px; border-radius: 50px;
+      font-size: 16px; font-weight: 700; border: none;
+      background: var(--tools-red); color: #fff;
+      cursor: pointer; transition: all .2s; margin-bottom: 24px;
+    }
+    .btn-spin:hover { background: var(--tools-dark); transform: translateY(-1px); }
+    .btn-spin:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+
+    .wheel-container {
+      position: relative; width: 280px; height: 280px;
+      margin: 0 auto 24px;
+    }
+    .wheel-container canvas {
+      width: 100%; height: 100%; border-radius: 50%;
+      box-shadow: 0 8px 30px rgba(0,0,0,.15);
+    }
+    .wheel-pointer {
+      position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+      width: 0; height: 0;
+      border-left: 16px solid transparent; border-right: 16px solid transparent;
+      border-top: 24px solid var(--tools-dark);
+      z-index: 10; filter: drop-shadow(0 2px 4px rgba(0,0,0,.3));
+    }
+    .wheel-center {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--bg-card); border: 3px solid var(--tools-dark);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; z-index: 10;
+    }
+
+    .result-box {
+      text-align: center; padding: 16px; border-radius: 12px;
+      background: #fff0e6; display: none;
+    }
+    .result-box.show { display: block; animation: fadeIn .5s; }
+    .result-box .result-label { font-size: 13px; color: var(--text-muted); }
+    .result-box .result-value { font-size: 28px; font-weight: 800; color: var(--tools-dark); margin: 4px 0; }
+
+    .history-box { margin-top: 16px; }
+    .history-box h4 { font-size: 14px; color: var(--text-muted); margin-bottom: 8px; }
+    .history-list { display: flex; flex-wrap: wrap; gap: 6px; }
+    .history-item {
+      padding: 4px 12px; border-radius: 50px; font-size: 13px;
+      background: #f5f0eb; color: var(--text-light); font-weight: 500;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    footer {
+      margin-top: auto; background: var(--bg-card); border-top: 1px solid #eee;
+      padding: 32px 0; text-align: center;
+    }
+    footer p { font-size: 13px; color: var(--text-muted); }
+    footer a { color: var(--tools-red); font-weight: 600; }
+    footer .foot-links { margin-bottom: 8px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+    footer .foot-links a { padding: 4px 10px; font-size: 13px; color: var(--text-light); border-radius: 6px; }
+    footer .foot-links a:hover { background: #fff0e6; color: var(--tools-dark); text-decoration: none; }
+
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 28px; }
+      .tool-card { padding: 20px; }
+      .wheel-container { width: 220px; height: 220px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a class="nav-brand" href="//xiaoyuland.com">🏮 Xiaoyu Land</a>
+    <div class="nav-links">
+      <a href="//tools.xiaoyuland.com">🛠️ Tools</a>
+      <a href="//game.xiaoyuland.com">🎮 Games</a>
+      <a href="//ai.xiaoyuland.com">🤖 AI</a>
+      <a href="//culture.xiaoyuland.com">🏮 Culture</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <span class="hero-icon">🎲</span>
+    <h1>Random Picker</h1>
+    <p>Enter your choices and let fate decide</p>
+  </div>
+</section>
+
+<section class="tool-section">
+  <div class="container">
+    <div class="tool-card">
+      <div class="mode-row">
+        <button class="mode-btn active" id="modeWheel" onclick="setMode('wheel')">🎡 Spin Wheel</button>
+        <button class="mode-btn" id="modeDraw" onclick="setMode('draw')">🎯 Draw Random</button>
+      </div>
+
+      <div class="input-area">
+        <label for="itemInput">Enter your items <small>(one per line)</small></label>
+        <textarea id="itemInput" placeholder="Alice&#10;Bob&#10;Charlie&#10;Diana&#10;Eve">Alice
+Bob
+Charlie
+Diana
+Eve</textarea>
+        <div class="input-hint" id="itemCount">5 items</div>
+      </div>
+
+      <button class="btn-spin" id="spinBtn" onclick="spin()">🎡 Spin the Wheel!</button>
+
+      <div class="wheel-container" id="wheelMode">
+        <div class="wheel-pointer"></div>
+        <canvas id="wheelCanvas" width="400" height="400"></canvas>
+        <div class="wheel-center">?</div>
+      </div>
+
+      <div class="result-box" id="resultBox">
+        <div class="result-label">🎉 Result</div>
+        <div class="result-value" id="resultValue">—</div>
+      </div>
+
+      <div class="history-box" id="historyBox" style="display:none">
+        <h4>📝 History</h4>
+        <div class="history-list" id="historyList"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+let currentMode = 'wheel';
+let isSpinning = false;
+let history = [];
+const COLORS = [
+  '#e53935', '#43a047', '#1e88e5', '#fb8c00', '#8e24aa',
+  '#00acc1', '#f4511e', '#3949ab', '#c0ca33', '#6d4c41',
+  '#d81b60', '#7cb342', '#039be5', '#fdd835', '#5e35b1'
+];
+
+function setMode(mode) {
+  currentMode = mode;
+  document.getElementById('modeWheel').className = 'mode-btn' + (mode === 'wheel' ? ' active' : '');
+  document.getElementById('modeDraw').className = 'mode-btn' + (mode === 'draw' ? ' active' : '');
+  document.getElementById('wheelMode').style.display = mode === 'wheel' ? '' : 'none';
+  document.getElementById('spinBtn').textContent = mode === 'wheel' ? '🎡 Spin the Wheel!' : '🎯 Pick Random!';
+  document.getElementById('resultBox').classList.remove('show');
+  updateItemCount();
+  if (mode === 'wheel') drawWheel();
+}
+
+function getItems() {
+  return document.getElementById('itemInput').value.split('\n')
+    .map(s => s.trim()).filter(s => s.length > 0);
+}
+
+function updateItemCount() {
+  const items = getItems();
+  document.getElementById('itemCount').textContent = items.length + ' items';
+  document.getElementById('spinBtn').disabled = items.length < 2;
+}
+
+document.getElementById('itemInput').addEventListener('input', () => {
+  updateItemCount();
+  if (currentMode === 'wheel') drawWheel();
+});
+
+function drawWheel() {
+  const items = getItems();
+  const canvas = document.getElementById('wheelCanvas');
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height;
+  const cx = w / 2, cy = h / 2, r = Math.min(cx, cy) - 8;
+
+  ctx.clearRect(0, 0, w, h);
+
+  if (items.length < 2) {
+    ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.fillStyle = '#eee'; ctx.fill();
+    ctx.fillStyle = '#999'; ctx.font = '16px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('Add at least 2 items', cx, cy);
+    return;
+  }
+
+  const arc = (Math.PI * 2) / items.length;
+  for (let i = 0; i < items.length; i++) {
+    const start = i * arc - Math.PI / 2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, r, start, start + arc);
+    ctx.closePath();
+    ctx.fillStyle = COLORS[i % COLORS.length];
+    ctx.fill();
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Text
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(start + arc / 2);
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 13px sans-serif';
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'middle';
+    const label = items[i].length > 10 ? items[i].slice(0, 9) + '…' : items[i];
+    ctx.fillText(label, r - 16, 0);
+    ctx.restore();
+  }
+}
+
+function spin() {
+  if (isSpinning) return;
+  const items = getItems();
+  if (items.length < 2) { alert('Add at least 2 items!'); return; }
+
+  isSpinning = true;
+  document.getElementById('spinBtn').disabled = true;
+  document.getElementById('resultBox').classList.remove('show');
+
+  if (currentMode === 'wheel') {
+    spinWheel(items);
+  } else {
+    drawRandom(items);
+  }
+}
+
+function spinWheel(items) {
+  const canvas = document.getElementById('wheelCanvas');
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height;
+  const cx = w / 2, cy = h / 2, r = Math.min(cx, cy) - 8;
+  const arc = (Math.PI * 2) / items.length;
+  const totalSpin = Math.PI * 2 * (5 + Math.random() * 5); // 5-10 full rotations
+  const target = Math.floor(Math.random() * items.length);
+  const targetAngle = target * arc + arc / 2;
+  const finalAngle = totalSpin + targetAngle;
+  const duration = 3000;
+  const start = performance.now();
+
+  function animate(now) {
+    const elapsed = now - start;
+    const progress = Math.min(1, elapsed / duration);
+    // Ease out cubic
+    const ease = 1 - Math.pow(1 - progress, 3);
+    const currentAngle = ease * finalAngle;
+
+    ctx.clearRect(0, 0, w, h);
+    for (let i = 0; i < items.length; i++) {
+      const startAngle = i * arc - Math.PI / 2 + currentAngle;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.arc(cx, cy, r, startAngle, startAngle + arc);
+      ctx.closePath();
+      ctx.fillStyle = COLORS[i % COLORS.length];
+      ctx.fill();
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(startAngle + arc / 2);
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 13px sans-serif';
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'middle';
+      const label = items[i].length > 10 ? items[i].slice(0, 9) + '…' : items[i];
+      ctx.fillText(label, r - 16, 0);
+      ctx.restore();
+    }
+
+    if (progress < 1) {
+      requestAnimationFrame(animate);
+    } else {
+      onResult(items[target]);
+    }
+  }
+  requestAnimationFrame(animate);
+}
+
+function drawRandom(items) {
+  const duration = 600;
+  const start = performance.now();
+  let interval;
+
+  // Rapidly cycle through items for suspense
+  const cycle = () => {
+    const rand = Math.floor(Math.random() * items.length);
+    document.getElementById('resultBox').classList.add('show');
+    document.getElementById('resultValue').textContent = items[rand];
+    document.getElementById('resultValue').style.opacity = '.6';
+  };
+  cycle();
+  interval = setInterval(cycle, 80);
+
+  setTimeout(() => {
+    clearInterval(interval);
+    const winner = items[Math.floor(Math.random() * items.length)];
+    document.getElementById('resultValue').textContent = winner;
+    document.getElementById('resultValue').style.opacity = '1';
+    onResult(winner);
+  }, duration + Math.random() * 600);
+}
+
+function onResult(winner) {
+  isSpinning = false;
+  document.getElementById('spinBtn').disabled = false;
+  document.getElementById('resultBox').classList.add('show');
+  document.getElementById('resultValue').textContent = winner;
+
+  history.unshift(winner);
+  if (history.length > 20) history.pop();
+
+  const historyBox = document.getElementById('historyBox');
+  const historyList = document.getElementById('historyList');
+  historyBox.style.display = '';
+  historyList.innerHTML = history.map(h => `<span class="history-item">${h}</span>`).join('');
+
+  // Confetti effect (simple)
+  for (let i = 0; i < 30; i++) {
+    const el = document.createElement('div');
+    el.style.cssText = `
+      position: fixed; pointer-events: none; z-index: 999;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: ${COLORS[Math.floor(Math.random() * COLORS.length)]};
+      left: ${Math.random() * 100}vw; top: -10px;
+      animation: confetti ${1 + Math.random() * 2}s ease-out forwards;
+    `;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 3000);
+  }
+}
+
+// Add confetti animation
+const style = document.createElement('style');
+style.textContent = `@keyframes confetti { to { transform: translateY(${window.innerHeight + 100}px) rotate(${Math.random() * 720}deg); opacity: 0; } }`;
+document.head.appendChild(style);
+
+// Init
+updateItemCount();
+drawWheel();
+</script>
+
+<footer>
+  <div class="container">
+    <div class="foot-links">
+      <a href="/random-picker/">🎲 Random Picker</a>
+      <a href="/bmi-calculator/">⚖️ BMI Calculator</a>
+      <a href="/password-generator/">🔑 Password Generator</a>
+      <a href="/quiz/">🏢 Workplace Quiz</a>
+      <a href="//xiaoyuland.com">🏠 Xiaoyu Land</a>
+    </div>
+    <p>© 2026 <a href="//xiaoyuland.com">Xiaoyu Land</a> · Tools</p>
+  </div>
+</footer>
+</body>
+</html>

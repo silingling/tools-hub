@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit Converter - Length, Weight, Temperature & More</title>
+  <meta name="description" content="Free online unit converter. Convert between length, weight, temperature, area, volume, speed units instantly.">
+  <meta name="keywords" content="unit converter, length converter, weight converter, temperature converter, metric conversion">
+  <link rel="canonical" href="https://tools.xiaoyuland.com/unit-converter/">
+  <meta property="og:title" content="Unit Converter">
+  <meta property="og:description" content="Convert length, weight, temperature, area, volume, speed units instantly.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tools.xiaoyuland.com/unit-converter/">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Unit Converter","description":"Convert between length, weight, temperature, area, volume, speed","applicationCategory":"Utility","operatingSystem":"All"}</script>
+  <style>
+    :root { --tools-red: #c41e3a; --tools-dark: #8b0000; --tools-light: #fff0e6; --bg: #faf6f0; --bg-card: #fff; --text: #2c2c2c; --text-light: #666; --text-muted: #999; --radius: 16px; --shadow: 0 4px 20px rgba(0,0,0,.06); }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: var(--text); background: var(--bg); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+    a { color: var(--tools-red); text-decoration: none; }
+    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+    nav { background: var(--bg-card); border-bottom: 1px solid #eee; padding: 14px 0; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(8px); }
+    nav .container { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .nav-brand { font-size: 20px; font-weight: 800; color: var(--tools-dark); display: flex; align-items: center; gap: 8px; }
+    .nav-links { display: flex; gap: 4px; flex-wrap: wrap; }
+    .nav-links a { padding: 6px 14px; border-radius: 8px; font-size: 14px; font-weight: 600; color: var(--text); transition: all .2s; }
+    .nav-links a:hover { background: var(--tools-light); color: var(--tools-dark); text-decoration: none; }
+    .hero { padding: 28px 0 12px; text-align: center; }
+    .hero-icon { font-size: 40px; display: block; margin-bottom: 2px; }
+    .hero h1 { font-size: 28px; font-weight: 800; color: var(--tools-dark); margin-bottom: 2px; }
+    .hero p { font-size: 14px; color: var(--text-light); }
+    .tool-section { padding: 12px 0 36px; }
+    .tool-card { background: var(--bg-card); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); border: 1px solid #f0e8e0; }
+
+    .category-tabs { display: flex; gap: 4px; margin-bottom: 20px; flex-wrap: wrap; padding: 3px; background: var(--bg); border-radius: 12px; }
+    .cat-tab { padding: 8px 18px; border-radius: 9px; border: none; font-size: 13px; font-weight: 600; cursor: pointer; background: transparent; color: var(--text-light); transition: all .15s; }
+    .cat-tab:hover { color: var(--text); }
+    .cat-tab.active { background: var(--bg-card); color: var(--tools-dark); box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+
+    .converter { display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; align-items: center; }
+    .conv-side { display: flex; flex-direction: column; gap: 6px; }
+    .conv-side select { padding: 10px 12px; border-radius: 10px; border: 2px solid #e8d8cc; font-size: 14px; background: var(--bg); outline: none; cursor: pointer; }
+    .conv-side input { padding: 12px 14px; border-radius: 10px; border: 2px solid #e8d8cc; font-size: 22px; font-weight: 700; background: var(--bg); outline: none; font-family: 'SF Mono', 'Consolas', monospace; width: 100%; }
+    .conv-side input:focus { border-color: var(--tools-red); }
+    .conv-side input.from { background: #fff5f0; border-color: var(--tools-red); }
+    .conv-side input.to { background: var(--bg-card); }
+    .conv-side .unit-label { font-size: 11px; color: var(--text-muted); padding-left: 2px; }
+
+    .swap-btn { display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; border: 2px solid #e8d8cc; background: var(--bg-card); font-size: 20px; cursor: pointer; transition: all .2s; flex-shrink: 0; }
+    .swap-btn:hover { border-color: var(--tools-red); background: var(--tools-light); }
+
+    .quick-list { margin-top: 18px; padding: 14px 16px; border-radius: 12px; background: var(--bg); border: 1px solid #eee8e0; }
+    .quick-list h4 { font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; }
+    .quick-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 4px; }
+    .quick-btn { padding: 5px 8px; border-radius: 6px; border: 1px solid #eee8e0; background: var(--bg-card); font-size: 11px; font-weight: 600; cursor: pointer; transition: all .1s; color: var(--text-light); }
+    .quick-btn:hover { border-color: var(--tools-red); color: var(--tools-dark); }
+
+    footer { margin-top: auto; background: var(--bg-card); border-top: 1px solid #eee; padding: 24px 0; text-align: center; }
+    footer p { font-size: 13px; color: var(--text-muted); }
+    footer a { color: var(--tools-red); font-weight: 600; }
+    footer .foot-links { margin-bottom: 6px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+    footer .foot-links a { padding: 4px 10px; font-size: 13px; color: var(--text-light); border-radius: 6px; }
+    footer .foot-links a:hover { background: var(--tools-light); color: var(--tools-dark); text-decoration: none; }
+
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 24px; }
+      .tool-card { padding: 14px; }
+      .converter { grid-template-columns: 1fr; gap: 6px; }
+      .swap-btn { transform: rotate(90deg); width: 36px; height: 36px; margin: 0 auto; }
+      .conv-side input { font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <div class="container">
+    <a class="nav-brand" href="//xiaoyuland.com">🏮 Xiaoyu Land</a>
+    <div class="nav-links">
+      <a href="//tools.xiaoyuland.com">🛠️ Tools</a>
+      <a href="//game.xiaoyuland.com">🎮 Games</a>
+      <a href="//ai.xiaoyuland.com">🤖 AI</a>
+      <a href="//culture.xiaoyuland.com">🏮 Culture</a>
+    </div>
+  </div>
+</nav>
+<section class="hero">
+  <div class="container">
+    <span class="hero-icon">📏</span>
+    <h1>Unit Converter</h1>
+    <p>Length · Weight · Temperature · Area · Volume · Speed</p>
+  </div>
+</section>
+<section class="tool-section">
+  <div class="container">
+    <div class="tool-card">
+      <div class="category-tabs" id="categoryTabs"></div>
+      <div class="converter">
+        <div class="conv-side">
+          <select id="fromUnit"></select>
+          <input class="from" id="fromVal" type="text" inputmode="decimal" value="1">
+        </div>
+        <button class="swap-btn" onclick="swap()">⇄</button>
+        <div class="conv-side">
+          <select id="toUnit"></select>
+          <input class="to" id="toVal" type="text" readonly>
+        </div>
+      </div>
+      <div class="quick-list">
+        <h4>⚡ Quick conversions</h4>
+        <div class="quick-grid" id="quickGrid"></div>
+      </div>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="container">
+    <div class="foot-links">
+      <a href="/unit-converter/">📏 Unit Converter</a>
+      <a href="/color-picker/">🎨 Color Picker</a>
+      <a href="/timezone-converter/">🌍 World Clock</a>
+      <a href="/number-base/">🔢 Number Base</a>
+      <a href="/word-counter/">📝 Word Counter</a>
+      <a href="/random-picker/">🎲 Random Picker</a>
+      <a href="/bmi-calculator/">⚖️ BMI Calculator</a>
+      <a href="/password-generator/">🔑 Password Generator</a>
+      <a href="/quiz/">🏢 Workplace Quiz</a>
+      <a href="//xiaoyuland.com">🏠 Xiaoyu Land</a>
+    </div>
+    <p>© 2026 <a href="//xiaoyuland.com">Xiaoyu Land</a> · Tools</p>
+  </div>
+</section>
+<script>
+const CATEGORIES = {
+  length: {
+    icon: '📏',
+    label: 'Length',
+    units: [
+      { id: 'mm', label: 'Millimeter', toBase: v => v / 1000 },
+      { id: 'cm', label: 'Centimeter', toBase: v => v / 100 },
+      { id: 'm', label: 'Meter', toBase: v => v },
+      { id: 'km', label: 'Kilometer', toBase: v => v * 1000 },
+      { id: 'in', label: 'Inch', toBase: v => v * 0.0254 },
+      { id: 'ft', label: 'Foot', toBase: v => v * 0.3048 },
+      { id: 'yd', label: 'Yard', toBase: v => v * 0.9144 },
+      { id: 'mi', label: 'Mile', toBase: v => v * 1609.344 },
+      { id: 'nmi', label: 'Nautical Mile', toBase: v => v * 1852 },
+    ]
+  },
+  weight: {
+    icon: '⚖️',
+    label: 'Weight',
+    units: [
+      { id: 'mg', label: 'Milligram', toBase: v => v / 1e6 },
+      { id: 'g', label: 'Gram', toBase: v => v / 1000 },
+      { id: 'kg', label: 'Kilogram', toBase: v => v },
+      { id: 't', label: 'Tonne', toBase: v => v * 1000 },
+      { id: 'oz', label: 'Ounce', toBase: v => v * 0.0283495 },
+      { id: 'lb', label: 'Pound', toBase: v => v * 0.453592 },
+      { id: 'st', label: 'Stone', toBase: v => v * 6.35029 },
+    ]
+  },
+  temperature: {
+    icon: '🌡️',
+    label: 'Temperature',
+    custom: true,
+    units: [
+      { id: 'C', label: 'Celsius', toBase: v => v, fromBase: v => v },
+      { id: 'F', label: 'Fahrenheit', toBase: v => (v - 32) * 5/9, fromBase: v => v * 9/5 + 32 },
+      { id: 'K', label: 'Kelvin', toBase: v => v - 273.15, fromBase: v => v + 273.15 },
+    ]
+  },
+  area: {
+    icon: '🔲',
+    label: 'Area',
+    units: [
+      { id: 'mm2', label: 'mm²', toBase: v => v / 1e6 },
+      { id: 'cm2', label: 'cm²', toBase: v => v / 10000 },
+      { id: 'm2', label: 'm²', toBase: v => v },
+      { id: 'km2', label: 'km²', toBase: v => v * 1e6 },
+      { id: 'ha', label: 'Hectare', toBase: v => v * 10000 },
+      { id: 'ac', label: 'Acre', toBase: v => v * 4046.86 },
+      { id: 'ft2', label: 'ft²', toBase: v => v * 0.092903 },
+      { id: 'in2', label: 'in²', toBase: v => v * 0.00064516 },
+    ]
+  },
+  volume: {
+    icon: '🧴',
+    label: 'Volume',
+    units: [
+      { id: 'ml', label: 'Milliliter', toBase: v => v / 1000 },
+      { id: 'l', label: 'Liter', toBase: v => v },
+      { id: 'm3', label: 'm³', toBase: v => v * 1000 },
+      { id: 'gal', label: 'Gallon (US)', toBase: v => v * 3.78541 },
+      { id: 'qt', label: 'Quart (US)', toBase: v => v * 0.946353 },
+      { id: 'pt', label: 'Pint (US)', toBase: v => v * 0.473176 },
+      { id: 'cup', label: 'Cup (US)', toBase: v => v * 0.236588 },
+      { id: 'floz', label: 'Fl Oz (US)', toBase: v => v * 0.0295735 },
+      { id: 'tbsp', label: 'Tablespoon', toBase: v => v * 0.0147868 },
+      { id: 'tsp', label: 'Teaspoon', toBase: v => v * 0.00492892 },
+    ]
+  },
+  speed: {
+    icon: '🚀',
+    label: 'Speed',
+    units: [
+      { id: 'ms', label: 'm/s', toBase: v => v },
+      { id: 'kmh', label: 'km/h', toBase: v => v / 3.6 },
+      { id: 'mph', label: 'mph', toBase: v => v * 0.44704 },
+      { id: 'kn', label: 'Knot', toBase: v => v * 0.514444 },
+      { id: 'c', label: 'Speed of Light', toBase: v => v * 299792458 },
+      { id: 'mach', label: 'Mach (20°C)', toBase: v => v * 343 },
+    ]
+  }
+};
+
+const CAT_KEYS = Object.keys(CATEGORIES);
+let currentCat = 'length';
+
+function fmt(val) {
+  if (!isFinite(val)) return '—';
+  if (Math.abs(val) >= 1e9 || (Math.abs(val) < 1e-6 && val !== 0)) return val.toExponential(4);
+  const s = val.toFixed(6);
+  // Trim trailing zeros but keep at least 1 decimal
+  return parseFloat(s).toString();
+}
+
+function convert() {
+  const cat = CATEGORIES[currentCat];
+  const fromIdx = document.getElementById('fromUnit').value;
+  const toIdx = document.getElementById('toUnit').value;
+  const fromUnit = cat.units[fromIdx];
+  const toUnit = cat.units[toIdx];
+  const raw = parseFloat(document.getElementById('fromVal').value);
+
+  if (isNaN(raw)) { document.getElementById('toVal').value = ''; return; }
+
+  let base;
+  if (cat.custom) {
+    base = fromUnit.toBase(raw);
+    if (toUnit.fromBase) {
+      base = toUnit.fromBase(fromUnit.toBase(raw) - fromUnit.toBase(0));
+    }
+  } else {
+    base = fromUnit.toBase(raw);
+  }
+
+  let result;
+  if (cat.custom) {
+    result = toUnit.fromBase(base);
+  } else {
+    result = base / toUnit.toBase(1);
+  }
+
+  document.getElementById('toVal').value = fmt(result);
+  updateQuick();
+}
+
+function swap() {
+  const fromSel = document.getElementById('fromUnit');
+  const toSel = document.getElementById('toUnit');
+  const tmp = fromSel.value;
+  fromSel.value = toSel.value;
+  toSel.value = tmp;
+  convert();
+}
+
+function switchCat(key) {
+  currentCat = key;
+  document.querySelectorAll('.cat-tab').forEach(t => t.classList.toggle('active', t.dataset.cat === key));
+  const cat = CATEGORIES[key];
+  const fromSel = document.getElementById('fromUnit');
+  const toSel = document.getElementById('toUnit');
+
+  fromSel.innerHTML = cat.units.map((u, i) => '<option value="' + i + '">' + u.label + '</option>').join('');
+  toSel.innerHTML = cat.units.map((u, i) => '<option value="' + i + '">' + u.label + '</option>').join('');
+  // Set sensible defaults
+  if (key === 'length') { fromSel.value = '2'; toSel.value = '0'; } // m→mm
+  else if (key === 'temperature') { fromSel.value = '0'; toSel.value = '1'; } // C→F
+  else { toSel.value = Math.min(1, cat.units.length - 1); }
+
+  convert();
+}
+
+function updateQuick() {
+  const cat = CATEGORIES[currentCat];
+  const fromIdx = parseInt(document.getElementById('fromUnit').value);
+  const toIdx = parseInt(document.getElementById('toUnit').value);
+  const raw = parseFloat(document.getElementById('fromVal').value);
+  if (isNaN(raw)) return;
+
+  const el = document.getElementById('quickGrid');
+  const srcUnit = cat.units[fromIdx];
+  const tgtUnit = cat.units[toIdx];
+
+  // Show conversions for one source unit to multiple targets
+  let items = [];
+  cat.units.forEach((u, i) => {
+    if (i === fromIdx) return;
+    let val;
+    if (cat.custom) {
+      val = u.fromBase(srcUnit.toBase(raw) - srcUnit.toBase(0));
+    } else {
+      val = raw * (srcUnit.toBase(1) / u.toBase(1));
+    }
+    items.push({ label: u.id, val: fmt(val) + ' ' + u.id, idx: i });
+  });
+  // Show first 6
+  el.innerHTML = items.slice(0, 8).map(it =>
+    '<button class="quick-btn" onclick="setToUnit(' + it.idx + ')">' + it.label + ' → ' + it.val + '</button>'
+  ).join('');
+}
+
+function setToUnit(idx) {
+  document.getElementById('toUnit').value = idx;
+  convert();
+}
+
+function init() {
+  const tabBar = document.getElementById('categoryTabs');
+  CAT_KEYS.forEach(key => {
+    const c = CATEGORIES[key];
+    const btn = document.createElement('button');
+    btn.className = 'cat-tab' + (key === currentCat ? ' active' : '');
+    btn.dataset.cat = key;
+    btn.textContent = c.icon + ' ' + c.label;
+    btn.onclick = () => switchCat(key);
+    tabBar.appendChild(btn);
+  });
+
+  switchCat(currentCat);
+  document.getElementById('fromVal').addEventListener('input', convert);
+  document.getElementById('fromUnit').addEventListener('change', convert);
+  document.getElementById('toUnit').addEventListener('change', convert);
+}
+
+init();
+</script>
+</body>
+</html>

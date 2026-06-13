@@ -33,12 +33,15 @@
 
     /* MASTER CLOCK - TOP */
     .master-clock {
-      text-align: center; margin-bottom: 20px;
+      margin-bottom: 20px;
       background: linear-gradient(135deg, #fff0e6, #ffe4d4);
       border-radius: 18px; padding: 20px;
       border: 2px solid var(--tools-red);
     }
-    .master-clock .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--tools-red); }
+    .master-clock .label { text-align: center; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--tools-red); margin-bottom: 8px; }
+    .master-body { display: flex; align-items: center; gap: 20px; justify-content: center; }
+    .master-icon { font-size: 64px; flex-shrink: 0; line-height: 1; }
+    .master-info { text-align: left; }
     .master-clock .big-time { font-size: 56px; font-weight: 800; color: var(--tools-dark); line-height: 1; letter-spacing: -1px; }
     .master-clock .big-date { font-size: 14px; color: var(--text); margin-top: 2px; }
     .master-clock .big-tz { font-size: 13px; font-weight: 600; color: var(--text-light); margin-top: 4px; padding: 3px 14px; background: rgba(255,255,255,.6); border-radius: 50px; display: inline-block; }
@@ -79,6 +82,7 @@
     .clock-card.nt .ctm { color: #ffffff; }
     .clock-card.nt .cd { color: #aaaadd; }
     .clock-card.nt .co { color: #aaaadd; }
+    .clock-card.nt .ci { filter: brightness(1.3); background: rgba(255,255,255,.08); border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; }
 
     footer { margin-top: auto; background: var(--bg-card); border-top: 1px solid #eee; padding: 24px 0; text-align: center; }
     footer p { font-size: 13px; color: var(--text-muted); }
@@ -120,9 +124,14 @@
       <!-- YOUR TIME - TOP -->
       <div class="master-clock">
         <div class="label">🕐 YOUR TIME</div>
-        <div class="big-time" id="masterTime">16:20</div>
-        <div class="big-date" id="masterDate">Sat, Jun 13, 2026</div>
-        <div class="big-tz" id="masterTzLabel">UTC+8</div>
+        <div class="master-body">
+          <div class="master-icon" id="masterIcon">🏮</div>
+          <div class="master-info">
+            <div class="big-time" id="masterTime">16:20</div>
+            <div class="big-date" id="masterDate">Sat, Jun 13, 2026</div>
+            <div class="big-tz" id="masterTzLabel">UTC+8</div>
+          </div>
+        </div>
         <div class="master-controls">
           <select id="masterTz"></select>
           <input type="date" id="masterDateInput">
@@ -242,8 +251,11 @@ function populateSelect() {
 }
 
 function getMasterTzCode() { return TIMEZONES[parseInt(document.getElementById('masterTz').value)].code; }
+function getMasterTz() { return TIMEZONES[parseInt(document.getElementById('masterTz').value)]; }
 
 function updateMasterDisplay() {
+  const tz = getMasterTz();
+  document.getElementById('masterIcon').textContent = tz.emoji || '\u{1F310}';
   const tzCode = getMasterTzCode();
   document.getElementById('masterTime').textContent = fmtTime(masterDate, tzCode);
   document.getElementById('masterDate').textContent = fmtDate(masterDate, tzCode);

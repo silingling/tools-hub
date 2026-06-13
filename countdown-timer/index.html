@@ -187,16 +187,17 @@
 </section>
 <script>
 let mode = 'countdown'; // countdown | stopwatch
-let interval = null;
+let rafId = null;
 let running = false;
 let paused = false;
+let pauseRemaining = 0; // countdown: ms left when paused
+let pauseElapsed = 0;   // stopwatch: ms elapsed when paused
 
-// Countdown state
+// Timestamps (Date.now) for live tracking
+let targetTime = 0;     // countdown end timestamp
+let startTime = 0;      // stopwatch start timestamp
+
 let totalSecs = 0;
-let remainSecs = 0;
-
-// Stopwatch state
-let swMs = 0;
 let lapCount = 0;
 let lastLapMs = 0;
 
@@ -223,54 +224,50 @@ function setPreset(h, m, s) {
   document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active-preset'));
   event.target.classList.add('active-preset');
   if (!running) {
-    remainSecs = h * 3600 + m * 60 + s;
-    totalSecs = remainSecs;
-    renderCountdown();
+    totalSecs = h * 3600 + m * 60 + s;
+    pauseRemaining = totalSecs * 1000;
+    renderMs(pauseRemaining, true);
   }
 }
 
-function renderCountdown() {
-  const d = Math.floor(remainSecs / 86400);
-  const h = Math.floor((remainSecs % 86400) / 3600);
-  const m = Math.floor((remainSecs % 3600) / 60);
-  const s = remainSecs % 60;
-  updateDisplay(d, h, m, s);
-  // Progress
-  if (totalSecs > 0) {
-    const pct = (1 - remainSecs / totalSecs) * 100;
-    document.getElementById('progressFill').style.width = Math.min(pct, 100) + '%';
-  }
-}
-
-function renderStopwatch() {
-  const total = Math.floor(swMs / 1000);
+function renderMs(ms, isCountdown) {
+  const total = Math.max(0, Math.round(ms / 1000));
   const d = Math.floor(total / 86400);
   const h = Math.floor((total % 86400) / 3600);
   const m = Math.floor((total % 3600) / 60);
   const s = total % 60;
   updateDisplay(d, h, m, s);
-  document.getElementById('progressFill').style.width = '0%';
+  if (isCountdown && totalSecs > 0) {
+    const pct = (1 - total / totalSecs) * 100;
+    document.getElementById('progressFill').style.width = Math.min(pct, 100) + '%';
+  } else {
+    document.getElementById('progressFill').style.width = '0%';
+  }
 }
 
-function tick() {
-  if (!running || paused) return;
+function loop() {
+  if (!running || paused) {
+    rafId = requestAnimationFrame(loop);
+    return;
+  }
+  const now = Date.now();
   if (mode === 'countdown') {
-    remainSecs--;
-    if (remainSecs <= 0) {
-      remainSecs = 0;
-      renderCountdown();
+    const remaining = targetTime - now;
+    if (remaining <= 0) {
+      renderMs(0, true);
       stopTimer();
       document.getElementById('status').textContent = '⏰ Time\'s up!';
       flashAlert();
       return;
     }
-    renderCountdown();
-    document.getElementById('status').textContent = '⏳ Running — ' + formatTimeLeft(remainSecs) + ' remaining';
+    renderMs(remaining, true);
+    document.getElementById('status').textContent = '⏳ Running — ' + formatTimeLeft(Math.round(remaining / 1000)) + ' remaining';
   } else {
-    swMs += 100;
-    renderStopwatch();
-    document.getElementById('status').textContent = '⏱ Elapsed — ' + formatTimeLeft(Math.floor(swMs / 1000));
+    const elapsed = pauseElapsed + (now - startTime);
+    renderMs(elapsed, false);
+    document.getElementById('status').textContent = '⏱ Elapsed — ' + formatTimeLeft(Math.round(elapsed / 1000));
   }
+  rafId = requestAnimationFrame(loop);
 }
 
 function formatTimeLeft(secs) {
@@ -295,8 +292,15 @@ function flashAlert() {
 }
 
 function startTimer() {
+  const now = Date.now();
   if (running && paused) {
+    // Resume
     paused = false;
+    if (mode === 'countdown') {
+      targetTime = now + pauseRemaining;
+    } else {
+      startTime = now;
+    }
     document.getElementById('startBtn').textContent = '▶ Running';
     document.getElementById('pauseBtn').disabled = false;
     document.getElementById('status').textContent = mode === 'countdown' ? '⏳ Running' : '⏱ Running';
@@ -307,11 +311,16 @@ function startTimer() {
   if (mode === 'countdown') {
     const secs = getCountdownSecs();
     if (secs <= 0) { document.getElementById('status').textContent = '⚠️ Set a time first'; return; }
-    if (remainSecs <= 0) {
+    if (pauseRemaining <= 0) {
       totalSecs = secs;
-      remainSecs = secs;
+      pauseRemaining = secs * 1000;
     }
+    targetTime = now + pauseRemaining;
   } else {
+    startTime = now;
+    pauseElapsed = 0;
+    lastLapMs = 0;
+    lapCount = 0;
     document.getElementById('lapBtn').disabled = false;
   }
 
@@ -324,22 +333,27 @@ function startTimer() {
   document.getElementById('cdSec').disabled = true;
   document.querySelectorAll('.preset-btn').forEach(b => b.style.pointerEvents = 'none');
 
-  interval = setInterval(tick, 100);
+  rafId = requestAnimationFrame(loop);
 }
 
 function pauseTimer() {
   if (!running || paused) return;
   paused = true;
+  const now = Date.now();
+  if (mode === 'countdown') {
+    pauseRemaining = targetTime - now;
+  } else {
+    pauseElapsed += now - startTime;
+  }
   document.getElementById('startBtn').textContent = '▶ Resume';
   document.getElementById('pauseBtn').disabled = true;
   document.getElementById('status').textContent = '⏸ Paused';
-  clearInterval(interval);
 }
 
 function stopTimer() {
   running = false;
   paused = false;
-  clearInterval(interval);
+  if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
   document.getElementById('startBtn').textContent = '▶ Start';
   document.getElementById('pauseBtn').disabled = true;
   document.getElementById('cdHour').disabled = false;
@@ -354,14 +368,14 @@ function resetTimer() {
   document.getElementById('status').textContent = 'Ready';
   document.getElementById('progressFill').style.width = '0%';
   if (mode === 'countdown') {
-    remainSecs = getCountdownSecs();
-    totalSecs = remainSecs;
-    renderCountdown();
+    pauseRemaining = getCountdownSecs() * 1000;
+    totalSecs = getCountdownSecs();
+    renderMs(pauseRemaining, true);
   } else {
-    swMs = 0;
+    pauseElapsed = 0;
     lastLapMs = 0;
     lapCount = 0;
-    renderStopwatch();
+    renderMs(0, false);
     document.getElementById('swLapTable').innerHTML = '';
     document.getElementById('lapsSection').style.display = 'none';
   }
@@ -370,8 +384,8 @@ function resetTimer() {
 function recordLap() {
   if (mode !== 'stopwatch' || !running) return;
   lapCount++;
-  const current = swMs;
-  const lapTime = current - lastLapMs;
+  const current = pauseElapsed + (Date.now() - startTime);
+  const lapTime = lapCount === 1 ? current : current - lastLapMs;
   lastLapMs = current;
   const fmtMs = ms => {
     const total = Math.floor(ms / 1000);
@@ -397,9 +411,9 @@ function switchMode(newMode) {
 }
 
 // Init
-remainSecs = getCountdownSecs();
-totalSecs = remainSecs;
-renderCountdown();
+totalSecs = getCountdownSecs();
+pauseRemaining = totalSecs * 1000;
+renderMs(pauseRemaining, true);
 </script>
 </body>
 </html>

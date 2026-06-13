@@ -298,8 +298,8 @@ function populateSelects() {
   const src = document.getElementById('srcTz');
   const dst = document.getElementById('dstTz');
   TIMEZONES.forEach((tz, i) => {
-    src.innerHTML += `<option value="${i}">${tz.name}</option>`;
-    dst.innerHTML += `<option value="${i}">${tz.name}</option>`;
+    src.innerHTML += `<option value="${i}">${tz.emoji || "\uD83C\uDF10"} ${tz.name}</option>`;
+    dst.innerHTML += `<option value="${i}">${tz.emoji || "\uD83C\uDF10"} ${tz.name}</option>`;
   });
   // Default: source = local browser, target = Shanghai
   const browserTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -321,7 +321,7 @@ function buildClocks() {
     const time = fmtTime(now, tz.code);
     const off = fmtOffset(tz.code, now);
     return `<div class="clock-card" data-idx="${i}" onclick="setDst(${i})">
-      <div class="city">${tz.city}</div>
+      <div class="city">${tz.emoji || "\uD83C\uDF10"} ${tz.city}</div>
       <div class="time">${time}</div>
       <div class="offset">${off}</div>
     </div>`;

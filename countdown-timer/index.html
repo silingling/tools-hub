@@ -55,8 +55,10 @@
     .ctrl-btn:disabled { opacity: .4; cursor: not-allowed; transform: none !important; }
 
     .input-area { display: flex; gap: 8px; align-items: center; justify-content: center; flex-wrap: wrap; margin-bottom: 10px; }
-    .input-area label { font-size: 12px; font-weight: 600; color: var(--text-light); }
-    .input-area input { padding: 8px 12px; border-radius: 8px; border: 2px solid #e0d0c4; font-size: 14px; width: 60px; text-align: center; outline: none; }
+    .input-area .input-group { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .input-area .input-group label { font-size: 10px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; }
+    .input-area .sep { font-size: 18px; font-weight: 700; color: var(--text-muted); margin-top: -14px; }
+    .input-area input { padding: 8px 12px; border-radius: 8px; border: 2px solid #e0d0c4; font-size: 16px; font-weight: 600; width: 64px; text-align: center; outline: none; }
     .input-area input:focus { border-color: var(--tools-red); }
     .input-area input::placeholder { color: #ccc; }
 
@@ -122,11 +124,20 @@
 
       <div id="countdownSection">
         <div class="input-area">
-          <input type="number" id="cdHour" min="0" max="99" value="0" placeholder="HH">
-          <label>:</label>
-          <input type="number" id="cdMin" min="0" max="59" value="5" placeholder="MM">
-          <label>:</label>
-          <input type="number" id="cdSec" min="0" max="59" value="0" placeholder="SS">
+          <div class="input-group">
+            <input type="number" id="cdHour" min="0" max="99" value="0">
+            <label>Hours</label>
+          </div>
+          <span class="sep">:</span>
+          <div class="input-group">
+            <input type="number" id="cdMin" min="0" max="59" value="5">
+            <label>Minutes</label>
+          </div>
+          <span class="sep">:</span>
+          <div class="input-group">
+            <input type="number" id="cdSec" min="0" max="59" value="0">
+            <label>Seconds</label>
+          </div>
         </div>
         <div class="presets" id="presets">
           <button class="preset-btn" onclick="setPreset(0,1,0)">1 min</button>

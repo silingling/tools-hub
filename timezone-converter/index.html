@@ -63,7 +63,7 @@
     .region-header { font-size: 16px; font-weight: 700; color: var(--tools-dark); margin: 16px 0 10px; padding: 8px 16px; background: var(--tools-light); border-radius: 8px; display: flex; align-items: center; gap: 8px; }
     .clock-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
     .clock-card {
-      display: flex; flex-direction: column; align-items: center; text-align: center;
+      display: flex; flex-direction: column; align-items: flex-start; text-align: left;
       padding: 18px 14px 14px; border-radius: 16px;
       background: var(--bg); border: 1px solid #eee8e0;
       transition: all .25s; box-shadow: 0 1px 4px rgba(0,0,0,.03);
@@ -72,7 +72,7 @@
     .clock-card .ci { font-size: 34px; line-height: 1; margin-bottom: 2px; }
     .clock-card .cn { font-size: 11px; font-weight: 700; color: var(--text-light); margin-bottom: 4px; text-transform: uppercase; letter-spacing: .5px; }
     .clock-card .ctm { font-size: 26px; font-weight: 800; color: var(--tools-dark); letter-spacing: .3px; line-height: 1.2; }
-    .clock-card .cbtm { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 3px; flex-wrap: wrap; }
+    .clock-card .cbtm { display: flex; align-items: center; gap: 6px; margin-top: 3px; flex-wrap: wrap; }
     .clock-card .cbtm .cd { font-size: 10px; color: var(--text-muted); }
     .clock-card .cbtm .co { font-size: 10px; color: var(--text-muted); }
     .clock-card .cbtm .df { font-size: 10px; font-weight: 700; padding: 1px 8px; border-radius: 50px; }

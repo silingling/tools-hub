@@ -200,6 +200,7 @@ This is a second paragraph with some more content. You can see how sentences and
 
       <div class="extra-stats">
         <div class="item">🔤 Letters: <span id="letterCount">170</span></div>
+        <div class="item">🈶 Chinese: <span id="chineseCount">0</span></div>
         <div class="item">🔢 Digits: <span id="digitCount">0</span></div>
         <div class="item">␣ Spaces: <span id="spaceCount">35</span></div>
         <div class="item">🔣 Special: <span id="specialCount">10</span></div>
@@ -235,7 +236,22 @@ function analyze() {
   const trimmed = text.trim();
 
   // Words
-  const words = trimmed ? trimmed.split(/\s+/).filter(w => w.length > 0) : [];
+  // Count words: CJK characters individually, English words by whitespace
+  let words = [];
+  if (trimmed) {
+    for (const token of trimmed.split(/\s+/)) {
+      let buf = '';
+      for (const ch of token) {
+        if (/[\u4e00-\u9fff\u3400-\u4dbf\uf900-\ufaff]/.test(ch)) {
+          if (buf) { words.push(buf); buf = ''; }
+          words.push(ch);
+        } else {
+          buf += ch;
+        }
+      }
+      if (buf) words.push(buf);
+    }
+  }
   document.getElementById('wordCount').textContent = words.length;
 
   // Characters
@@ -243,7 +259,7 @@ function analyze() {
   document.getElementById('charNoSpace').textContent = text.replace(/\s/g, '').length;
 
   // Sentences (split by . ! ?)
-  const sentences = trimmed ? trimmed.split(/[.!?]+/).filter(s => s.trim().length > 0) : [];
+  const sentences = trimmed ? trimmed.split(/[.!?\u3002\uff01\uff1f\u2026]+/).filter(s => s.trim().length > 0) : [];
   document.getElementById('sentenceCount').textContent = sentences.length;
 
   // Paragraphs (split by double newline)
@@ -254,15 +270,17 @@ function analyze() {
   const mins = words.length / 200;
   document.getElementById('readingTime').textContent = mins < 0.1 ? '<0.1' : mins.toFixed(1);
 
-  // Letter / Digit / Space / Special counts
-  let letters = 0, digits = 0, spaces = 0, special = 0;
+  // Letter / Chinese / Digit / Space / Special counts
+  let letters = 0, chineseC = 0, digits = 0, spaces = 0, special = 0;
   for (const ch of text) {
     if (/[a-zA-Z]/.test(ch)) letters++;
+    else if (/[\u4e00-\u9fff\u3400-\u4dbf\uf900-\ufaff]/.test(ch)) chineseC++;
     else if (/[0-9]/.test(ch)) digits++;
     else if (/\s/.test(ch)) spaces++;
     else special++;
   }
   document.getElementById('letterCount').textContent = letters;
+  document.getElementById('chineseCount').textContent = chineseC;
   document.getElementById('digitCount').textContent = digits;
   document.getElementById('spaceCount').textContent = spaces;
   document.getElementById('specialCount').textContent = special;
@@ -277,13 +295,21 @@ function analyze() {
     document.getElementById('longestWord').textContent = '—';
   }
 
-  // Top keywords (words with 4+ chars, exclude common stop words)
+  // Top keywords (English words 4+ chars, or Chinese chars 2+ occurrences)
   const stopWords = new Set(['this','that','with','from','have','the','and','for','are','not','but','you','all','can','was','had','her','his','has','its','out','see','she','too','did','get','say','got','put','use','try','ask','let','may','now','how','why','who','what','when','where','our','its','the','and','for','not','but','are','you','all']);
   const freq = {};
+  // Count English words
   for (const w of words) {
-    const lower = w.toLowerCase().replace(/[^a-z0-9]/g, '');
+    const lower = w.toLowerCase().replace(/[^a-z]/g, '');
     if (lower.length >= 4 && !stopWords.has(lower)) {
       freq[lower] = (freq[lower] || 0) + 1;
+    }
+  }
+  // Count individual Chinese characters (excluding common particles)
+  const chStop = new Set(['的','了','在','是','我','有','和','就','不','人','都','一','个','上','也','很','到','说','要','去','你','会','着','没','看','好','自','这','为','与']);
+  for (const ch of text) {
+    if (/[\u4e00-\u9fff\u3400-\u4dbf\uf900-\ufaff]/.test(ch) && !chStop.has(ch)) {
+      freq[ch] = (freq[ch] || 0) + 1;
     }
   }
   const sorted = Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 8);

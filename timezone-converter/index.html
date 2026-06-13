@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Time Zone Converter - Free World Clock & Time Conversion</title>
-  <meta name="description" content="Free online time zone converter. Convert time between time zones worldwide.">
-  <meta name="keywords" content="time zone converter, world clock, time converter, meeting planner, timezone">
+  <title>World Clock - Free Time Zone Converter</title>
+  <meta name="description" content="See what time it is anywhere in the world. Free World Clock with 30 cities.">
   <link rel="canonical" href="https://tools.xiaoyuland.com/timezone-converter/">
   <meta property="og:title" content="World Clock - Time Zone Converter">
   <meta property="og:description" content="See what time it is anywhere in the world.">
@@ -25,19 +24,15 @@
     .nav-links a { padding: 6px 14px; border-radius: 8px; font-size: 14px; font-weight: 600; color: var(--text); transition: all .2s; }
     .nav-links a:hover { background: var(--tools-light); color: var(--tools-dark); text-decoration: none; }
     .nav-links a.active { background: var(--tools-red); color: #fff; }
-
     .hero { padding: 36px 0 16px; text-align: center; }
     .hero-icon { font-size: 44px; margin-bottom: 2px; display: block; }
     .hero h1 { font-size: 30px; font-weight: 800; color: var(--tools-dark); margin-bottom: 2px; }
     .hero p { font-size: 14px; color: var(--text-light); }
-
     .tool-section { padding: 16px 0 40px; }
     .tool-card { background: var(--bg-card); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow); border: 1px solid #f0e8e0; }
-
-    /* Left-right layout */
     .split { display: flex; gap: 28px; align-items: flex-start; }
-    
-    /* LEFT PANEL - Master clock */
+
+    /* LEFT PANEL */
     .left-panel { flex: 0 0 260px; position: sticky; top: 80px; }
     .master-clock {
       background: linear-gradient(145deg, #fff0e6, #ffe4d4);
@@ -56,36 +51,37 @@
     .master-controls .now-btn { width: 100%; padding: 10px; border-radius: 12px; border: none; background: var(--tools-red); color: #fff; font-size: 14px; font-weight: 700; cursor: pointer; transition: background .2s; }
     .master-controls .now-btn:hover { background: var(--tools-dark); }
 
-    /* RIGHT PANEL - World clocks */
+    /* RIGHT PANEL - HORIZONTAL CITY CARDS */
     .right-panel { flex: 1; min-width: 0; }
     .right-panel .header { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
     .right-panel .header h3 { font-size: 16px; font-weight: 700; color: var(--tools-dark); }
     .right-panel .header .count { font-size: 13px; color: var(--text-muted); font-weight: 400; }
-
-    .clock-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; }
+    .clock-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 8px; }
     .clock-card {
-      padding: 16px 12px 14px; border-radius: 16px;
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 14px; border-radius: 14px;
       background: var(--bg); border: 1px solid #eee8e0;
-      text-align: center; transition: all .25s;
-      box-shadow: 0 1px 4px rgba(0,0,0,.03);
+      transition: all .25s; box-shadow: 0 1px 4px rgba(0,0,0,.03);
     }
-    .clock-card:hover { border-color: var(--tools-red); transform: translateY(-3px); box-shadow: 0 6px 20px rgba(196,30,58,.1); }
-    .clock-card .card-emoji { font-size: 34px; display: block; margin-bottom: 2px; line-height: 1.2; }
-    .clock-card .city { font-size: 11px; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: .8px; }
-    .clock-card .time { font-size: 26px; font-weight: 800; color: var(--tools-dark); margin: 5px 0 1px; line-height: 1.1; letter-spacing: .3px; }
-    .clock-card .date { font-size: 11px; color: var(--text-muted); }
-    .clock-card .offset { font-size: 10px; color: var(--text-muted); margin-top: 1px; }
-    .clock-card .diff { font-size: 10px; font-weight: 700; padding: 2px 10px; border-radius: 50px; display: inline-block; margin-top: 6px; min-width: 44px; }
-    .diff.same { background: #e8f5e9; color: #2e7d32; }
-    .diff.ahead { background: #fff8e1; color: #e65100; border: 1px solid #ffe082; }
-    .diff.behind { background: #e3f2fd; color: #1565c0; border: 1px solid #90caf9; }
-
-    /* Day/Night indicator */
-    .clock-card.night { background: #1a1a2e; border-color: #2a2a4e; }
-    .clock-card.night .city { color: #9999cc; }
-    .clock-card.night .time { color: #e8e8ff; }
-    .clock-card.night .date { color: #7777aa; }
-    .clock-card.night .offset { color: #7777aa; }
+    .clock-card:hover { border-color: var(--tools-red); background: #fff5f0; box-shadow: 0 4px 14px rgba(196,30,58,.08); }
+    .clock-card .ci { font-size: 40px; flex-shrink: 0; width: 48px; text-align: center; line-height: 1; }
+    .clock-card .cb { flex: 1; min-width: 0; }
+    .clock-card .ct { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
+    .clock-card .ct .cn { font-size: 12px; font-weight: 700; color: var(--text-light); }
+    .clock-card .ct .ctm { font-size: 24px; font-weight: 800; color: var(--tools-dark); letter-spacing: .3px; }
+    .clock-card .cbtm { display: flex; align-items: center; gap: 8px; margin-top: 1px; flex-wrap: wrap; }
+    .clock-card .cbtm .cd { font-size: 11px; color: var(--text-muted); }
+    .clock-card .cbtm .co { font-size: 10px; color: var(--text-muted); }
+    .clock-card .cbtm .df { font-size: 10px; font-weight: 700; padding: 1px 10px; border-radius: 50px; }
+    .df.s { background: #e8f5e9; color: #2e7d32; }
+    .df.a { background: #fff8e1; color: #e65100; border: 1px solid #ffe082; }
+    .df.b { background: #e3f2fd; color: #1565c0; border: 1px solid #90caf9; }
+    .clock-card.nt { background: #1a1a2e; border-color: #2a2a4e; }
+    .clock-card.nt:hover { background: #222244; }
+    .clock-card.nt .cn { color: #9999cc; }
+    .clock-card.nt .ctm { color: #e8e8ff; }
+    .clock-card.nt .cd { color: #7777aa; }
+    .clock-card.nt .co { color: #7777aa; }
 
     footer { margin-top: auto; background: var(--bg-card); border-top: 1px solid #eee; padding: 28px 0; text-align: center; }
     footer p { font-size: 13px; color: var(--text-muted); }
@@ -93,12 +89,11 @@
     footer .foot-links { margin-bottom: 6px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
     footer .foot-links a { padding: 4px 10px; font-size: 13px; color: var(--text-light); border-radius: 6px; }
     footer .foot-links a:hover { background: var(--tools-light); color: var(--tools-dark); text-decoration: none; }
-
     @media (max-width: 768px) {
       .split { flex-direction: column; }
       .left-panel { flex: none; position: static; width: 100%; }
       .master-clock .big-time { font-size: 42px; }
-      .clock-grid { grid-template-columns: repeat(3, 1fr); }
+      .clock-grid { grid-template-columns: repeat(2, 1fr); }
       .tool-card { padding: 16px; }
     }
   </style>
@@ -126,7 +121,6 @@
   <div class="container">
     <div class="tool-card">
       <div class="split">
-        <!-- LEFT: Your Time -->
         <div class="left-panel">
           <div class="master-clock">
             <div class="label">🕐 YOUR TIME</div>
@@ -143,7 +137,6 @@
             </div>
           </div>
         </div>
-        <!-- RIGHT: World Clocks -->
         <div class="right-panel">
           <div class="header">
             <h3>🌐 World Cities</h3>
@@ -281,18 +274,17 @@ function updateAllClocks() {
 
     const tzOff = getTzOffset(tz.code, masterDate);
     const diffMin = tzOff - srcOffset;
-    let diffLabel = '', diffClass = 'same';
-    if (diffMin === 0) { diffLabel = 'same'; diffClass = 'same'; }
-    else if (diffMin > 0) { const hh = Math.floor(diffMin / 60); diffLabel = '+' + hh + 'h'; diffClass = 'ahead'; const rm = Math.abs(diffMin) % 60; if(rm) diffLabel += String(rm); }
-    else { const hh = Math.floor(-diffMin / 60); diffLabel = '-' + hh + 'h'; diffClass = 'behind'; const rm = Math.abs(diffMin) % 60; if(rm) diffLabel += String(rm); }
+    let diffLabel = '', diffClass = 's';
+    if (diffMin === 0) { diffLabel = 'same'; }
+    else if (diffMin > 0) { const hh = Math.floor(diffMin / 60); diffLabel = '+' + hh + 'h'; diffClass = 'a'; const rm = Math.abs(diffMin) % 60; if(rm) diffLabel += String(rm); }
+    else { const hh = Math.floor(-diffMin / 60); diffLabel = '-' + hh + 'h'; diffClass = 'b'; const rm = Math.abs(diffMin) % 60; if(rm) diffLabel += String(rm); }
 
-    return '<div class="clock-card' + (isNight ? ' night' : '') + '">' +
-      '<span class="card-emoji">' + e + '</span>' +
-      '<div class="city">' + tz.city + '</div>' +
-      '<div class="time">' + t + '</div>' +
-      '<div class="date">' + d + '</div>' +
-      '<div class="offset">' + off + '</div>' +
-      '<div class="diff ' + diffClass + '">' + diffLabel + '</div></div>';
+    return '<div class="clock-card' + (isNight ? ' nt' : '') + '">' +
+      '<div class="ci">' + e + '</div>' +
+      '<div class="cb">' +
+      '<div class="ct"><span class="cn">' + tz.city + '</span><span class="ctm">' + t + '</span></div>' +
+      '<div class="cbtm"><span class="cd">' + d + '</span><span class="co">' + off + '</span><span class="df ' + diffClass + '">' + diffLabel + '</span></div>' +
+      '</div></div>';
   }).join('');
 }
 
@@ -331,11 +323,9 @@ function initInputs() {
 
 populateSelect();
 initInputs();
-
 document.getElementById('masterTz').addEventListener('change', convertFromInput);
 document.getElementById('masterDateInput').addEventListener('input', convertFromInput);
 document.getElementById('masterTimeInput').addEventListener('input', convertFromInput);
-
 setInterval(() => {
   const now = new Date();
   if (Math.abs(masterDate.getTime() - now.getTime()) < 5000) {

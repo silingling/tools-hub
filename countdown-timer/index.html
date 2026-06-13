@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Countdown Timer & Stopwatch</title>
+  <meta name="description" content="Free online countdown timer and stopwatch. Set timers, track elapsed time, with presets.">
+  <meta name="keywords" content="countdown timer, stopwatch, online timer, countdown, timer">
+  <link rel="canonical" href="https://tools.xiaoyuland.com/countdown-timer/">
+  <meta property="og:title" content="Countdown Timer & Stopwatch">
+  <meta property="og:description" content="Countdown timer and stopwatch with presets.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tools.xiaoyuland.com/countdown-timer/">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Countdown Timer","description":"Countdown timer and stopwatch","applicationCategory":"Utility","operatingSystem":"All"}</script>
+  <style>
+    :root { --tools-red: #c41e3a; --tools-dark: #8b0000; --tools-light: #fff0e6; --bg: #faf6f0; --bg-card: #fff; --text: #2c2c2c; --text-light: #666; --text-muted: #999; --radius: 16px; --shadow: 0 4px 20px rgba(0,0,0,.06); }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: var(--text); background: var(--bg); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+    a { color: var(--tools-red); text-decoration: none; }
+    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+    nav { background: var(--bg-card); border-bottom: 1px solid #eee; padding: 14px 0; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(8px); }
+    nav .container { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .nav-brand { font-size: 20px; font-weight: 800; color: var(--tools-dark); display: flex; align-items: center; gap: 8px; }
+    .nav-links { display: flex; gap: 4px; flex-wrap: wrap; }
+    .nav-links a { padding: 6px 14px; border-radius: 8px; font-size: 14px; font-weight: 600; color: var(--text); transition: all .2s; }
+    .nav-links a:hover { background: var(--tools-light); color: var(--tools-dark); text-decoration: none; }
+    .hero { padding: 28px 0 12px; text-align: center; }
+    .hero-icon { font-size: 40px; display: block; margin-bottom: 2px; }
+    .hero h1 { font-size: 28px; font-weight: 800; color: var(--tools-dark); margin-bottom: 2px; }
+    .hero p { font-size: 14px; color: var(--text-light); }
+    .tool-section { padding: 12px 0 36px; }
+    .tool-card { background: var(--bg-card); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); border: 1px solid #f0e8e0; }
+
+    .mode-tabs { display: flex; gap: 4px; margin-bottom: 20px; padding: 4px; background: #efe8e0; border-radius: 14px; }
+    .mode-tab { padding: 10px 28px; border-radius: 10px; border: none; font-size: 15px; font-weight: 600; cursor: pointer; background: transparent; color: #999; opacity: .7; transition: all .2s; }
+    .mode-tab:hover { opacity: 1; color: var(--text); background: rgba(255,255,255,.6); }
+    .mode-tab.active { opacity: 1; background: linear-gradient(135deg, var(--tools-red), #b0102a); color: #fff; font-weight: 700; box-shadow: 0 3px 10px rgba(196,30,58,.3); }
+
+    .timer-display { text-align: center; padding: 24px 0 16px; }
+    .time-nums { font-size: 72px; font-weight: 800; color: var(--tools-dark); letter-spacing: 2px; font-variant-numeric: tabular-nums; line-height: 1; }
+    .time-nums .secs { color: var(--tools-red); }
+    .time-labels { display: flex; justify-content: center; gap: 40px; margin-top: 2px; font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+    .time-labels span { width: 60px; text-align: center; }
+    .timer-status { font-size: 13px; color: var(--text-light); margin-top: 4px; font-weight: 500; }
+
+    .controls { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 16px; }
+    .ctrl-btn { padding: 10px 24px; border-radius: 10px; border: none; font-size: 14px; font-weight: 700; cursor: pointer; transition: all .2s; }
+    .ctrl-btn.start { background: linear-gradient(135deg, var(--tools-red), #b0102a); color: #fff; box-shadow: 0 3px 10px rgba(196,30,58,.2); }
+    .ctrl-btn.start:hover { transform: translateY(-1px); box-shadow: 0 5px 16px rgba(196,30,58,.3); }
+    .ctrl-btn.pause { background: #e8a020; color: #fff; }
+    .ctrl-btn.pause:hover { background: #d09018; }
+    .ctrl-btn.reset { background: var(--bg); color: var(--text); border: 2px solid #e0d0c4; }
+    .ctrl-btn.reset:hover { border-color: var(--tools-red); color: var(--tools-dark); }
+    .ctrl-btn:disabled { opacity: .4; cursor: not-allowed; transform: none !important; }
+
+    .input-area { display: flex; gap: 8px; align-items: center; justify-content: center; flex-wrap: wrap; margin-bottom: 10px; }
+    .input-area label { font-size: 12px; font-weight: 600; color: var(--text-light); }
+    .input-area input { padding: 8px 12px; border-radius: 8px; border: 2px solid #e0d0c4; font-size: 14px; width: 60px; text-align: center; outline: none; }
+    .input-area input:focus { border-color: var(--tools-red); }
+    .input-area input::placeholder { color: #ccc; }
+
+    .presets { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-bottom: 16px; }
+    .preset-btn { padding: 8px 18px; border-radius: 10px; border: 1px solid #e0d0c4; background: var(--bg-card); font-size: 13px; font-weight: 600; cursor: pointer; transition: all .15s; color: var(--text); }
+    .preset-btn:hover { border-color: var(--tools-red); background: var(--tools-light); }
+    .preset-btn.active-preset { border-color: var(--tools-red); background: var(--tools-light); color: var(--tools-dark); font-weight: 700; }
+
+    .progress-bar { height: 6px; background: var(--bg); border-radius: 3px; overflow: hidden; margin-top: 6px; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--tools-red), #ff6b3d); border-radius: 3px; transition: width .3s; width: 0%; }
+
+    .laps { margin-top: 16px; }
+    .laps h4 { font-size: 13px; font-weight: 700; color: var(--tools-dark); margin-bottom: 6px; }
+    .lap-table { width: 100%; border-collapse: collapse; }
+    .lap-table td { padding: 6px 10px; font-size: 13px; border-bottom: 1px solid #f0e8e0; font-variant-numeric: tabular-nums; }
+    .lap-table td:first-child { color: var(--text-muted); width: 40px; }
+    .lap-table td:nth-child(2) { font-weight: 700; }
+    .lap-table td:last-child { text-align: right; color: var(--text-light); }
+
+    footer { margin-top: auto; background: var(--bg-card); border-top: 1px solid #eee; padding: 24px 0; text-align: center; }
+    footer p { font-size: 13px; color: var(--text-muted); }
+    footer a { color: var(--tools-red); font-weight: 600; }
+    footer .foot-links { margin-bottom: 6px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+    footer .foot-links a { padding: 4px 10px; font-size: 13px; color: var(--text-light); border-radius: 6px; }
+    footer .foot-links a:hover { background: var(--tools-light); color: var(--tools-dark); text-decoration: none; }
+
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 24px; }
+      .tool-card { padding: 16px; }
+      .time-nums { font-size: 48px; }
+      .time-labels { gap: 20px; }
+      .time-labels span { width: 40px; }
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <div class="container">
+    <a class="nav-brand" href="//xiaoyuland.com">🏮 Xiaoyu Land</a>
+    <div class="nav-links">
+      <a href="//tools.xiaoyuland.com">🛠️ Tools</a>
+      <a href="//game.xiaoyuland.com">🎮 Games</a>
+      <a href="//ai.xiaoyuland.com">🤖 AI</a>
+      <a href="//culture.xiaoyuland.com">🏮 Culture</a>
+    </div>
+  </div>
+</nav>
+<section class="hero">
+  <div class="container">
+    <span class="hero-icon">⏱</span>
+    <h1>Countdown Timer</h1>
+    <p>Countdown + Stopwatch</p>
+  </div>
+</section>
+<section class="tool-section">
+  <div class="container">
+    <div class="tool-card">
+      <div class="mode-tabs" id="modeTabs">
+        <button class="mode-tab active" data-mode="countdown" onclick="switchMode('countdown')">⏳ Countdown</button>
+        <button class="mode-tab" data-mode="stopwatch" onclick="switchMode('stopwatch')">⏱ Stopwatch</button>
+      </div>
+
+      <div id="countdownSection">
+        <div class="input-area">
+          <input type="number" id="cdHour" min="0" max="99" value="0" placeholder="HH">
+          <label>:</label>
+          <input type="number" id="cdMin" min="0" max="59" value="5" placeholder="MM">
+          <label>:</label>
+          <input type="number" id="cdSec" min="0" max="59" value="0" placeholder="SS">
+        </div>
+        <div class="presets" id="presets">
+          <button class="preset-btn" onclick="setPreset(0,1,0)">1 min</button>
+          <button class="preset-btn active-preset" onclick="setPreset(0,5,0)">5 min</button>
+          <button class="preset-btn" onclick="setPreset(0,10,0)">10 min</button>
+          <button class="preset-btn" onclick="setPreset(0,30,0)">30 min</button>
+          <button class="preset-btn" onclick="setPreset(1,0,0)">1 hour</button>
+          <button class="preset-btn" onclick="setPreset(2,0,0)">2 hours</button>
+        </div>
+      </div>
+
+      <div id="stopwatchSection" style="display:none">
+        <div class="presets" style="margin-bottom:6px">
+          <button class="preset-btn" onclick="document.getElementById('swLapTable').innerHTML=''">🗑 Clear Laps</button>
+        </div>
+      </div>
+
+      <div class="timer-display">
+        <div class="time-nums" id="display">
+          <span id="d">00</span>:<span id="h">00</span>:<span id="m">05</span>:<span class="secs" id="s">00</span>
+        </div>
+        <div class="time-labels">
+          <span>Days</span><span>Hours</span><span>Mins</span><span>Secs</span>
+        </div>
+        <div class="timer-status" id="status">Ready</div>
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      </div>
+
+      <div class="controls">
+        <button class="ctrl-btn start" id="startBtn" onclick="startTimer()">▶ Start</button>
+        <button class="ctrl-btn pause" id="pauseBtn" onclick="pauseTimer()" disabled>⏸ Pause</button>
+        <button class="ctrl-btn reset" onclick="resetTimer()">↺ Reset</button>
+        <button class="ctrl-btn reset" id="lapBtn" onclick="recordLap()" disabled>🏁 Lap</button>
+      </div>
+
+      <div class="laps" id="lapsSection" style="display:none">
+        <h4>🏁 Laps</h4>
+        <table class="lap-table" id="swLapTable"></table>
+      </div>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="container">
+    <div class="foot-links">
+      <a href="/countdown-timer/">⏱ Countdown Timer</a>
+      <a href="/unit-converter/">📏 Unit Converter</a>
+      <a href="/color-picker/">🎨 Color Picker</a>
+      <a href="/timezone-converter/">🌍 World Clock</a>
+      <a href="/number-base/">🔢 Number Base</a>
+      <a href="/word-counter/">📝 Word Counter</a>
+      <a href="/random-picker/">🎲 Random Picker</a>
+      <a href="/bmi-calculator/">⚖️ BMI Calculator</a>
+      <a href="/password-generator/">🔑 Password Generator</a>
+      <a href="/quiz/">🏢 Workplace Quiz</a>
+      <a href="//xiaoyuland.com">🏠 Xiaoyu Land</a>
+    </div>
+    <p>© 2026 <a href="//xiaoyuland.com">Xiaoyu Land</a> · Tools</p>
+  </div>
+</section>
+<script>
+let mode = 'countdown'; // countdown | stopwatch
+let interval = null;
+let running = false;
+let paused = false;
+
+// Countdown state
+let totalSecs = 0;
+let remainSecs = 0;
+
+// Stopwatch state
+let swMs = 0;
+let lapCount = 0;
+let lastLapMs = 0;
+
+function fmt(n) { return String(n).padStart(2, '0'); }
+
+function updateDisplay(d, h, m, s) {
+  document.getElementById('d').textContent = fmt(d);
+  document.getElementById('h').textContent = fmt(h);
+  document.getElementById('m').textContent = fmt(m);
+  document.getElementById('s').textContent = fmt(s);
+}
+
+function getCountdownSecs() {
+  const h = parseInt(document.getElementById('cdHour').value) || 0;
+  const m = parseInt(document.getElementById('cdMin').value) || 0;
+  const s = parseInt(document.getElementById('cdSec').value) || 0;
+  return h * 3600 + m * 60 + s;
+}
+
+function setPreset(h, m, s) {
+  document.getElementById('cdHour').value = h;
+  document.getElementById('cdMin').value = m;
+  document.getElementById('cdSec').value = s;
+  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active-preset'));
+  event.target.classList.add('active-preset');
+  if (!running) {
+    remainSecs = h * 3600 + m * 60 + s;
+    totalSecs = remainSecs;
+    renderCountdown();
+  }
+}
+
+function renderCountdown() {
+  const d = Math.floor(remainSecs / 86400);
+  const h = Math.floor((remainSecs % 86400) / 3600);
+  const m = Math.floor((remainSecs % 3600) / 60);
+  const s = remainSecs % 60;
+  updateDisplay(d, h, m, s);
+  // Progress
+  if (totalSecs > 0) {
+    const pct = (1 - remainSecs / totalSecs) * 100;
+    document.getElementById('progressFill').style.width = Math.min(pct, 100) + '%';
+  }
+}
+
+function renderStopwatch() {
+  const total = Math.floor(swMs / 1000);
+  const d = Math.floor(total / 86400);
+  const h = Math.floor((total % 86400) / 3600);
+  const m = Math.floor((total % 3600) / 60);
+  const s = total % 60;
+  updateDisplay(d, h, m, s);
+  document.getElementById('progressFill').style.width = '0%';
+}
+
+function tick() {
+  if (!running || paused) return;
+  if (mode === 'countdown') {
+    remainSecs--;
+    if (remainSecs <= 0) {
+      remainSecs = 0;
+      renderCountdown();
+      stopTimer();
+      document.getElementById('status').textContent = '⏰ Time\'s up!';
+      flashAlert();
+      return;
+    }
+    renderCountdown();
+    document.getElementById('status').textContent = '⏳ Running — ' + formatTimeLeft(remainSecs) + ' remaining';
+  } else {
+    swMs += 100;
+    renderStopwatch();
+    document.getElementById('status').textContent = '⏱ Elapsed — ' + formatTimeLeft(Math.floor(swMs / 1000));
+  }
+}
+
+function formatTimeLeft(secs) {
+  const h = Math.floor(secs / 3600);
+  const m = Math.floor((secs % 3600) / 60);
+  const s = secs % 60;
+  let parts = [];
+  if (h) parts.push(h + 'h');
+  if (m) parts.push(m + 'm');
+  parts.push(s + 's');
+  return parts.join(' ');
+}
+
+function flashAlert() {
+  const display = document.querySelector('.time-nums');
+  let count = 0;
+  const flash = setInterval(() => {
+    display.style.color = count % 2 === 0 ? '#ff0000' : 'var(--tools-dark)';
+    count++;
+    if (count > 10) { clearInterval(flash); display.style.color = 'var(--tools-dark)'; }
+  }, 300);
+}
+
+function startTimer() {
+  if (running && paused) {
+    paused = false;
+    document.getElementById('startBtn').textContent = '▶ Running';
+    document.getElementById('pauseBtn').disabled = false;
+    document.getElementById('status').textContent = mode === 'countdown' ? '⏳ Running' : '⏱ Running';
+    return;
+  }
+  if (running) return;
+
+  if (mode === 'countdown') {
+    const secs = getCountdownSecs();
+    if (secs <= 0) { document.getElementById('status').textContent = '⚠️ Set a time first'; return; }
+    if (remainSecs <= 0) {
+      totalSecs = secs;
+      remainSecs = secs;
+    }
+  } else {
+    document.getElementById('lapBtn').disabled = false;
+  }
+
+  running = true;
+  paused = false;
+  document.getElementById('startBtn').textContent = '▶ Running';
+  document.getElementById('pauseBtn').disabled = false;
+  document.getElementById('cdHour').disabled = true;
+  document.getElementById('cdMin').disabled = true;
+  document.getElementById('cdSec').disabled = true;
+  document.querySelectorAll('.preset-btn').forEach(b => b.style.pointerEvents = 'none');
+
+  interval = setInterval(tick, 100);
+}
+
+function pauseTimer() {
+  if (!running || paused) return;
+  paused = true;
+  document.getElementById('startBtn').textContent = '▶ Resume';
+  document.getElementById('pauseBtn').disabled = true;
+  document.getElementById('status').textContent = '⏸ Paused';
+  clearInterval(interval);
+}
+
+function stopTimer() {
+  running = false;
+  paused = false;
+  clearInterval(interval);
+  document.getElementById('startBtn').textContent = '▶ Start';
+  document.getElementById('pauseBtn').disabled = true;
+  document.getElementById('cdHour').disabled = false;
+  document.getElementById('cdMin').disabled = false;
+  document.getElementById('cdSec').disabled = false;
+  document.querySelectorAll('.preset-btn').forEach(b => b.style.pointerEvents = '');
+  document.getElementById('lapBtn').disabled = true;
+}
+
+function resetTimer() {
+  stopTimer();
+  document.getElementById('status').textContent = 'Ready';
+  document.getElementById('progressFill').style.width = '0%';
+  if (mode === 'countdown') {
+    remainSecs = getCountdownSecs();
+    totalSecs = remainSecs;
+    renderCountdown();
+  } else {
+    swMs = 0;
+    lastLapMs = 0;
+    lapCount = 0;
+    renderStopwatch();
+    document.getElementById('swLapTable').innerHTML = '';
+    document.getElementById('lapsSection').style.display = 'none';
+  }
+}
+
+function recordLap() {
+  if (mode !== 'stopwatch' || !running) return;
+  lapCount++;
+  const current = swMs;
+  const lapTime = current - lastLapMs;
+  lastLapMs = current;
+  const fmtMs = ms => {
+    const total = Math.floor(ms / 1000);
+    const m = Math.floor(total / 60);
+    const s = total % 60;
+    const cs = Math.floor((ms % 1000) / 100);
+    return fmt(m) + ':' + fmt(s) + '.' + cs;
+  };
+  const row = document.getElementById('swLapTable').insertRow(0);
+  row.innerHTML = '<td>#' + lapCount + '</td><td>' + fmtMs(current) + '</td><td>+' + fmtMs(lapTime) + '</td>';
+  document.getElementById('lapsSection').style.display = 'block';
+}
+
+function switchMode(newMode) {
+  if (running) { stopTimer(); }
+  mode = newMode;
+  document.querySelectorAll('.mode-tab').forEach(t => t.classList.toggle('active', t.dataset.mode === mode));
+  document.getElementById('countdownSection').style.display = mode === 'countdown' ? '' : 'none';
+  document.getElementById('stopwatchSection').style.display = mode === 'stopwatch' ? '' : 'none';
+  document.getElementById('lapBtn').style.display = mode === 'stopwatch' ? '' : 'none';
+  document.getElementById('lapsSection').style.display = 'none';
+  resetTimer();
+}
+
+// Init
+remainSecs = getCountdownSecs();
+totalSecs = remainSecs;
+renderCountdown();
+</script>
+</body>
+</html>

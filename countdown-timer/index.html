@@ -127,7 +127,11 @@
         <div class="input-area">
           <span class="input-label">⏳ Preset Time</span>
           <div class="input-group">
-            <input type="number" id="cdHour" min="0" max="99" value="0">
+            <input type="number" id="cdDay" min="0" max="99" value="0">
+            <label>Days</label>
+          </div>
+          <div class="input-group">
+            <input type="number" id="cdHour" min="0" max="23" value="0">
             <label>Hours</label>
           </div>
           <span class="sep">:</span>
@@ -142,12 +146,14 @@
           </div>
         </div>
         <div class="presets" id="presets">
-          <button class="preset-btn" onclick="setPreset(0,1,0)">1 min</button>
-          <button class="preset-btn active-preset" onclick="setPreset(0,5,0)">5 min</button>
-          <button class="preset-btn" onclick="setPreset(0,10,0)">10 min</button>
-          <button class="preset-btn" onclick="setPreset(0,30,0)">30 min</button>
-          <button class="preset-btn" onclick="setPreset(1,0,0)">1 hour</button>
-          <button class="preset-btn" onclick="setPreset(2,0,0)">2 hours</button>
+          <button class="preset-btn" onclick="setPreset(0,0,1,0)">1 min</button>
+          <button class="preset-btn active-preset" onclick="setPreset(0,0,5,0)">5 min</button>
+          <button class="preset-btn" onclick="setPreset(0,0,10,0)">10 min</button>
+          <button class="preset-btn" onclick="setPreset(0,0,30,0)">30 min</button>
+          <button class="preset-btn" onclick="setPreset(0,1,0,0)">1 hour</button>
+          <button class="preset-btn" onclick="setPreset(0,2,0,0)">2 hours</button>
+          <button class="preset-btn" onclick="setPreset(1,0,0,0)">1 day</button>
+          <button class="preset-btn" onclick="setPreset(2,0,0,0)">2 days</button>
         </div>
       </div>
 
@@ -226,13 +232,15 @@ function updateDisplay(h, m, s, tenth) {
 }
 
 function getCountdownSecs() {
+  const d = parseInt(document.getElementById('cdDay').value) || 0;
   const h = parseInt(document.getElementById('cdHour').value) || 0;
   const m = parseInt(document.getElementById('cdMin').value) || 0;
   const s = parseInt(document.getElementById('cdSec').value) || 0;
-  return h * 3600 + m * 60 + s;
+  return d * 86400 + h * 3600 + m * 60 + s;
 }
 
-function setPreset(h, m, s) {
+function setPreset(d, h, m, s) {
+  document.getElementById('cdDay').value = d;
   document.getElementById('cdHour').value = h;
   document.getElementById('cdMin').value = m;
   document.getElementById('cdSec').value = s;
@@ -344,6 +352,7 @@ function startTimer() {
   paused = false;
   document.getElementById('startBtn').textContent = '▶ Running';
   document.getElementById('pauseBtn').disabled = false;
+  document.getElementById('cdDay').disabled = true;
   document.getElementById('cdHour').disabled = true;
   document.getElementById('cdMin').disabled = true;
   document.getElementById('cdSec').disabled = true;
@@ -372,6 +381,7 @@ function stopTimer() {
   if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
   document.getElementById('startBtn').textContent = '▶ Start';
   document.getElementById('pauseBtn').disabled = true;
+  document.getElementById('cdDay').disabled = false;
   document.getElementById('cdHour').disabled = false;
   document.getElementById('cdMin').disabled = false;
   document.getElementById('cdSec').disabled = false;

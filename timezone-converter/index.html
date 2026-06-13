@@ -63,24 +63,23 @@
     .region-header { font-size: 16px; font-weight: 700; color: var(--tools-dark); margin: 16px 0 10px; padding: 8px 16px; background: var(--tools-light); border-radius: 8px; display: flex; align-items: center; gap: 8px; }
     .clock-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
     .clock-card {
-      display: flex; align-items: center; gap: 14px;
-      padding: 16px 18px; border-radius: 16px;
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+      padding: 18px 14px 14px; border-radius: 16px;
       background: var(--bg); border: 1px solid #eee8e0;
       transition: all .25s; box-shadow: 0 1px 4px rgba(0,0,0,.03);
     }
     .clock-card:hover { border-color: var(--tools-red); background: #fff5f0; box-shadow: 0 4px 14px rgba(196,30,58,.08); }
-    .clock-card .ci { font-size: 40px; flex-shrink: 0; width: 52px; text-align: center; line-height: 1; }
-    .clock-card .cb { flex: 1; min-width: 0; }
-    .clock-card .ct { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
-    .clock-card .ct .cn { font-size: 13px; font-weight: 700; color: var(--text-light); }
-    .clock-card .ct .ctm { font-size: 24px; font-weight: 800; color: var(--tools-dark); letter-spacing: .3px; }
-    .clock-card .cbtm { display: flex; align-items: center; gap: 8px; margin-top: 1px; flex-wrap: wrap; }
-    .clock-card .cbtm .cd { font-size: 12px; color: var(--text-muted); }
-    .clock-card .cbtm .co { font-size: 12px; color: var(--text-muted); }
-    .clock-card .cbtm .df { font-size: 11px; font-weight: 700; padding: 1px 10px; border-radius: 50px; }
+    .clock-card .ci { font-size: 34px; line-height: 1; margin-bottom: 2px; }
+    .clock-card .cn { font-size: 11px; font-weight: 700; color: var(--text-light); margin-bottom: 4px; text-transform: uppercase; letter-spacing: .5px; }
+    .clock-card .ctm { font-size: 26px; font-weight: 800; color: var(--tools-dark); letter-spacing: .3px; line-height: 1.2; }
+    .clock-card .cbtm { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 3px; flex-wrap: wrap; }
+    .clock-card .cbtm .cd { font-size: 10px; color: var(--text-muted); }
+    .clock-card .cbtm .co { font-size: 10px; color: var(--text-muted); }
+    .clock-card .cbtm .df { font-size: 10px; font-weight: 700; padding: 1px 8px; border-radius: 50px; }
     .df.s { background: #e8f5e9; color: #2e7d32; }
     .df.a { background: #fff8e1; color: #e65100; border: 1px solid #ffe082; }
     .df.b { background: #e3f2fd; color: #1565c0; border: 1px solid #90caf9; }
+    .clock-card.nt .ci { filter: brightness(1.4); }
 
     /* NIGHT MODE */
     .clock-card.nt { background: #1a1a2e; border-color: #2a2a4e; }
@@ -89,7 +88,7 @@
     .clock-card.nt .ctm { color: #ffffff; }
     .clock-card.nt .cd { color: #aaaadd; }
     .clock-card.nt .co { color: #aaaadd; }
-    .clock-card.nt .ci { filter: brightness(1.4); background: rgba(255,255,255,.12); border-radius: 10px; width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,.18); }
+    .clock-card.nt .ci { filter: brightness(1.4); background: rgba(255,255,255,.12); border-radius: 10px; width: 48px; height: 48px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,.18); margin-bottom: 4px; }
     .clock-card.hidden { display: none; }
 
     footer { margin-top: auto; background: var(--bg-card); border-top: 1px solid #eee; padding: 24px 0; text-align: center; }
@@ -315,10 +314,9 @@ function renderClockCard(tz, srcOffset) {
 
   return '<div class="clock-card' + (isNight ? ' nt' : '') + '" data-city="' + tz.city.toLowerCase() + '" data-country="' + (tz.country||'').toLowerCase() + '" data-region="' + tz.region + '">' +
     '<div class="ci">' + e + '</div>' +
-    '<div class="cb">' +
-    '<div class="ct"><span class="cn">' + tz.city + '</span><span class="ctm">' + t + '</span></div>' +
-    '<div class="cbtm"><span class="cd">' + d + '</span><span class="co">' + off + '</span><span class="df ' + diffClass + '">' + diffLabel + '</span></div>' +
-    '</div></div>';
+    '<div class="cn">' + tz.city + '</div>' +
+    '<div class="ctm">' + t + '</div>' +
+    '<div class="cbtm"><span class="cd">' + d + '</span><span class="co">' + off + '</span><span class="df ' + diffClass + '">' + diffLabel + '</span></div></div>';
 }
 
 function updateAllClocks() {

@@ -32,16 +32,16 @@
 
     /* MASTER CLOCK */
     .master-clock { margin-bottom: 18px; background: linear-gradient(135deg, #fff0e6, #ffe4d4); border-radius: 18px; padding: 18px; border: 2px solid var(--tools-red); }
-    .master-clock .label { text-align: center; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--tools-red); margin-bottom: 6px; }
+    .master-clock .label { text-align: center; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--tools-red); margin-bottom: 6px; }
     .master-body { display: flex; align-items: center; gap: 20px; justify-content: center; }
     .master-badge { flex-shrink: 0; width: 150px; text-align: center; background: rgba(255,255,255,.5); border-radius: 18px; padding: 16px 14px; border: 1px solid rgba(196,30,58,.2); }
     .master-badge .badge-icon { font-size: 66px; line-height: 1; margin-bottom: 3px; }
     .master-badge .badge-city { font-size: 16px; font-weight: 800; color: var(--tools-dark); }
-    .master-badge .badge-country { font-size: 11px; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: .8px; }
+    .master-badge .badge-country { font-size: 12px; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: .8px; }
     .master-info { text-align: left; }
     .master-clock .big-time { font-size: 54px; font-weight: 800; color: var(--tools-dark); line-height: 1; letter-spacing: -1px; }
-    .master-clock .big-date { font-size: 14px; color: var(--text); margin-top: 2px; }
-    .master-clock .big-tz { font-size: 13px; font-weight: 600; color: var(--text-light); margin-top: 4px; padding: 3px 14px; background: rgba(255,255,255,.6); border-radius: 50px; display: inline-block; }
+    .master-clock .big-date { font-size: 15px; color: var(--text); margin-top: 2px; }
+    .master-clock .big-tz { font-size: 14px; font-weight: 600; color: var(--text-light); margin-top: 4px; padding: 3px 14px; background: rgba(255,255,255,.6); border-radius: 50px; display: inline-block; }
     .master-controls { display: flex; gap: 8px; justify-content: center; align-items: center; margin-top: 12px; flex-wrap: wrap; }
     .master-controls select { padding: 8px 14px; border-radius: 10px; border: 2px solid #e8d8cc; font-size: 14px; background: var(--bg-card); outline: none; cursor: pointer; }
     .master-controls input { padding: 8px 12px; border-radius: 10px; border: 2px solid #e8d8cc; font-size: 14px; background: var(--bg-card); outline: none; }
@@ -52,11 +52,11 @@
     /* TOOLBAR */
     .toolbar { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
     .toolbar h3 { font-size: 16px; font-weight: 700; color: var(--tools-dark); }
-    .toolbar .count { font-size: 13px; color: var(--text-muted); font-weight: 400; margin-right: auto; }
-    .search-input { padding: 7px 12px; border-radius: 10px; border: 2px solid #e8d8cc; font-size: 13px; background: var(--bg); outline: none; width: 170px; }
+    .toolbar .count { font-size: 14px; color: var(--text-muted); font-weight: 400; margin-right: auto; }
+    .search-input { padding: 7px 12px; border-radius: 10px; border: 2px solid #e8d8cc; font-size: 14px; background: var(--bg); outline: none; width: 170px; }
     .search-input:focus { border-color: var(--tools-red); }
     .theme-toggle { display: flex; gap: 2px; background: var(--bg); border-radius: 10px; padding: 2px; border: 1px solid #e8d8cc; }
-    .theme-btn { padding: 5px 12px; border: none; border-radius: 8px; font-size: 13px; cursor: pointer; background: transparent; color: var(--text-light); font-weight: 600; transition: all .15s; }
+    .theme-btn { padding: 5px 12px; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; background: transparent; color: var(--text-light); font-weight: 600; transition: all .15s; }
     .theme-btn.active { background: var(--bg-card); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,.08); }
 
     /* CITY CARDS */
@@ -72,12 +72,12 @@
     .clock-card .ci { font-size: 40px; flex-shrink: 0; width: 52px; text-align: center; line-height: 1; }
     .clock-card .cb { flex: 1; min-width: 0; }
     .clock-card .ct { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
-    .clock-card .ct .cn { font-size: 12px; font-weight: 700; color: var(--text-light); }
+    .clock-card .ct .cn { font-size: 13px; font-weight: 700; color: var(--text-light); }
     .clock-card .ct .ctm { font-size: 24px; font-weight: 800; color: var(--tools-dark); letter-spacing: .3px; }
     .clock-card .cbtm { display: flex; align-items: center; gap: 8px; margin-top: 1px; flex-wrap: wrap; }
-    .clock-card .cbtm .cd { font-size: 11px; color: var(--text-muted); }
-    .clock-card .cbtm .co { font-size: 10px; color: var(--text-muted); }
-    .clock-card .cbtm .df { font-size: 10px; font-weight: 700; padding: 1px 10px; border-radius: 50px; }
+    .clock-card .cbtm .cd { font-size: 12px; color: var(--text-muted); }
+    .clock-card .cbtm .co { font-size: 12px; color: var(--text-muted); }
+    .clock-card .cbtm .df { font-size: 11px; font-weight: 700; padding: 1px 10px; border-radius: 50px; }
     .df.s { background: #e8f5e9; color: #2e7d32; }
     .df.a { background: #fff8e1; color: #e65100; border: 1px solid #ffe082; }
     .df.b { background: #e3f2fd; color: #1565c0; border: 1px solid #90caf9; }

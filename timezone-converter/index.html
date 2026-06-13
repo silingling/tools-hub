@@ -23,7 +23,6 @@
     .nav-links { display: flex; gap: 4px; flex-wrap: wrap; }
     .nav-links a { padding: 6px 14px; border-radius: 8px; font-size: 14px; font-weight: 600; color: var(--text); transition: all .2s; }
     .nav-links a:hover { background: var(--tools-light); color: var(--tools-dark); text-decoration: none; }
-    .nav-links a.active { background: var(--tools-red); color: #fff; }
     .hero { padding: 32px 0 12px; text-align: center; }
     .hero-icon { font-size: 40px; margin-bottom: 2px; display: block; }
     .hero h1 { font-size: 28px; font-weight: 800; color: var(--tools-dark); margin-bottom: 2px; }
@@ -31,42 +30,37 @@
     .tool-section { padding: 12px 0 36px; }
     .tool-card { background: var(--bg-card); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); border: 1px solid #f0e8e0; }
 
-    /* MASTER CLOCK - TOP */
-    .master-clock {
-      margin-bottom: 20px;
-      background: linear-gradient(135deg, #fff0e6, #ffe4d4);
-      border-radius: 18px; padding: 20px;
-      border: 2px solid var(--tools-red);
-    }
-    .master-clock .label { text-align: center; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--tools-red); margin-bottom: 8px; }
-    .master-body { display: flex; align-items: center; gap: 24px; justify-content: center; }
-    .master-badge {
-      flex-shrink: 0; width: 150px; text-align: center;
-      background: rgba(255,255,255,.5); border-radius: 18px;
-      padding: 18px 14px; border: 1px solid rgba(196,30,58,.2);
-    }
-    .master-badge .badge-icon { font-size: 68px; line-height: 1; margin-bottom: 4px; }
+    /* MASTER CLOCK */
+    .master-clock { margin-bottom: 18px; background: linear-gradient(135deg, #fff0e6, #ffe4d4); border-radius: 18px; padding: 18px; border: 2px solid var(--tools-red); }
+    .master-clock .label { text-align: center; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--tools-red); margin-bottom: 6px; }
+    .master-body { display: flex; align-items: center; gap: 20px; justify-content: center; }
+    .master-badge { flex-shrink: 0; width: 150px; text-align: center; background: rgba(255,255,255,.5); border-radius: 18px; padding: 16px 14px; border: 1px solid rgba(196,30,58,.2); }
+    .master-badge .badge-icon { font-size: 66px; line-height: 1; margin-bottom: 3px; }
     .master-badge .badge-city { font-size: 16px; font-weight: 800; color: var(--tools-dark); }
     .master-badge .badge-country { font-size: 11px; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: .8px; }
     .master-info { text-align: left; }
-    .master-clock .big-time { font-size: 56px; font-weight: 800; color: var(--tools-dark); line-height: 1; letter-spacing: -1px; }
+    .master-clock .big-time { font-size: 54px; font-weight: 800; color: var(--tools-dark); line-height: 1; letter-spacing: -1px; }
     .master-clock .big-date { font-size: 14px; color: var(--text); margin-top: 2px; }
     .master-clock .big-tz { font-size: 13px; font-weight: 600; color: var(--text-light); margin-top: 4px; padding: 3px 14px; background: rgba(255,255,255,.6); border-radius: 50px; display: inline-block; }
-    .master-controls { display: flex; gap: 8px; justify-content: center; align-items: center; margin-top: 14px; flex-wrap: wrap; }
-    @media (max-width: 640px) {
-      .master-body { flex-direction: column; gap: 12px; }
-      .master-info { text-align: center; }
-    }
-    .master-controls select { padding: 8px 14px; border-radius: 10px; border: 2px solid #e8d8cc; font-size: 14px; background: var(--bg-card); outline: none; font-family: inherit; cursor: pointer; }
-    .master-controls input { padding: 8px 12px; border-radius: 10px; border: 2px solid #e8d8cc; font-size: 14px; background: var(--bg-card); outline: none; font-family: inherit; }
+    .master-controls { display: flex; gap: 8px; justify-content: center; align-items: center; margin-top: 12px; flex-wrap: wrap; }
+    .master-controls select { padding: 8px 14px; border-radius: 10px; border: 2px solid #e8d8cc; font-size: 14px; background: var(--bg-card); outline: none; cursor: pointer; }
+    .master-controls input { padding: 8px 12px; border-radius: 10px; border: 2px solid #e8d8cc; font-size: 14px; background: var(--bg-card); outline: none; }
     .master-controls input:focus { border-color: var(--tools-red); }
-    .master-controls .now-btn { padding: 8px 20px; border-radius: 10px; border: none; background: var(--tools-red); color: #fff; font-size: 14px; font-weight: 700; cursor: pointer; transition: background .2s; }
+    .master-controls .now-btn { padding: 8px 20px; border-radius: 10px; border: none; background: var(--tools-red); color: #fff; font-size: 14px; font-weight: 700; cursor: pointer; }
     .master-controls .now-btn:hover { background: var(--tools-dark); }
 
-    /* WORLD CLOCKS - BOTTOM */
-    .world-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
-    .world-header h3 { font-size: 16px; font-weight: 700; color: var(--tools-dark); }
-    .world-header .count { font-size: 13px; color: var(--text-muted); font-weight: 400; }
+    /* TOOLBAR */
+    .toolbar { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+    .toolbar h3 { font-size: 16px; font-weight: 700; color: var(--tools-dark); }
+    .toolbar .count { font-size: 13px; color: var(--text-muted); font-weight: 400; margin-right: auto; }
+    .search-input { padding: 7px 12px; border-radius: 10px; border: 2px solid #e8d8cc; font-size: 13px; background: var(--bg); outline: none; width: 170px; }
+    .search-input:focus { border-color: var(--tools-red); }
+    .theme-toggle { display: flex; gap: 2px; background: var(--bg); border-radius: 10px; padding: 2px; border: 1px solid #e8d8cc; }
+    .theme-btn { padding: 5px 12px; border: none; border-radius: 8px; font-size: 13px; cursor: pointer; background: transparent; color: var(--text-light); font-weight: 600; transition: all .15s; }
+    .theme-btn.active { background: var(--bg-card); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+
+    /* CITY CARDS */
+    .region-header { font-size: 13px; font-weight: 700; color: var(--tools-dark); margin: 16px 0 8px; padding: 6px 12px; background: var(--tools-light); border-radius: 8px; display: flex; align-items: center; gap: 6px; }
     .clock-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
     .clock-card {
       display: flex; align-items: center; gap: 14px;
@@ -75,7 +69,7 @@
       transition: all .25s; box-shadow: 0 1px 4px rgba(0,0,0,.03);
     }
     .clock-card:hover { border-color: var(--tools-red); background: #fff5f0; box-shadow: 0 4px 14px rgba(196,30,58,.08); }
-    .clock-card .ci { font-size: 40px; flex-shrink: 0; width: 48px; text-align: center; line-height: 1; }
+    .clock-card .ci { font-size: 40px; flex-shrink: 0; width: 52px; text-align: center; line-height: 1; }
     .clock-card .cb { flex: 1; min-width: 0; }
     .clock-card .ct { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
     .clock-card .ct .cn { font-size: 12px; font-weight: 700; color: var(--text-light); }
@@ -87,13 +81,16 @@
     .df.s { background: #e8f5e9; color: #2e7d32; }
     .df.a { background: #fff8e1; color: #e65100; border: 1px solid #ffe082; }
     .df.b { background: #e3f2fd; color: #1565c0; border: 1px solid #90caf9; }
+
+    /* NIGHT MODE */
     .clock-card.nt { background: #1a1a2e; border-color: #2a2a4e; }
     .clock-card.nt:hover { background: #222244; }
     .clock-card.nt .cn { color: #b8b8e0; }
     .clock-card.nt .ctm { color: #ffffff; }
     .clock-card.nt .cd { color: #aaaadd; }
     .clock-card.nt .co { color: #aaaadd; }
-    .clock-card.nt .ci { filter: brightness(1.4); background: rgba(255,255,255,.12); border-radius: 10px; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,.18); }
+    .clock-card.nt .ci { filter: brightness(1.4); background: rgba(255,255,255,.12); border-radius: 10px; width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,.18); }
+    .clock-card.hidden { display: none; }
 
     footer { margin-top: auto; background: var(--bg-card); border-top: 1px solid #eee; padding: 24px 0; text-align: center; }
     footer p { font-size: 13px; color: var(--text-muted); }
@@ -105,8 +102,12 @@
       .hero h1 { font-size: 24px; }
       .tool-card { padding: 14px; }
       .master-clock .big-time { font-size: 40px; }
+      .master-body { flex-direction: column; gap: 12px; }
+      .master-info { text-align: center; }
       .clock-grid { grid-template-columns: repeat(2, 1fr); }
       .master-controls { flex-direction: column; }
+      .toolbar { gap: 6px; }
+      .search-input { width: 120px; }
     }
   </style>
 </head>
@@ -132,14 +133,13 @@
 <section class="tool-section">
   <div class="container">
     <div class="tool-card">
-      <!-- YOUR TIME - TOP -->
       <div class="master-clock">
         <div class="label">🕐 YOUR TIME</div>
         <div class="master-body">
           <div class="master-badge" id="masterBadge">
             <div class="badge-icon" id="masterIcon">🐼</div>
             <div class="badge-city" id="masterCity">Shanghai</div>
-            <div class="badge-country" id="masterCountry">International</div>
+            <div class="badge-country" id="masterCountry">China</div>
           </div>
           <div class="master-info">
             <div class="big-time" id="masterTime">16:20</div>
@@ -154,12 +154,17 @@
           <button class="now-btn" onclick="resetNow()">🔁 Now</button>
         </div>
       </div>
-      <!-- WORLD CLOCKS - BOTTOM -->
-      <div class="world-header">
+      <div class="toolbar">
         <h3>🌐 World Cities</h3>
-        <span class="count">30 cities</span>
+        <span class="count" id="cityCount">30 cities</span>
+        <input class="search-input" id="searchInput" type="text" placeholder="🔍 Search city..." oninput="filterCities()">
+        <div class="theme-toggle">
+          <button class="theme-btn" onclick="setTheme('auto')" id="themeAuto">🌓 Auto</button>
+          <button class="theme-btn active" onclick="setTheme('light')" id="themeLight">☀️</button>
+          <button class="theme-btn" onclick="setTheme('dark')" id="themeDark">🌙</button>
+        </div>
       </div>
-      <div class="clock-grid" id="clockGrid"></div>
+      <div id="clockGrid"></div>
     </div>
   </div>
 </section>
@@ -167,6 +172,7 @@
   <div class="container">
     <div class="foot-links">
       <a href="/timezone-converter/">🌍 World Clock</a>
+      <a href="/number-base/">🔢 Number Base</a>
       <a href="/word-counter/">📝 Word Counter</a>
       <a href="/random-picker/">🎲 Random Picker</a>
       <a href="/bmi-calculator/">⚖️ BMI Calculator</a>
@@ -178,37 +184,45 @@
   </div>
 </section>
 <script>
+const REGIONS = {
+  americas: { label: 'Americas', emoji: '\u{1F30E}', order: 0 },
+  europe: { label: 'Europe', emoji: '\u{1F3F4}', order: 1 },
+  asia: { label: 'Asia & Middle East', emoji: '\u{1F30F}', order: 2 },
+  pacific: { label: 'Pacific & Oceania', emoji: '\u{1F30A}', order: 3 },
+  africa: { label: 'Africa', emoji: '\u{1F33B}', order: 4 },
+};
+
 const TIMEZONES = [
-  { name: 'UTC', code: 'UTC', city: 'UTC', emoji: '\u{1F30D}', offset: 0 , country: 'International' },
-  { name: 'US Eastern', code: 'America/New_York', city: 'New York', emoji: '\u{1F5FD}', offset: -5 , country: 'United States' },
-  { name: 'US Central', code: 'America/Chicago', city: 'Chicago', emoji: '\u{1F3C0}', offset: -6 , country: 'United States' },
-  { name: 'US Mountain', code: 'America/Denver', city: 'Denver', emoji: '\u{1F304}', offset: -7 , country: 'United States' },
-  { name: 'US Pacific', code: 'America/Los_Angeles', city: 'Los Angeles', emoji: '\u{1F3AC}', offset: -8 , country: 'United States' },
-  { name: 'Alaska', code: 'America/Anchorage', city: 'Anchorage', emoji: '\u{1F427}', offset: -9 , country: 'United States' },
-  { name: 'Hawaii', code: 'Pacific/Honolulu', city: 'Honolulu', emoji: '\u{1F334}', offset: -10 , country: 'United States' },
-  { name: 'Canada Atlantic', code: 'America/Halifax', city: 'Halifax', emoji: '\u{1F99E}', offset: -4 , country: 'Canada' },
-  { name: 'Brazil', code: 'America/Sao_Paulo', city: 'São Paulo', emoji: '\u{1F3AD}', offset: -3 , country: 'Brazil' },
-  { name: 'Argentina', code: 'America/Argentina/Buenos_Aires', city: 'Buenos Aires', emoji: '\u{1F4AA}', offset: -3 , country: 'Argentina' },
-  { name: 'UK/Ireland', code: 'Europe/London', city: 'London', emoji: '\u{1F451}', offset: 0 , country: 'United Kingdom' },
-  { name: 'Central Europe', code: 'Europe/Berlin', city: 'Berlin', emoji: '\u{1F3EA}', offset: 1 , country: 'Germany' },
-  { name: 'Eastern Europe', code: 'Europe/Helsinki', city: 'Helsinki', emoji: '\u{1F525}', offset: 2 , country: 'Finland' },
-  { name: 'Moscow', code: 'Europe/Moscow', city: 'Moscow', emoji: '\u{1F43B}', offset: 3 , country: 'Russia' },
-  { name: 'Dubai', code: 'Asia/Dubai', city: 'Dubai', emoji: '\u{1F306}', offset: 4 , country: 'UAE' },
-  { name: 'India', code: 'Asia/Kolkata', city: 'Kolkata', emoji: '\u{1F54C}', offset: 5.5 , country: 'India' },
-  { name: 'Bangladesh', code: 'Asia/Dhaka', city: 'Dhaka', emoji: '\u{1F405}', offset: 6 , country: 'Bangladesh' },
-  { name: 'Thailand', code: 'Asia/Bangkok', city: 'Bangkok', emoji: '\u{1F6DF}', offset: 7 , country: 'Thailand' },
-  { name: 'China', code: 'Asia/Shanghai', city: 'Shanghai', emoji: '\u{1F43C}', offset: 8 , country: 'China' },
-  { name: 'Singapore', code: 'Asia/Singapore', city: 'Singapore', emoji: '\u{1F9FB}', offset: 8 , country: 'Singapore' },
-  { name: 'Japan', code: 'Asia/Tokyo', city: 'Tokyo', emoji: '\u{1F338}', offset: 9 , country: 'Japan' },
-  { name: 'Korea', code: 'Asia/Seoul', city: 'Seoul', emoji: '\u{1F30F}', offset: 9 , country: 'South Korea' },
-  { name: 'Australia AEST', code: 'Australia/Sydney', city: 'Sydney', emoji: '\u{1F31F}', offset: 10 , country: 'Australia' },
-  { name: 'Australia ACDT', code: 'Australia/Adelaide', city: 'Adelaide', emoji: '\u{1F30A}', offset: 10.5 , country: 'Australia' },
-  { name: 'Australia AWST', code: 'Australia/Perth', city: 'Perth', emoji: '\u{1F998}', offset: 8 , country: 'Australia' },
-  { name: 'New Zealand', code: 'Pacific/Auckland', city: 'Auckland', emoji: '\u{1F98B}', offset: 12 , country: 'New Zealand' },
-  { name: 'Fiji', code: 'Pacific/Fiji', city: 'Suva', emoji: '\u{1F33A}', offset: 12 , country: 'Fiji' },
-  { name: 'South Africa', code: 'Africa/Johannesburg', city: 'Johannesburg', emoji: '\u{1F9A7}', offset: 2 , country: 'South Africa' },
-  { name: 'Nigeria', code: 'Africa/Lagos', city: 'Lagos', emoji: '\u{1F3B2}', offset: 1 , country: 'Nigeria' },
-  { name: 'Kenya', code: 'Africa/Nairobi', city: 'Nairobi', emoji: '\u{1F98C}', offset: 3 , country: 'Kenya' },
+  { name: 'UTC', code: 'UTC', city: 'UTC', emoji: '\u{1F30D}', offset: 0, country: 'International', region: 'europe' },
+  { name: 'US Eastern', code: 'America/New_York', city: 'New York', emoji: '\u{1F5FD}', offset: -5, country: 'United States', region: 'americas' },
+  { name: 'US Central', code: 'America/Chicago', city: 'Chicago', emoji: '\u{1F3C0}', offset: -6, country: 'United States', region: 'americas' },
+  { name: 'US Mountain', code: 'America/Denver', city: 'Denver', emoji: '\u{1F304}', offset: -7, country: 'United States', region: 'americas' },
+  { name: 'US Pacific', code: 'America/Los_Angeles', city: 'Los Angeles', emoji: '\u{1F3AC}', offset: -8, country: 'United States', region: 'americas' },
+  { name: 'Alaska', code: 'America/Anchorage', city: 'Anchorage', emoji: '\u{1F427}', offset: -9, country: 'United States', region: 'americas' },
+  { name: 'Hawaii', code: 'Pacific/Honolulu', city: 'Honolulu', emoji: '\u{1F334}', offset: -10, country: 'United States', region: 'americas' },
+  { name: 'Canada Atlantic', code: 'America/Halifax', city: 'Halifax', emoji: '\u{1F99E}', offset: -4, country: 'Canada', region: 'americas' },
+  { name: 'Brazil', code: 'America/Sao_Paulo', city: 'São Paulo', emoji: '\u{1F3AD}', offset: -3, country: 'Brazil', region: 'americas' },
+  { name: 'Argentina', code: 'America/Argentina/Buenos_Aires', city: 'Buenos Aires', emoji: '\u{1F4AA}', offset: -3, country: 'Argentina', region: 'americas' },
+  { name: 'UK/Ireland', code: 'Europe/London', city: 'London', emoji: '\u{1F451}', offset: 0, country: 'United Kingdom', region: 'europe' },
+  { name: 'Central Europe', code: 'Europe/Berlin', city: 'Berlin', emoji: '\u{1F3EA}', offset: 1, country: 'Germany', region: 'europe' },
+  { name: 'Eastern Europe', code: 'Europe/Helsinki', city: 'Helsinki', emoji: '\u{1F525}', offset: 2, country: 'Finland', region: 'europe' },
+  { name: 'Moscow', code: 'Europe/Moscow', city: 'Moscow', emoji: '\u{1F43B}', offset: 3, country: 'Russia', region: 'europe' },
+  { name: 'Dubai', code: 'Asia/Dubai', city: 'Dubai', emoji: '\u{1F306}', offset: 4, country: 'UAE', region: 'asia' },
+  { name: 'India', code: 'Asia/Kolkata', city: 'Kolkata', emoji: '\u{1F54C}', offset: 5.5, country: 'India', region: 'asia' },
+  { name: 'Bangladesh', code: 'Asia/Dhaka', city: 'Dhaka', emoji: '\u{1F405}', offset: 6, country: 'Bangladesh', region: 'asia' },
+  { name: 'Thailand', code: 'Asia/Bangkok', city: 'Bangkok', emoji: '\u{1F6DF}', offset: 7, country: 'Thailand', region: 'asia' },
+  { name: 'China', code: 'Asia/Shanghai', city: 'Shanghai', emoji: '\u{1F43C}', offset: 8, country: 'China', region: 'asia' },
+  { name: 'Singapore', code: 'Asia/Singapore', city: 'Singapore', emoji: '\u{1F9FB}', offset: 8, country: 'Singapore', region: 'asia' },
+  { name: 'Japan', code: 'Asia/Tokyo', city: 'Tokyo', emoji: '\u{1F338}', offset: 9, country: 'Japan', region: 'asia' },
+  { name: 'Korea', code: 'Asia/Seoul', city: 'Seoul', emoji: '\u{1F30F}', offset: 9, country: 'South Korea', region: 'asia' },
+  { name: 'Australia AEST', code: 'Australia/Sydney', city: 'Sydney', emoji: '\u{1F31F}', offset: 10, country: 'Australia', region: 'pacific' },
+  { name: 'Australia ACDT', code: 'Australia/Adelaide', city: 'Adelaide', emoji: '\u{1F30A}', offset: 10.5, country: 'Australia', region: 'pacific' },
+  { name: 'Australia AWST', code: 'Australia/Perth', city: 'Perth', emoji: '\u{1F998}', offset: 8, country: 'Australia', region: 'pacific' },
+  { name: 'New Zealand', code: 'Pacific/Auckland', city: 'Auckland', emoji: '\u{1F98B}', offset: 12, country: 'New Zealand', region: 'pacific' },
+  { name: 'Fiji', code: 'Pacific/Fiji', city: 'Suva', emoji: '\u{1F33A}', offset: 12, country: 'Fiji', region: 'pacific' },
+  { name: 'South Africa', code: 'Africa/Johannesburg', city: 'Johannesburg', emoji: '\u{1F9A7}', offset: 2, country: 'South Africa', region: 'africa' },
+  { name: 'Nigeria', code: 'Africa/Lagos', city: 'Lagos', emoji: '\u{1F3B2}', offset: 1, country: 'Nigeria', region: 'africa' },
+  { name: 'Kenya', code: 'Africa/Nairobi', city: 'Nairobi', emoji: '\u{1F98C}', offset: 3, country: 'Kenya', region: 'africa' },
 ];
 
 function getTzOffset(tzCode, date) {
@@ -254,6 +268,7 @@ function getHour(tzCode, date) {
 }
 
 let masterDate = new Date();
+let currentTheme = 'light'; // auto, light, dark
 
 function populateSelect() {
   const sel = document.getElementById('masterTz');
@@ -279,33 +294,91 @@ function updateMasterDisplay() {
   document.getElementById('masterTzLabel').textContent = fmtOffset(tzCode, masterDate);
 }
 
+function renderClockCard(tz, srcOffset) {
+  const t = fmtTime(masterDate, tz.code);
+  const d = fmtShortDate(masterDate, tz.code);
+  const off = fmtOffset(tz.code, masterDate);
+  const e = tz.emoji || '\u{1F310}';
+  const h = getHour(tz.code, masterDate);
+
+  let isNight;
+  if (currentTheme === 'light') isNight = false;
+  else if (currentTheme === 'dark') isNight = true;
+  else isNight = h < 6 || h >= 20;
+
+  const tzOff = getTzOffset(tz.code, masterDate);
+  const diffMin = tzOff - srcOffset;
+  let diffLabel = '', diffClass = 's';
+  if (diffMin === 0) { diffLabel = 'same'; }
+  else if (diffMin > 0) { const hh = Math.floor(diffMin / 60); diffLabel = '+' + hh + 'h'; diffClass = 'a'; const rm = Math.abs(diffMin) % 60; if(rm) diffLabel += String(rm); }
+  else { const hh = Math.floor(-diffMin / 60); diffLabel = '-' + hh + 'h'; diffClass = 'b'; const rm = Math.abs(diffMin) % 60; if(rm) diffLabel += String(rm); }
+
+  return '<div class="clock-card' + (isNight ? ' nt' : '') + '" data-city="' + tz.city.toLowerCase() + '" data-country="' + (tz.country||'').toLowerCase() + '" data-region="' + tz.region + '">' +
+    '<div class="ci">' + e + '</div>' +
+    '<div class="cb">' +
+    '<div class="ct"><span class="cn">' + tz.city + '</span><span class="ctm">' + t + '</span></div>' +
+    '<div class="cbtm"><span class="cd">' + d + '</span><span class="co">' + off + '</span><span class="df ' + diffClass + '">' + diffLabel + '</span></div>' +
+    '</div></div>';
+}
+
 function updateAllClocks() {
   const srcTz = getMasterTzCode();
   const srcOffset = getTzOffset(srcTz, masterDate);
-  const grid = document.getElementById('clockGrid');
+  const container = document.getElementById('clockGrid');
 
-  grid.innerHTML = TIMEZONES.map((tz, i) => {
-    const t = fmtTime(masterDate, tz.code);
-    const d = fmtShortDate(masterDate, tz.code);
-    const off = fmtOffset(tz.code, masterDate);
-    const e = tz.emoji || '\u{1F310}';
-    const h = getHour(tz.code, masterDate);
-    const isNight = h < 6 || h >= 20;
+  // Group by region
+  const groups = {};
+  TIMEZONES.forEach(tz => {
+    const r = tz.region || 'americas';
+    if (!groups[r]) groups[r] = [];
+    groups[r].push(tz);
+  });
 
-    const tzOff = getTzOffset(tz.code, masterDate);
-    const diffMin = tzOff - srcOffset;
-    let diffLabel = '', diffClass = 's';
-    if (diffMin === 0) { diffLabel = 'same'; }
-    else if (diffMin > 0) { const hh = Math.floor(diffMin / 60); diffLabel = '+' + hh + 'h'; diffClass = 'a'; const rm = Math.abs(diffMin) % 60; if(rm) diffLabel += String(rm); }
-    else { const hh = Math.floor(-diffMin / 60); diffLabel = '-' + hh + 'h'; diffClass = 'b'; const rm = Math.abs(diffMin) % 60; if(rm) diffLabel += String(rm); }
+  let html = '';
+  const regions = ['americas', 'europe', 'asia', 'pacific', 'africa'];
+  let total = 0;
+  regions.forEach(rid => {
+    const r = REGIONS[rid];
+    if (groups[rid] && groups[rid].length > 0) {
+      html += '<div class="region-header">' + (r.emoji || '') + ' ' + r.label + '</div>';
+      html += '<div class="clock-grid">';
+      groups[rid].forEach(tz => {
+        html += renderClockCard(tz, srcOffset);
+        total++;
+      });
+      html += '</div>';
+    }
+  });
 
-    return '<div class="clock-card' + (isNight ? ' nt' : '') + '">' +
-      '<div class="ci">' + e + '</div>' +
-      '<div class="cb">' +
-      '<div class="ct"><span class="cn">' + tz.city + '</span><span class="ctm">' + t + '</span></div>' +
-      '<div class="cbtm"><span class="cd">' + d + '</span><span class="co">' + off + '</span><span class="df ' + diffClass + '">' + diffLabel + '</span></div>' +
-      '</div></div>';
-  }).join('');
+  container.innerHTML = html;
+  document.getElementById('cityCount').textContent = total + ' cities';
+  filterCities();
+}
+
+function filterCities() {
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  document.querySelectorAll('.clock-card').forEach(el => {
+    if (!q) { el.classList.remove('hidden'); return; }
+    const city = el.dataset.city || '';
+    const country = el.dataset.country || '';
+    if (city.includes(q) || country.includes(q)) el.classList.remove('hidden');
+    else el.classList.add('hidden');
+  });
+  // Hide region headers with no visible children
+  document.querySelectorAll('.region-header').forEach(h => {
+    const grid = h.nextElementSibling;
+    if (grid && grid.classList.contains('clock-grid')) {
+      const visible = grid.querySelectorAll('.clock-card:not(.hidden)').length;
+      h.style.display = visible === 0 ? 'none' : '';
+    }
+  });
+}
+
+function setTheme(mode) {
+  currentTheme = mode;
+  document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('theme' + mode.charAt(0).toUpperCase() + mode.slice(1)).classList.add('active');
+  updateAllClocks();
 }
 
 function refresh() { updateMasterDisplay(); updateAllClocks(); }

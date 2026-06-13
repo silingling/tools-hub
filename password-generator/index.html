@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password Generator - Strong Random Password Creator</title>
+  <meta name="description" content="Generate strong, secure random passwords instantly. Customize length, symbols, numbers, and more. Free online password generator.">
+  <meta name="keywords" content="password generator, random password, strong password, secure password, password creator">
+  <link rel="canonical" href="https://tools.xiaoyuland.com/password-generator/">
+
+  <meta property="og:title" content="Password Generator - Strong Random Password Creator">
+  <meta property="og:description" content="Generate strong, secure random passwords instantly. Free and private — everything runs in your browser.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tools.xiaoyuland.com/password-generator/">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Password Generator",
+    "description": "Generate strong random passwords with customizable options",
+    "applicationCategory": "Utility",
+    "operatingSystem": "All",
+    "browserRequirements": "Requires JavaScript"
+  }
+  </script>
+
+  <style>
+    :root {
+      --tools-red: #c41e3a;
+      --tools-dark: #8b0000;
+      --tools-light: #fff0e6;
+      --bg: #faf6f0;
+      --bg-card: #fff;
+      --text: #2c2c2c;
+      --text-light: #666;
+      --text-muted: #999;
+      --radius: 16px;
+      --shadow: 0 4px 20px rgba(0,0,0,.06);
+      --shadow-hover: 0 8px 30px rgba(0,0,0,.12);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: var(--text); background: var(--bg); line-height: 1.6;
+      min-height: 100vh; display: flex; flex-direction: column;
+    }
+    a { color: var(--tools-red); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+    nav {
+      background: var(--bg-card); border-bottom: 1px solid #eee;
+      padding: 14px 0; position: sticky; top: 0; z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+    nav .container { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .nav-brand { font-size: 20px; font-weight: 800; color: var(--tools-dark); display: flex; align-items: center; gap: 8px; }
+    .nav-links { display: flex; gap: 4px; flex-wrap: wrap; }
+    .nav-links a { padding: 6px 14px; border-radius: 8px; font-size: 14px; font-weight: 600; color: var(--text); transition: all .2s; }
+    .nav-links a:hover { background: var(--tools-light); color: var(--tools-dark); text-decoration: none; }
+    .nav-links a.active { background: var(--tools-red); color: #fff; }
+
+    .hero { padding: 48px 0 24px; text-align: center; }
+    .hero-icon { font-size: 56px; margin-bottom: 8px; display: block; }
+    .hero h1 { font-size: 36px; font-weight: 800; color: var(--tools-dark); margin-bottom: 6px; }
+    .hero p { font-size: 16px; color: var(--text-light); }
+
+    .tool-section { padding: 32px 0; }
+    .tool-card {
+      background: var(--bg-card); border-radius: var(--radius);
+      padding: 32px; box-shadow: var(--shadow); border: 1px solid #f0e8e0;
+      max-width: 600px; margin: 0 auto;
+    }
+
+    .password-display {
+      background: #f5f0eb; border-radius: 12px;
+      padding: 20px; margin-bottom: 24px;
+      display: flex; align-items: center; gap: 12px;
+      border: 2px solid #e8e0d8;
+    }
+    .password-display input {
+      flex: 1; border: none; background: none;
+      font-size: 20px; font-family: 'Courier New', monospace;
+      font-weight: 700; color: var(--text); outline: none;
+      letter-spacing: 1px;
+    }
+    .password-display .btn-icon {
+      background: var(--tools-red); color: #fff; border: none;
+      width: 40px; height: 40px; border-radius: 10px;
+      font-size: 18px; cursor: pointer; transition: all .2s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .password-display .btn-icon:hover { background: var(--tools-dark); transform: scale(1.05); }
+    .password-display .btn-icon.copied { background: #2e7d32; }
+
+    .strength-bar {
+      height: 6px; background: #e8e0d8; border-radius: 3px;
+      margin-bottom: 24px; overflow: hidden;
+    }
+    .strength-bar .fill {
+      height: 100%; border-radius: 3px; transition: all .3s;
+      width: 0%;
+    }
+    .strength-label {
+      font-size: 13px; font-weight: 600; margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .options { display: grid; gap: 16px; margin-bottom: 24px; }
+
+    .option-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 0; border-bottom: 1px solid #f0ece8;
+    }
+    .option-row:last-child { border-bottom: none; }
+    .option-label { font-size: 15px; font-weight: 500; color: var(--text); }
+    .option-label small { font-weight: 400; color: var(--text-muted); font-size: 12px; }
+
+    .option-row input[type="checkbox"] {
+      width: 20px; height: 20px; accent-color: var(--tools-red); cursor: pointer;
+    }
+    .option-row input[type="range"] {
+      width: 140px; accent-color: var(--tools-red); cursor: pointer;
+    }
+    .len-display { font-size: 18px; font-weight: 700; color: var(--tools-dark); min-width: 32px; text-align: center; }
+
+    .btn-gen {
+      width: 100%; padding: 14px; border-radius: 50px;
+      font-size: 16px; font-weight: 700; border: none;
+      background: var(--tools-red); color: #fff;
+      cursor: pointer; transition: all .2s;
+    }
+    .btn-gen:hover { background: var(--tools-dark); transform: translateY(-1px); }
+
+    .toast {
+      position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+      background: #2e7d32; color: #fff; padding: 12px 24px;
+      border-radius: 50px; font-size: 14px; font-weight: 600;
+      opacity: 0; transition: opacity .3s; pointer-events: none;
+    }
+    .toast.show { opacity: 1; }
+
+    .tips {
+      max-width: 600px; margin: 32px auto; padding: 24px;
+      background: var(--bg-card); border-radius: var(--radius);
+      border: 1px solid #f0e8e0;
+    }
+    .tips h3 { font-size: 16px; color: var(--tools-dark); margin-bottom: 12px; }
+    .tips ul { padding-left: 20px; }
+    .tips li { font-size: 14px; color: var(--text-light); margin-bottom: 6px; }
+
+    footer {
+      margin-top: auto; background: var(--bg-card); border-top: 1px solid #eee;
+      padding: 32px 0; text-align: center;
+    }
+    footer p { font-size: 13px; color: var(--text-muted); }
+    footer a { color: var(--tools-red); font-weight: 600; }
+    footer .foot-links { margin-bottom: 8px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+    footer .foot-links a { padding: 4px 10px; font-size: 13px; color: var(--text-light); border-radius: 6px; }
+    footer .foot-links a:hover { background: var(--tools-light); color: var(--tools-dark); text-decoration: none; }
+
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 28px; }
+      .hero-icon { font-size: 48px; }
+      .tool-card { padding: 20px; }
+      .password-display input { font-size: 16px; }
+      nav .container { flex-direction: column; gap: 10px; }
+      .nav-links { justify-content: center; }
+      .option-row input[type="range"] { width: 100px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a class="nav-brand" href="//xiaoyuland.com">🏮 Xiaoyu Land</a>
+    <div class="nav-links">
+      <a href="//tools.xiaoyuland.com">🛠️ Tools</a>
+      <a href="//game.xiaoyuland.com">🎮 Games</a>
+      <a href="//ai.xiaoyuland.com">🤖 AI</a>
+      <a href="//culture.xiaoyuland.com">🏮 Culture</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <span class="hero-icon">🔑</span>
+    <h1>Password Generator</h1>
+    <p>Generate strong, secure random passwords instantly</p>
+  </div>
+</section>
+
+<section class="tool-section">
+  <div class="container">
+    <div class="tool-card">
+      <div class="password-display">
+        <input type="text" id="passwordOutput" readonly value="P@ssW0rd!Secure">
+        <button class="btn-icon" id="copyBtn" onclick="copyPassword()" title="Copy to clipboard">📋</button>
+        <button class="btn-icon" onclick="generatePassword()" title="Generate new" style="background:#555">↻</button>
+      </div>
+
+      <div class="strength-bar">
+        <div class="fill" id="strengthFill"></div>
+      </div>
+      <div class="strength-label" id="strengthLabel">Strong</div>
+
+      <div class="options">
+        <div class="option-row">
+          <span class="option-label">Password Length</span>
+          <div style="display:flex;align-items:center;gap:10px">
+            <input type="range" id="lengthSlider" min="4" max="64" value="16" oninput="updateLength()">
+            <span class="len-display" id="lengthDisplay">16</span>
+          </div>
+        </div>
+        <div class="option-row">
+          <span class="option-label">Uppercase (A-Z)</span>
+          <input type="checkbox" id="uppercase" checked>
+        </div>
+        <div class="option-row">
+          <span class="option-label">Lowercase (a-z)</span>
+          <input type="checkbox" id="lowercase" checked>
+        </div>
+        <div class="option-row">
+          <span class="option-label">Numbers (0-9)</span>
+          <input type="checkbox" id="numbers" checked>
+        </div>
+        <div class="option-row">
+          <span class="option-label">Symbols (!@#$%^&amp;*)</span>
+          <input type="checkbox" id="symbols" checked>
+        </div>
+        <div class="option-row">
+          <span class="option-label">Exclude Similar <small>(il1Lo0O)</small></span>
+          <input type="checkbox" id="excludeSimilar">
+        </div>
+      </div>
+
+      <button class="btn-gen" onclick="generatePassword()">🔑 Generate Password</button>
+    </div>
+
+    <div class="tips">
+      <h3>💡 Password Tips</h3>
+      <ul>
+        <li>Use at least <strong>12 characters</strong> for a secure password</li>
+        <li>Include a mix of uppercase, lowercase, numbers, and symbols</li>
+        <li>Use a different password for every account</li>
+        <li>Consider using a <strong>password manager</strong> to store passwords securely</li>
+        <li>This generator runs entirely in your browser — nothing is sent to any server</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="foot-links">
+      <a href="/">🔑 Password Generator</a>
+      <a href="/quiz/">🏢 Workplace Quiz</a>
+      <a href="//xiaoyuland.com">🏠 Xiaoyu Land</a>
+    </div>
+    <p>© 2026 <a href="//xiaoyuland.com">Xiaoyu Land</a> · Tools</p>
+  </div>
+</footer>
+
+<div class="toast" id="toast">Copied to clipboard!</div>
+
+<script>
+function generatePassword() {
+  const len = parseInt(document.getElementById('lengthSlider').value);
+  const upper = document.getElementById('uppercase').checked;
+  const lower = document.getElementById('lowercase').checked;
+  const nums = document.getElementById('numbers').checked;
+  const syms = document.getElementById('symbols').checked;
+  const exclude = document.getElementById('excludeSimilar').checked;
+
+  let chars = '';
+  if (upper) chars += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  if (lower) chars += 'abcdefghijklmnopqrstuvwxyz';
+  if (nums) chars += '0123456789';
+  if (syms) chars += '!@#$%^&*()_+-=[]{}|;:,.<>?';
+
+  if (exclude) {
+    chars = chars.replace(/[il1Lo0O]/g, '');
+  }
+
+  if (chars.length === 0) {
+    document.getElementById('passwordOutput').value = 'Select at least one option!';
+    return;
+  }
+
+  let password = '';
+  const array = new Uint32Array(len);
+  crypto.getRandomValues(array);
+  for (let i = 0; i < len; i++) {
+    password += chars[array[i] % chars.length];
+  }
+
+  document.getElementById('passwordOutput').value = password;
+  updateStrength(password, len, upper, lower, nums, syms);
+}
+
+function updateStrength(pwd, len, upper, lower, nums, syms) {
+  const fill = document.getElementById('strengthFill');
+  const label = document.getElementById('strengthLabel');
+  let score = 0;
+
+  // Length scoring
+  if (len >= 8) score += 20;
+  if (len >= 12) score += 10;
+  if (len >= 16) score += 10;
+
+  // Character variety
+  let types = 0;
+  if (upper) types++;
+  if (lower) types++;
+  if (nums) types++;
+  if (syms) types++;
+  score += types * 8;
+
+  // Check actual content for variety
+  if (/[A-Z]/.test(pwd)) score += 5;
+  if (/[a-z]/.test(pwd)) score += 5;
+  if (/[0-9]/.test(pwd)) score += 5;
+  if (/[^A-Za-z0-9]/.test(pwd)) score += 10;
+
+  // Bonus for very long
+  if (len >= 20) score += 10;
+  if (len >= 30) score += 10;
+
+  // Cap and display
+  score = Math.min(100, score);
+
+  fill.style.width = score + '%';
+  if (score < 30) {
+    fill.style.background = '#e53935';
+    label.textContent = 'Weak';
+    label.style.color = '#e53935';
+  } else if (score < 60) {
+    fill.style.background = '#fb8c00';
+    label.textContent = 'Fair';
+    label.style.color = '#fb8c00';
+  } else if (score < 80) {
+    fill.style.background = '#43a047';
+    label.textContent = 'Good';
+    label.style.color = '#43a047';
+  } else {
+    fill.style.background = '#1b5e20';
+    label.textContent = 'Very Strong';
+    label.style.color = '#1b5e20';
+  }
+}
+
+function updateLength() {
+  const val = document.getElementById('lengthSlider').value;
+  document.getElementById('lengthDisplay').textContent = val;
+  generatePassword();
+}
+
+function copyPassword() {
+  const input = document.getElementById('passwordOutput');
+  const btn = document.getElementById('copyBtn');
+
+  if (!input.value || input.value === 'Select at least one option!') return;
+
+  navigator.clipboard.writeText(input.value).then(() => {
+    btn.textContent = '✅';
+    btn.classList.add('copied');
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => {
+      btn.textContent = '📋';
+      btn.classList.remove('copied');
+      toast.classList.remove('show');
+    }, 2000);
+  }).catch(() => {
+    // Fallback
+    input.select();
+    document.execCommand('copy');
+  });
+}
+
+// Generate on load
+generatePassword();
+</script>
+</body>
+</html>

@@ -358,7 +358,7 @@ function convert() {
 
   // Create a date in UTC that represents the source time
   // We need to account for the offset difference
-  const srcOffset = getTzOffset(srcTz, new Date(year, month-1, day, hour, minute));
+  const srcOffset = getTzOffset(srcTz, new Date(Date.UTC(year, month-1, day, hour, minute)));
   // Create UTC timestamp for the source time
   const utcMs = Date.UTC(year, month-1, day, hour, minute) - srcOffset * 60000;
   const utcDate = new Date(utcMs);

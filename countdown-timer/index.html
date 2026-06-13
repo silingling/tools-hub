@@ -41,6 +41,7 @@
     .time-nums .secs { color: var(--tools-red); }
     .time-labels { display: flex; justify-content: center; gap: 40px; margin-top: 2px; font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
     .time-labels span { width: 60px; text-align: center; }
+    .tenths { font-size: 36px; color: var(--tools-red); font-weight: 600; margin-left: 2px; vertical-align: super; }
     .timer-status { font-size: 13px; color: var(--text-light); margin-top: 4px; font-weight: 500; }
 
     .controls { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 16px; }
@@ -86,6 +87,7 @@
       .hero h1 { font-size: 24px; }
       .tool-card { padding: 16px; }
       .time-nums { font-size: 48px; }
+      .tenths { font-size: 24px; }
       .time-labels { gap: 20px; }
       .time-labels span { width: 40px; }
     }
@@ -144,10 +146,10 @@
 
       <div class="timer-display">
         <div class="time-nums" id="display">
-          <span id="d">00</span>:<span id="h">00</span>:<span id="m">05</span>:<span class="secs" id="s">00</span>
+          <span id="d">00</span>:<span id="h">00</span>:<span id="m">05</span>:<span class="secs" id="s">00</span><span class="tenths" id="t">.0</span>
         </div>
         <div class="time-labels">
-          <span>Days</span><span>Hours</span><span>Mins</span><span>Secs</span>
+          <span>Days</span><span>Hours</span><span>Mins</span><span>Secs</span><span style="width:30px">1/10</span>
         </div>
         <div class="timer-status" id="status">Ready</div>
         <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
@@ -203,11 +205,12 @@ let lastLapMs = 0;
 
 function fmt(n) { return String(n).padStart(2, '0'); }
 
-function updateDisplay(d, h, m, s) {
+function updateDisplay(d, h, m, s, tenth) {
   document.getElementById('d').textContent = fmt(d);
   document.getElementById('h').textContent = fmt(h);
   document.getElementById('m').textContent = fmt(m);
   document.getElementById('s').textContent = fmt(s);
+  document.getElementById('t').textContent = '.' + (tenth !== undefined ? tenth : 0);
 }
 
 function getCountdownSecs() {
@@ -231,12 +234,14 @@ function setPreset(h, m, s) {
 }
 
 function renderMs(ms, isCountdown) {
-  const total = Math.max(0, Math.round(ms / 1000));
-  const d = Math.floor(total / 86400);
-  const h = Math.floor((total % 86400) / 3600);
-  const m = Math.floor((total % 3600) / 60);
-  const s = total % 60;
-  updateDisplay(d, h, m, s);
+  const total = Math.max(0, ms / 1000);
+  const ds = Math.floor(total);
+  const tenth = Math.floor((total - ds) * 10);
+  const d = Math.floor(ds / 86400);
+  const h = Math.floor((ds % 86400) / 3600);
+  const m = Math.floor((ds % 3600) / 60);
+  const s = ds % 60;
+  updateDisplay(d, h, m, s, tenth);
   if (isCountdown && totalSecs > 0) {
     const pct = (1 - total / totalSecs) * 100;
     document.getElementById('progressFill').style.width = Math.min(pct, 100) + '%';
